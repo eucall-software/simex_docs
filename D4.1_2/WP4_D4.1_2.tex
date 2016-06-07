@@ -4,6 +4,45 @@
 \usepackage[centertags]{amsmath}
 \usepackage{amssymb}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   BIBLIOGRAPHY SETTINGS                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[bibstyle=nature,sorting=none,=maxnames=1000,eprint=false, defernumbers=true, backend=biber]{biblatex}
+\usepackage{hyperref}
+
+\renewcommand*\finalnamedelim{, and\addspace}
+\DeclareNameAlias{sortname}{last-first}
+\renewcommand{\newunitpunct}{, }
+
+%\defbibenvironment{bibliography}
+  %{\list{}
+     %{\setlength{\leftmargin}{3.0cm}%
+      %%\setlength{\itemindent}{-\leftmargin}%
+      %\setlength{\itemsep}{1ex}%
+      %\setlength{\parsep}{\bibparsep}}}
+  %{\endlist}
+  %{\item}
+
+\AtEveryBibitem{%
+  \clearfield{day}%
+  \clearfield{month}%
+  \clearfield{endday}%
+  \clearfield{endmonth}%
+  \clearfield{issn}%
+  \clearfield{issue}%
+}
+%convert titles to hyperlinks using doi
+\ExecuteBibliographyOptions{doi=false}
+\newbibmacro{string+doi}[1]{%
+  \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+\DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
+
+\addbibresource{/home/grotec/Documents/LiteratureDB/bibtex/library.bib}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% END BIBLIOGRAPHY SETTINGS                   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 \title{Design Report and Advanced Simulation Software for Laser -- Matter interaction}
 %In fullfilment of deliverables D4.1 and D4.2 in EUCALL SIMEX
 \author{Carsten Fortmann-Grote, Axel Huebl, } % Add yourself.
@@ -17,29 +56,37 @@ electron lasers, synchrotrons, and optical lasers with solid, liquid, or gasous 
 It discusses the generic simulation platform within which the simulations will be performed and the
 concrete simulation tools for two virtual experiments:
 \begin{enumerate}
-  \item Interaction of high power, short pulse optical lasers with matter and susequent probing of the resulting state by intense x-ray pulses
-  \item Interaction of high energy, long pulses of optical laser light with a solid target and probing with x-rays
+  \item Interaction of high power, \textbf{short} pulse optical laser radiation (duration $\approx 10\,\text{fs}$)
+    with matter and subsequent probing of the resulting state by intense x-ray pulses,
+  \item Interaction of high energy, \textbf{long} pulses of optical laser light (duration $\approx 10\,\text{ps}$
+    with a solid target and probing with x-rays.
 \end{enumerate}%
 
 \section{The SIMEX simulation platform \label{sec:simex_platform}}
 %
 \subsection{Introduction}
-The computer program \textsf{simex\_platform} is a platform for the simulation of experiments at advanced laser light sources. It allows the
+The computer program \texttt{simex\_platform} \cite{simex_github} is a platform for the simulation of experiments at advanced laser light sources. It allows the
 user to assemble a virtual experiment through combination of suitable programs for the light source (e.g. a synchrotron, an x-ray free electron
-laser or and optical laser), beam transport from the source to the sample or target, interaction of the light with the sample or target,
-propagation of the scattered light behind the sample or target, and detection in a light detector. \textsf{simex\_platform} comes preloaded with
+laser or an optical laser), beam transport from the source to the sample or target, interaction of the light with the sample or target,
+propagation of the scattered light behind the sample or target, and detection in a light detector. \texttt{simex\_platform} comes preloaded with
 a number of such \textit{Calculators}, aimed at the simulation of various typical laser light experiments. Furthermore, researchers
 can replace individual built-in \textit{Calculators} by their own codes. In this way, they can embed their codes
 into a more realistic simulation environment compared to running the code in stand-alone fashion with more or less idealized parameters.
 %
 \subsection{Building blocks of a virtual photon experiment}
-With slight variations, photon based experiments can be broken down to five or six individual blocks. In simex\_platform each of these blocks is
-represented by an \textit{Abstract Calculator}. which defines virtual methods for communication between subsequent calculators and execution of
-the underlying implementation of a particular algorithm to drive the actual simulation. These virtual methods can be used e.g. in a workflow manager to execute the virtual experiment.
-Specialized \textit{Calculators}, derived from the\textit{Abstract Calculator}, implement each of these methods taking care of e.g. data
-format conversion, execution statements, and submission of calculation tasks to the operating system, to name a few. The
+With slight variations, photon based experiments can be broken down into six individual blocks: The photon source, the photon transport
+from the source to the experiment, the interaction of photons and matter, propagation of scattered and transmitted radiation from the
+target/sample to the detector and photon detection in a detector, followed by data analysis.
+In \texttt{simex\_platform} each of these blocks is
+represented by an \textit{Abstract Calculator}, which defines virtual methods for communication between subsequent calculators and execution of
+the underlying implementation of a particular algorithm.
+These virtual methods can be used e.g. in a workflow manager to execute the virtual experiment.
+Specialized \textit{Calculators}, derived from the\textit{Abstract Calculator}, implement one particular stage of the simulation, using a
+specific method or algorithm. Data
+format conversion, execution statements, and submission of calculation tasks to the operating system, are handled on this
+level. The
 \textit{Calculators} are the algorithmic building blocks describing subsequent stages in the beamline.
-
+%
 \subsubsection{Photon source}
 The mechanism to generate the radiation before any optical elements and before any photon-matter interaction has happened.
 \begin{description}
@@ -47,20 +94,21 @@ The mechanism to generate the radiation before any optical elements and before a
   \item[Physics:] Depending on nature of the source: radiation from charged particle acceleration, spontanuous emission, laser medium.
   \item[Input data:] Parameters of the photon source, e.g. for an undulator: electron bunch charge, electron energy, undulator period and length.
   \item[Output data:] Representation of the light source (e.g. as a wavefront, rays, photon distribution)
-  \item[Example method:] The code FAST generates 3D (x-y-t) wavefronts at the exit of the undulator in an x-ray free electron laser.
+  \item[Example method:] The code FAST \cite{Saldin1999} generates 3D (x-y-t) wavefronts at the exit of the undulator in an x-ray free electron laser.
 \end{description}
+%
 \subsubsection{Photon Propagation}
 Propagates the radiation as described by the photon source calculator from the source to the point of interaction with the sample or target under
     investigation. Describes focussing, filtering, pulse shaping,
     and other optical effects realized through lenses, mirrors, apertures, grids etc.
 \begin{description}
   \item[Abstract calculator:] AbstractPhotonPropagator
-  \item[Physics:] Wavefront propagation (Fourier optics), Ray tracing.
+  \item[Physics:] Propagation of light through optical elements.
   \item[Input data:] Wavefront or rays at beginning of beamline.
   \item[Output data:] Wavefront or rays at target/sample interaction point.
-  \item[Example method:] Wavefront propagation: SynchrotronRadiationWorkShop (SRW) \cite{}.
+  \item[Example method:] Fourier optics wavefront propagation, ray tracing.
 \end{description}
-
+%
 \subsubsection{Photon Interactor}
 Interaction of the photons with the target or sample. Takes into account elementary processes like absorption, emission, scattering of radiation and secondary processes like collisional ionization and recombination. The end product is the electronic state of the sample/target as a function of time during the interaction with the external light source.
 \begin{description}
@@ -72,19 +120,20 @@ Interaction of the photons with the target or sample. Takes into account element
     wavefunction or density matrix.
   \item[Example method:] Molecular Dynamics, Particle-in-cell, Ab-initio.
 \end{description}
-
+%
 \subsubsection{Photon Diffractor}
 Typically in a photon experiment, the scattered or transmitted radiation, or reaction products from the photon-matter
-interaction, such as photo-electrons, are detected and used to infer information about the sample/target. For historic reasons, this block is named
-\textit{Diffractor} although diffraction is not the only anticipated diagnostic method.
+interaction, such as photo-electrons, are detected and used to infer information about the sample/target.
+This module is named \textit{Diffractor} although diffraction is by far not the only anticipated diagnostic method to be simulated.
 \begin{description}
   \item[Abstract calculator:] AbstractPhotonDiffractor
-  \item[Physics:] Absorption, emission, and scattering of radiation by the target/sample as represented by the output data from the Photon Interactor.
+  \item[Physics:] Absorption, emission, and scattering of radiation by the target/sample.
   \item[Input data:] Wavefront or rays at sample/target interaction point and electronic state trajectory.
-  \item[Output data:] Radiation signal at a given position of a ratiation detector.
-  \item[Example method:] SingFEL: Born approximation scattering from single molecules.
+  \item[Output data:] Radiation signal at a given position of a radiation detector.
+  \item[Example methods:] Born approximation scattering from single molecules, small-angle x-ray scattering (SAXS), x-ray Thomson
+    scattering (XRTS).
 \end{description}
-
+%
 \subsubsection{Photon Detector}
 The scattered radiation will ultimately  be collected in a detection device. The Photon Detector models the response of the detector to the incoming
 radiation.
@@ -93,9 +142,9 @@ radiation.
   \item[Physics:] Response of the detector to incoming radiation, e.g. photoelectron conversion, charge transport, and counting in a photon detector.
   \item[Input data:] Intensity or photon distribution at the detector.
   \item[Output data:] Detector response to the signal, e.g. photons per pixel in an area detector.
-  \item[Example method:]
+  \item[Example method:] X-ray camera simulation toolkit X-CSIT \cite{Joy2015}.
 \end{description}
-
+%
 \subsubsection{Photon Analysis}
 Following the detector readout, the recorded raw data has to be analyzed in order to extract the desired information about the target/sample. The
 specific algorithms depend largely on the details of the experiment and the underlying questions. Here, we discuss the analysis steps to be taken
@@ -106,20 +155,31 @@ in a single particle diffractive imaging experiment.
     from measured 2D diffraction patterns and subsequent phasing of the data to solve the inverse scattering problem.
   \item[Input data:] Detector response (raw data)
   \item[Output data:] Reduced data to describe the investigated processes in the target/sample.
-  \item[Example:]  Expand-Maximize-Compress (EMC) for orientation, Difference-Map for phasing.
+  \item[Example:]  Expand-Maximize-Compress (EMC)  for orientation, Difference-Map for phasing \cite{Loh2009, s2e_recon_bitbucket}.
 \end{description}
 
-
-
 \section{D4.1: Short pulse laser-matter interaction\label{sec:short_pulse}}
-
-
-
+%
 \subsection{Introduction}
-TBD
+\ldots\marginpar{Fill in, HZDR}
+%
 \subsection{X-ray source}
-The x-ray source is the SASE2 beamline at the European XFEL, Hamburg, Germany. The High Energy Density instrument \cite{} provides the infrastructure
-for such an experiment. X-ray pulse data is read from the x-ray pulse database \cite{}.
+The x-ray source in this virtual experiment is the SASE2 beamline at the European XFEL, Hamburg, Germany \cite{Tschentscher2011}.
+X-ray pulses are simulated using the code FAST \cite{Saldin1999} developed at DESY. Starting from parameters of the electron linear accelerator
+(e.g. electron energy and bunch charge), FAST simulates the self amplification of stimulated emission (SASE) process \cite{} in the FEL's
+undulator. As a result, the simulation returns the wavefront (i.e. the complex electric field components
+along the horizontal and vertical polarization axis) in the plane of the undulator exit. In the coordinate frame of the
+XFEL, this plane has the longitudinal coordinate $z=0$. For practical reasons and because FAST is not a public domain software,
+the FAST wavefront data are read from the x-ray pulse database \cite{xpd_xfel}.
+
+The following x-ray pulse parameters are available:
+\begin{description}
+  \item[Photon energy:] 6 - 12 keV. The targeted initial photon energy at the European XFEL is 6 keV.
+  \item[energy spread:] SASE operation: 10$^{-3}$, seeded operation: $10^{-5\dots-4}$.
+  \item[Pulse duration:] of the order 10 fs.
+  \item[Number of photons] of the order 10$^{12}$.
+\end{description}
+%
 \subsection{Optical laser source}
 The optical laser source is described through a set of parameters characterizing the short-pulse pump-probe (``PP'') laser at the HED
 instrument:
@@ -131,25 +191,35 @@ instrument:
   \item[Focus:] $3\,\mu\text{m}$
   \item[Profile:] Gaussian in t and x,y
 \end{description}
-\subsection{Propagation}
+%
+\subsection{Propagation\label{sec:short_pulse_prop}}
 Propagation of XFEL pulses is modeled through the existing XFELPhotonPropagator calculator. The latter is an interface
-to \texttt{WPG} (https://github.com/samoylv/WPG), a python binding for the software \texttt{Synchrotron Radiation Workshop} (SRW)
-(https://github.com/ochubar/SRW).
+to \texttt{WPG} \cite{Samoylova2016_submitted, wpg_github}, a python high level interface for the \texttt{Synchrotron Radiation Workshop} (SRW) \cite{Chubar2008, srw_github}.
+The simulation parameters reflect the conditions at the High Energy Density (HED) instrument \cite{Nakatsutsumi2014}
+at the European XFEL. The focal spotsize can be fixed at three different ranges,
+$\approx 200 \mu\text{m}$, $\approx 20 \mu\text{m}$, and $\approx 2 \mu\text{m}$ \marginpar{Fix numbers, how large are the ranges?}
+%
 \subsection{Photon-Matter interaction}
-The short-pulse laser-plasma interaction is modeled with [PIConGPU](http://picongpu.hzdr.de/).
+The short-pulse laser-plasma interaction is modeled with \texttt{PIConGPU} \cite{Bussmann2013, picongpu_github}.
 \texttt{simex\_platform} provides tools for the conversion of wavefronts into photon distributions.
 \subsection{Scattering}
-Scattering of x-ray pulses is modeled with xxx.
-\subsection{Detector}
-An ideal detector result from PIConGPU (2D openPMD "images") can be fed back into the `detector` calculator.
+\ldots \marginpar{Fill in, HZDR?}
+At an early stage, the detector will be modeled as an ideal x-ray detector, i.e. registering the exact number of incident photons in each
+pixel as simulated by the scattering module. At a later stage, the realistic detector response will be modeled within the
+X-ray Camera Simulation Toolkit \cite{Joy2015}.% as described in \cite{Rueter2016_submitted}.
+%
 \subsection{Data analysis}
-TBD
+From the small-angle x-ray scattering data one can infer important information about the structure of the highly excited target during
+the interaction with the optical laser. E.g. the electron density is directly encoded in the diffraction pattern. In order to
+reconstruct the electron density from the diffraction data, the complex phase of the probe has to be reconstructed using an iterative phasing
+algorithm. Such algorithms are widely available, e.g. \ldots \marginpar{Fill in}.
+The so calculated electron density can then be compared to the particle data in the PIC simulation to assess the reliability of
+the phasing algorithm under given realistic experimental condition. \marginpar{What else would be of interest here?}
 
 \section{D4.2: Long pulse laser-matter interaction\label{sec:long_pulse}}
 \subsection{Introduction}
 TBD
 \subsection{X-ray source}
-The x-ray source is the SASE2 beamline at the European XFEL, Hamburg, Germany. The High Energy Density instrument \cite{} provides the infrastructure
 \subsection{Optical laser source}
 The optical laser source is described through a set of parameters:
 \begin{description}
@@ -161,9 +231,7 @@ The optical laser source is described through a set of parameters:
   \item[Profile:]
 \end{description}
 \subsection{Propagation}
-Propagation of XFEL pulses is modeled through the existing XFELPhotonPropagator calculator. The latter is an interface
-to \texttt{WPG} (https://github.com/samoylv/WPG), a python binding for the software \texttt{Synchrotron Radiation Workshop} (SRW)
-(https://github.com/ochubar/SRW).
+Propagation of XFEL pulses is modeled through the existing XFELPhotonPropagator calculator as described in Sec.~\ref{sec:short_pulse_prop}.
 \subsection{Photon-Matter interaction}
 The photon matter interaction is modeled via radiation hydrodynamics simulation using the code Multi. Data format converters are part of
 \texttt{simex\_platform}.
@@ -172,6 +240,8 @@ TBD
 \subsection{Detector}
 TBD
 \subsection{Data analysis}
+
+\printbibliography
 \end{document}
 
 
