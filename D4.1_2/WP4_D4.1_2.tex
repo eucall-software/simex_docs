@@ -165,15 +165,15 @@ Short pulse lasers typically deliver laser pulses in the infrared (800~nm to 100
 
 Despite their intensity, these sources usually do not penetrate a solid density target but rather create a plasma at the target front side, accelerating electrons to relativistic energies in the strong electric field of the laser and pushing them into the target via the $\vec{v}\times\vec{B}$ force once the velocity $v$ approaches the speed of light.
 
-The generation of relativistic electrons at the front side, the transport of electrons through the target and the subsequent formation of a sheeth of electrons at the target rear side all happen on time scales below a few hundred femtoseconds. They can create plasma instabilities, ionize and heat the target bulk or generate strong magnetic or drive shocks inside the target.
+The generation of relativistic electrons at the front side, the transport of electrons through the target and the subsequent formation of a sheeth of electrons at the target rear side all happen on time scales below a few hundred femtoseconds. They can create plasma instabilities, ionize and heat the target bulk, generate strong magnetic fields or drive shocks inside the target.
 
 These phenomena can potentially be studied with high spatial resolution of a few nanometer and temporal resolution of a few femtosecond using X-Ray lasers such as the European XFEL.
 
-The particle-in-cell method is the most advanced simulation method to study the interaction of a high-power laser with a solid density target. Realistic 3D Particle-in-cell simulations of laser-irradiated solid density plasmas require Petascale computing capabilities and produce hundreds of Terabytes of data.
+The particle-in-cell method is the most advanced simulation method to study the interaction of a high-power laser with a solid density target. Realistic 3D particle-in-cell simulations of laser-irradiated solid density plasmas require Petascale computing capabilities and produce hundreds of Terabytes of data.
 
-Within \texttt{simex_platform} we interface particle-in-cell (PIC) codes such as \texttt{PIConGPU} to XFEL sources to allow for synthetic scattering simulations on the free and, in the future, bound electrons in the solid density plasma simulated by the PIC codes. Interfaces are based on the openPMD meta data format.
+Within \texttt{simex_platform} we interface particle-in-cell (PIC) codes such as \texttt{PIConGPU} to XFEL sources to allow for synthetic scattering simulations on the free and, in the future, bound electrons in the solid density plasma simulated by the PIC codes. Interfaces are based on the \texttt{openPMD} meta data format.
 
-As a first test of the capabilities of the \texttt{simex_platform} free electron density data from a PIConGPU simulation of the interaction of a short-pulse laser system\footnote{see details below} available at the High Energy Density (HED) instrument \cite{Nakatsutsumi2014} at the European XFEL will be used to compute a synthetic scattering image.
+As a first test of the capabilities of the \texttt{simex_platform} free electron density data from a \texttt{PIConGPU} simulation of the interaction of a short-pulse laser system\footnote{see details below} available at the High Energy Density (HED) instrument \cite{Nakatsutsumi2014} at the European XFEL will be used to compute a synthetic scattering image.
 %
 \subsection{X-ray source}
 The x-ray source in this virtual experiment is the SASE2 beamline at the European XFEL, Hamburg, Germany \cite{Tschentscher2011}.
