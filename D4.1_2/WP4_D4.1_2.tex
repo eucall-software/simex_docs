@@ -14,15 +14,6 @@
 \DeclareNameAlias{sortname}{last-first}
 \renewcommand{\newunitpunct}{, }
 
-%\defbibenvironment{bibliography}
-  %{\list{}
-     %{\setlength{\leftmargin}{3.0cm}%
-      %%\setlength{\itemindent}{-\leftmargin}%
-      %\setlength{\itemsep}{1ex}%
-      %\setlength{\parsep}{\bibparsep}}}
-  %{\endlist}
-  %{\item}
-
 \AtEveryBibitem{%
   \clearfield{day}%
   \clearfield{month}%
@@ -37,7 +28,8 @@
   \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
 \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
 
-\addbibresource{/home/grotec/Documents/LiteratureDB/bibtex/library.bib}
+%\addbibresource{/home/grotec/Documents/LiteratureDB/bibtex/jabref.bib}
+\addbibresource{references.bib}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END BIBLIOGRAPHY SETTINGS                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,7 +37,7 @@
 
 \title{Design Report and Advanced Simulation Software for Laser -- Matter interaction}
 %In fullfilment of deliverables D4.1 and D4.2 in EUCALL SIMEX
-\author{Carsten Fortmann-Grote, Axel Huebl, } % Add yourself.
+\author{Carsten Fortmann-Grote, Axel Huebl, Michael Bussmann } % Add yourself.
 \date{\today}
 
 \begin{document}
@@ -65,7 +57,9 @@ concrete simulation tools for two virtual experiments:
 \section{The SIMEX simulation platform \label{sec:simex_platform}}
 %
 \subsection{Introduction}
-The computer program \texttt{simex\_platform} \cite{simex_github} is a platform for the simulation of experiments at advanced laser light sources. It allows the
+The computer program \texttt{simex\_platform}
+\cite{simex_github}
+is a platform for the simulation of experiments at advanced laser light sources. It allows the
 user to assemble a virtual experiment through combination of suitable programs for the light source (e.g. a synchrotron, an x-ray free electron
 laser or an optical laser), beam transport from the source to the sample or target, interaction of the light with the sample or target,
 propagation of the scattered light behind the sample or target, and detection in a light detector. \texttt{simex\_platform} comes preloaded with
@@ -171,9 +165,9 @@ These phenomena can potentially be studied with high spatial resolution of a few
 
 The particle-in-cell method is the most advanced simulation method to study the interaction of a high-power laser with a solid density target. Realistic 3D Particle-in-cell simulations of laser-irradiated solid density plasmas require Petascale computing capabilities and produce hundreds of Terabytes of data.
 
-Within \texttt{simex_platform} we interface particle-in-cell (PIC) codes such as \texttt{PIConGPU} to XFEL sources to allow for synthetic scattering simulations on the free and, in the future, bound electrons in the solid density plasma simulated by the PIC codes. Interfaces are based on the openPMD meta data format.
+Within \texttt{simex\_platform} we interface particle-in-cell (PIC) codes such as \texttt{PIConGPU} to XFEL sources to allow for synthetic scattering simulations on the free and, in the future, bound electrons in the solid density plasma simulated by the PIC codes. Interfaces are based on the openPMD meta data format.
 
-As a first test of the capabilities of the \texttt{simex_platform} free electron density data from a PIConGPU simulation of the interaction of a short-pulse laser system\footnote{see details below} available at the High Energy Density (HED) instrument \cite{Nakatsutsumi2014} at the European XFEL will be used to compute a synthetic scattering image.
+As a first test of the capabilities of the \texttt{simex\_platform} free electron density data from a PIConGPU simulation of the interaction of a short-pulse laser system\footnote{see details below} available at the High Energy Density (HED) instrument \cite{Nakatsutsumi2014} at the European XFEL will be used to compute a synthetic scattering image.
 %
 \subsection{X-ray source}
 The x-ray source in this virtual experiment is the SASE2 beamline at the European XFEL, Hamburg, Germany \cite{Tschentscher2011}.
@@ -216,6 +210,7 @@ The short-pulse laser-plasma interaction is modeled with \texttt{PIConGPU} \cite
 \texttt{simex\_platform} provides tools for the conversion of wavefronts into photon distributions.
 \subsection{Scattering}
 \ldots \marginpar{Fill in, HZDR?}
+\subsection{Detection}
 At an early stage, the detector will be modeled as an ideal x-ray detector, i.e. registering the exact number of incident photons in each
 pixel as simulated by the scattering module. At a later stage, the realistic detector response will be modeled within the
 X-ray Camera Simulation Toolkit \cite{Joy2015}.% as described in \cite{Rueter2016_submitted}.
