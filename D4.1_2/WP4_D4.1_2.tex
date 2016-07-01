@@ -207,9 +207,42 @@ $\approx 200 \mu\text{m}$, $\approx 20 \mu\text{m}$, and $\approx 2 \mu\text{m}$
 %
 \subsection{Photon-Matter interaction}
 The short-pulse laser-plasma interaction is modeled with \texttt{PIConGPU} \cite{Bussmann2013, picongpu_github}.
+
+\texttt{PIConGPU} is an Open Source explicit, relativistic 3D3V particle-in-cell (\texttt{PIC}) code which can simulate the interaction of high power, ultra-short laser pulses with matter. 
+
+High power laser pulses, \texttt{HPL}, are defined by their time dependent magnetic and electric field components and solved on a regular mesh (usually Cartesian) via a so called Maxwell solver using e.g. finite difference time domain techniques.
+
+Different to the \texttt{HPL}, the X-ray interaction is modeled via a Monte-Carlo photon interaction model. Each photon is described by its wave vector and a phase\footnote{In the future, the photon model will also include polarization.}.
+
+An X-ray pulse described by temporally and spatially varying intensities and wavefronts will have to be converted into a time-depended spatial distribution of photons. These photons are then tracked through the volume simulated by \texttt{PIConGPU}.
+
+Photons are scattered according to predefined scattering functions that depend on the local properties of the matter irradiated by the HPL. In the most simple case, the local free electron density is used as an input for calculating the probability for Thomson scattering of the photons off free electrons.
+
 \texttt{simex\_platform} provides tools for the conversion of wavefronts into photon distributions.
 \subsection{Scattering}
-\ldots \marginpar{Fill in, HZDR?}
+
+There are several methods that already are or will be implemented for scattering. We list them below in order of ascending generality (and technical difficulty).
+
+\begin{enumerate}
+\item 3D Fast Fourier Transform of electron density \label{pmi:methods:fft}
+\item Ex-situ scattering using stand-alone Monte-Carlo photon scattering \label{pmi:methods:exsituphoton}
+\item In-situ scattering using a modified particle-in-cell algorithm and far field Lienard-Wiechert potential calculation.\label{pmi:methods:insitulienardwiechert}
+\item In-situ scattering using Monte-Carlo photon scattering\label{pmi:methods:insituphoton}
+\item In-situ scattering using Monte-Carlo photon scattering with absorption and emission of photons\label{pmi:methods:insituphotoninteract}
+\end{enumerate}
+
+Ex-situ Fast Fourier Transforms have been implemented using the \texttt{LiFFT} library \cite{} and can be performed in a post processing step on \texttt{openPMD} outputs of the electron density. Implementation in \texttt{simex\_platform} is currently under discussion.
+
+Ex-situ scattering is performed by the \texttt{XRT} code \cite{}. The code will soon be released as Open Source. It uses the same libraries and techniques as \texttt{PIConGPU}. Specifically, it can read \texttt{openPMD} files via \texttt{libSplash} \cite{} and traces photons through a mesh using \texttt{libPMacc} \cite{}. One can define an arbitrary interaction using a C++ function object. The current code version provides Thomson Scattering from free electrons based on the local free electron density. Photon scattering is computed via repeated Monte-Carlo evaluation of the scattering function, allowing for multiple scattering.
+
+In-situ scattering using Lienard-Wiechert potentials will be based on an already existing in-situ Lienard-Wiechert potential calculator plugin to \texttt{PIConGPU} \cite{}. This method will serve mainly as a cross check to the other methods. It involves a modification of the PIC algorithm that will be implemented in the future. The method allows to compute arbitrary angular far field scattering spectra during the interaction of the HPL with matter.
+
+An implementation of in-situ Monte-Carlo photon scattering in \texttt{PIConGPU} would be based on the techniques developed for the \texttt{XRT} code. Here, the main issue is the large memory consumption by the photons traced while the simulation is running. 
+
+If in-situ photon scattering can be succesfully implemented, interaction of the X-ray photons with the ions and electrons in the simulation can be implemented. Possible scenarios include elastic scattering of photons from electrons, excitation of ions, absorption and emission of photons. Finally, other processes that produce X-ray photons could be included, such as deexcitation, Bremsstrahlung, etc. These could help to determine backgrounds. In summary, such a framework of physical models would allow for fully kinetic in-situ radiation transport modeling in a particle-in-cell code.
+
+As discussed, development of these capabilities are ongoing and will be subsequently made available in \texttt{simex\_platform} and \texttt{PIConGPU}. Compatibility of all software packages will be ensured by reuse of existing libraries and the common meta data format \texttt{openPMD}.
+
 \subsection{Detection}
 At an early stage, the detector will be modeled as an ideal x-ray detector, i.e. registering the exact number of incident photons in each
 pixel as simulated by the scattering module. At a later stage, the realistic detector response will be modeled within the
