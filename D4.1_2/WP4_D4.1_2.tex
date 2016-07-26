@@ -11,9 +11,6 @@
 %\usepackage{nomencl}
 \usepackage{hyperref}
 
-\usepackage[nonumberlist]{glossaries}
-
-
 
 \renewcommand*\finalnamedelim{, and\addspace}
 \DeclareNameAlias{sortname}{last-first}
@@ -45,9 +42,6 @@
 \author{Carsten Fortmann-Grote, Axel Huebl, Michael Bussmann } % Add yourself.
 \date{\today}
 
-\makeglossaries
-\newacronym[longplural={Free Electron Lasers}]{fel}{FEL}{Free Electron Laser}
-
 \begin{document}
 \maketitle
 \abstract{%
@@ -69,7 +63,8 @@ concrete simulation tools for two virtual experiments:
 The computer program \texttt{simex\_platform}
 \cite{simex_github}
 is a platform for simulation of experiments at advanced laser light sources. The user can
-assemble a virtual experiment through combination of suitable programs for the light source (e.g. synchrotron, \gls{fel}, or conventional laser),
+assemble a virtual experiment through combination of suitable programs for the light source (e.g. synchrotron, free electron
+laser, or conventional laser),
 beam transport from source to sample or target, interaction of the light with the sample or target,
 propagation of the scattered light behind the interaction, and finally detection in a light detector.
 \texttt{simex\_platform} comes preloaded with
@@ -92,7 +87,7 @@ from the source to the experiment, the interaction of photons and matter, propag
 target/sample to the detector and detection in a detector, followed by data analysis. Later in this report, we will discuss two
 concrete examples for photon-based experiments. Both of them are so-called pump-probe experiments, i.e. they involve two photon
 sources, typically one optical source and one x-ray source. However, only the x-ray source will actually be simulated while the
-optical laser will be parametrized. More complex experiments, FELs based on compact
+optical laser will be parametrized. More complex experiments, e.g. FELs based on compact
 laser-plasma electron accelerators are currently beyond the scope of the toolchain described above. But with slight
 modifications to the framework, they can also be included in a somewhat more
 flexible scheme which allows reordering of the \textit{Calculators}.
@@ -111,7 +106,7 @@ level. The
 The mechanism to generate the radiation before any optical elements and before any photon-matter interaction has happened.
 \begin{description}
   \item[Abstract calculator:] AbstractPhotonSource
-  \item[Physics:] Depending on nature of the source: radiation from charged particle acceleration, spontanuous emission, laser medium.
+  \item[Physics:] Depending on nature of the source: radiation from charged particle acceleration, spontaneous emission, laser medium.
   \item[Input data:] Parameters of the photon source, e.g. for an undulator: electron bunch charge, electron energy, undulator period and length.
   \item[Output data:] Representation of the light source (e.g. as a wavefront, rays, photon distribution)
   \item[Example method:] The code FAST \cite{Saldin1999} generates 3D (x-y-t) wavefronts at the exit of the undulator in an
@@ -141,7 +136,7 @@ the electronic state of the sample/target as a function of time during the inter
   \item[Input data:] Wavefront or rays at sample/target interaction point.
   \item[Output data:] Snapshots of electronic state trajectory during the radiation exposure, e.g. electron density, form factors, electronic
     wavefunction or density matrix.
-  \item[Example method:] Molecular Dynamics, Particle-in-cell, Time-Dependent Density Functional Theory, Many-body Perurbation
+  \item[Example method:] Molecular Dynamics, Particle-in-cell, Time-Dependent Density Functional Theory, Many-body Perturbation
     Theory
 \end{description}
 %
@@ -233,7 +228,7 @@ instrument:
 %
 \subsection{Propagation\label{sec:short_pulse_prop}}
 Propagation of XFEL pulses is modeled through the existing XFELPhotonPropagator calculator. The latter is an interface
-to \texttt{WPG} \cite{Samoylova2016_submitted, wpg_github}, a python high level interface for the \texttt{Synchrotron Radiation Workshop} (SRW) \cite{Chubar2008, srw_github}.
+to \texttt{WPG} \cite{Samoylova2016, wpg_github}, a python high level interface for the \texttt{Synchrotron Radiation Workshop} (SRW) \cite{Chubar2008, srw_github}.
 The simulation parameters reflect the conditions at the High Energy Density (HED) instrument \cite{Nakatsutsumi2014}
 at the European XFEL. The focal spotsize can be fixed at three different ranges,
 $\approx 200 \mu\text{m}$, $\approx 20 \mu\text{m}$, and $\approx 2 \mu\text{m}$.
@@ -284,7 +279,7 @@ The detector is currently modeled in two steps: In cases where the scattered rad
 distribution, first a distribution of photons is calculated. To this end,
 the scattered intensity is evaluated on a two dimensional grid corresponding to the pixels of the x-ray
 detector located at a given distance and angle with respect to the target position.
-In each pixel (coordinates $i,j$) the intensity is converted into an average photon number $n_{ij}$ by dividing the intensity
+In each pixel (coordinates $i,j$) the intensity is converted into an average photon number $\bar n_{ij}$ by dividing the intensity
 $I_{ij}$ by the central photon energy $\hbar\omega_{0}$ of the x-ray laser and multiplying by the pulse duration $\tau$,
 \begin{equation}
   \bar n_{ij} = \frac{I_{ij}}{\hbar\omega_0} \tau~.
@@ -298,8 +293,8 @@ from the Poisson distribution $p(m_{ij}) = \frac{\lambda^{m_{ij}}}{m_{ij}\!}\mat
 of the Poisson distribution is fixed at the previously calculated average photon number $\bar n_{ij}$.
 
 Effects which go beyond this simple detector model will be taken into account at a later stage using the
-X-ray Camera Simulation Toolkit \cite{Joy2015}. It has been modified recently to describe x-ray
-detectors that will be employed at the European XFEL as described e.g. in \cite{Rueter2016}. It describes the physical processes
+X-ray Camera Simulation Toolkit (X-CSIT) \cite{Joy2015}. It has been modified recently to describe x-ray
+detectors that will be employed at the European XFEL as described e.g. in \cite{Rueter2016}. X-CSIT describes the physical processes
 of charge creation, charge transport, and electronics on a detailled level including the photo electric effect, Compton
 and Rayleigh scattering, fluorescence and Auger emissions, charge cloud drift and diffusion, plasma formation and screening at
 high charge cloud densities, and simulations of the detector electronics for amplification and digitisation and the corresponding
@@ -340,7 +335,6 @@ TBD
 TBD
 \subsection{Data analysis}
 
-\printglossary
 \printbibliography
 \end{document}
 
