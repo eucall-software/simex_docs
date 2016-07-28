@@ -37,7 +37,8 @@
 
 \title{Design Report and Advanced Simulation Software for Laser -- Matter interaction}
 %In fullfilment of deliverables D4.1 and D4.2 in EUCALL SIMEX
-\author{Carsten Fortmann-Grote, Axel Huebl, Michael Bussmann } % Add yourself.
+\author{Carsten Fortmann-Grote, Axel Huebl, Michael Bussmann, Richard
+Briggs} % Add yourself.
 \date{\today}
 
 \begin{document}
@@ -326,8 +327,22 @@ the hydrocode simulations and to write the output data to a openPMD conform hdf5
 In the MULTI2D hydrocode \cite{Ramis2009},
 the hydrodynamic equations solved by the code are combined with a multigroup method for radiation transport.
 
-\subsection{Scattering}
-TBD
+\subsection{Scattering and absorption\label{sec:long_pulse__scattering}}
+In the proposed experimental setup, x-ray absorption spectroscopy (XAS) and x-ray Thomson scattering (XRTS) are employed to monitor
+the evolution of laser shock compressed matter. By varying the pump-probe delay, we receive time resolved data. The two
+methods are complimentary to each other in the sense that they are sensitive to different plasma observables: The spectral
+features of absorption spectra (e.g. intensity jump at K or L edge)
+are predominantly sensitive to the mass density profile. The x-ray absorption fine structure
+(XAFS) near the absorption edge furthermore delivers information about the ionic structure factor. Both quantities are not
+readily measurable in a spectrally resolved XRTS experiment, but are required parameters for fitting electron density,
+degree of ionization, and temperature to the data. Analysing the simulated absorption and scattering spectra and
+re-calculating the mass density, electron density, and temperature evolution allows benchmarking the applied analytical
+procedures by comparing to the simulated profiles from the radiation-hydrodynamics data.
+
+We use state-of-the-art codes to simulate the absorption and scattering signals, xxx code for the XAS spectra, and
+the code \textit{XRTS} \cite{Gregori2009, Fortmann2010} for scattering. Interfacing \text{Calculator} modules and
+IO converters are part of \textit{simex\_platform}.
+
 \subsection{Detector}
 TBD
 \subsection{Data analysis}
