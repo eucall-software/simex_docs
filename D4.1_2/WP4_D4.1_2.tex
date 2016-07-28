@@ -208,7 +208,7 @@ $\approx 200 \mu\text{m}$, $\approx 20 \mu\text{m}$, and $\approx 2 \mu\text{m}$
 \subsection{Photon-Matter interaction}
 The short-pulse laser-plasma interaction is modeled with \texttt{PIConGPU} \cite{Bussmann2013}.
 
-\texttt{PIConGPU} is an Open Source~\cite{picongpu_github} explicit, relativistic 3D3V particle-in-cell (\texttt{PIC}) code which can simulate the interaction of high power, ultra-short laser pulses with matter. 
+\texttt{PIConGPU} is an Open Source~\cite{picongpu_github} explicit, relativistic 3D3V particle-in-cell (\texttt{PIC}) code which can simulate the interaction of high power, ultra-short laser pulses with matter.
 
 High power laser pulses, \texttt{HPL}, are defined by their time dependent magnetic and electric field components and solved on a regular mesh (usually Cartesian) via a so called Maxwell solver using e.g. finite difference time domain techniques~\cite{Yee1966}.
 
@@ -237,7 +237,7 @@ Ex-situ scattering is performed by the \texttt{XRT}~\cite{xrt_github} code. The 
 
 In-situ scattering using Lienard-Wiechert potentials will be based on an already existing in-situ Lienard-Wiechert potential calculator plugin to \texttt{PIConGPU} \cite{Pausch2013}. This method will serve mainly as a cross check to the other methods. It involves a modification of the PIC algorithm that will be implemented in the future. The method allows to compute arbitrary angular far field scattering spectra during the interaction of the HPL with matter.
 
-An implementation of in-situ Monte-Carlo photon scattering in \texttt{PIConGPU} would be based on the techniques developed for the \texttt{XRT} code. Here, the main issue is the large memory consumption by the photons traced while the simulation is running. 
+An implementation of in-situ Monte-Carlo photon scattering in \texttt{PIConGPU} would be based on the techniques developed for the \texttt{XRT} code. Here, the main issue is the large memory consumption by the photons traced while the simulation is running.
 
 If in-situ photon scattering can be succesfully implemented, interaction of the X-ray photons with the ions and electrons in the simulation can be implemented. Possible scenarios include elastic scattering of photons from electrons, excitation of ions, absorption and emission of photons. Finally, other processes that produce X-ray photons could be included, such as deexcitation, Bremsstrahlung, etc. These could help to determine backgrounds. In summary, such a framework of physical models would allow for fully kinetic in-situ radiation transport modeling in a particle-in-cell code.
 
@@ -256,25 +256,76 @@ algorithm. Such algorithms are widely available, e.g. \ldots \marginpar{Fill in}
 The so calculated electron density can then be compared to the particle data in the PIC simulation to assess the reliability of
 the phasing algorithm under given realistic experimental condition. \marginpar{What else would be of interest here?}
 
-\section{D4.2: Long pulse laser-matter interaction\label{sec:long_pulse}}
+\section{D4.2: Long pulse laser-matter interaction\label{sec:long_pulse}} %%%%%%%%%%%%%%%%%%%%%%ESRF
 \subsection{Introduction}
-TBD
+Long pulse laser systems are capable of reaching intensities of up to $\sim 10^{12}$ -- 10$^{15} \text{ W}/\text{cm}^2$ with pulse lengths of greater than a few nanoseconds. The pulse length and focal spot of the laser can depend heavily on the sample material and target package. Generally, focal spot sizes range between $\sim$ 100 $\mu$m up to 1 mm. With these specifications, the laser energies now required to reach the highest intensities are on the order of hundreds of joules.
+
+Temporally shaped laser pulses interacting with overdense target material create a rapidly expanding plasma that
+can generate a shockwave in the ablating material. This shock wave can travel through the target at several km/s
+and compress the sample material to pressures reaching several hundred GPa. (For comparison, the Earth's core
+pressure is $\sim$ 330 GPa). By using a ramp temporal pulse, where the laser intensity is slowly increased, the temperatures generated remain much cooler than during rapid shock compression and the solid state of matter can be studied up to several TPa (1 TPa = 1000 GPa).
+
+High-power \marginpar{not "high energy" ?} laser facilities are now becoming increasingly in demand at new
+generation x-ray light sources (X-FELs, 3rd generation synchrotron sources). The potential of long pulse laser experiments are already yielding extreme conditions of matter well beyond the reach of static high-pressure techniques and combinations with X-ray techniques provide enticing experiments at new extreme states of matter.
+
+We design here simulations for a prototypical experiment combining a high-energy laser system and x-ray radiation
+from a 3rd generation synchrotron. The laser shock-compresses a tailored solid density target and the compressed
+matter is subsequently probed by x-rays. X-ray absorption spectroscopy (XAS) allows to monitor the compression and
+to characterize the electronic and structural states in the target. Through variation of the delay between optical
+laser pulse and x-ray probe pulse, time resolved data is obtained.
+
 \subsection{X-ray source}
+\subsubsection{European Synchrotron Radiaton Facility (ESRF)}
+For X-ray absorption studies at ESRF, an intense source of linearly polarized X-rays, with photon energy tunable
+between $\sim$ 5 and 28 keV, is used at the ID24 beamline. Beamline optics focus the X-ray beam to a 3 $\times$ 3
+$\mu$m (H $\times$ V) FWHM. However, the horizontal spot size is energy dependent and ranges from 3 $\mu$m at 5 keV
+to 50 $\mu$m at 28 keV. The X-ray flux on sample ranges from 1 $\times$ 10$^{14}$ photons s$^{-1}$ at 7 keV to 4
+$\times$ 10$^{13}$ photons s$^{-1}$ at 28 keV. The X-ray source at the ESRF synchrotron runs in several timing
+modes, several of which are suitable for laser shock experiments where a single x-ray bunch ($\sim$ 100 ps) is used
+to probe the sample during a highly compressed state. An overview of the time-resolved and extreme-conditions XAS
+(TEXAS) facility is presented in \cite{Pascarelli2016}.
 \subsection{Optical laser source}
-The optical laser source is described through a set of parameters:
+\subsubsection{ESRF}
+The optical laser source, used at the ESRF for shock compression experiments in May/June 2016,  is described through a set of parameters:
 \begin{description}
-  \item[Wavelength:]
-  \item[Pulse duration:]
-  \item[Intensity:]
-  \item[Pulse energy:]
-  \item[Focus:]
-  \item[Profile:]
+  \item[Wavelength:] 1053 nm
+  \item[Pulse duration:] 4 ns - 15 ns
+  \item[Intensity:] $2\times 10^{13}\,\text{W}/\,\text{cm}^2$
+  \item[Pulse energy:] $\textless \, 30\, \text{J}$
+  \item[Focus:] 100 or 300 $\mu\text{m}^{2}$
+  \item[Profile:] Gaussian in x,y and `flat top' in $t$
 \end{description}
+A call for tender will be issued in 2016 for a new high-energy laser system to be installed at the ESRF, with increased energy ($\textless$ 200 J) and frequency doubling crystals to take advantage of the 2$\omega$ at $\sim$ 527 nm.
 \subsection{Propagation}
 Propagation of XFEL pulses is modeled through the existing XFELPhotonPropagator calculator as described in Sec.~\ref{sec:short_pulse_prop}.
 \subsection{Photon-Matter interaction}
-The photon matter interaction is modeled via radiation hydrodynamics simulation using the code Multi. Data format converters are part of
-\texttt{simex\_platform}.
+Nearly all of the physical processes of long pulse laser-matter interactions are described by partial differential
+equations that can be solved with careful construction of numerical simulation codes. Here, the laser-matter
+interactions are modelled with the 1D radiation-hydrodynamics computer code ``Esther'' \cite{Colombier2005}
+or the 2D code ``MULTI2D'' \cite{Ramis2009}.
+
+For the 1D hydrocodes, a moving mesh is applied in an arbitrary Lagrangian-Eulerian framework where the coordinates of
+the mesh contain the variables from which density can be calculated (mass of each zone is fixed). The most important variables
+considered in these codes are those associated with the extreme conditions generated by the high-power lasers: pressure (density),
+temperature and velocity. Feedback of these hydrocode outputs are crucial in the design and implementation of laser shock/ramp
+experiments with X-ray interactions.
+
+The X-ray probe duration, during laser shock compression, can range from nanosecond down to femtosecond exposures.
+It is crucial to have an understanding of shock transit times so that accurate timing of the X-ray probe,
+with respect to the laser initialisation, can be made. The final density state reached by a shock, as calculated
+from the hydrocode simulation packages, can define the shock velocity.
+
+\subsubsection{Esther}
+The Esther hydrocode was written by Patrick Combis and Laurent Videau of the CEA, Paris, France.
+\footnote{The Esther hydrocode is currently presented in French only.}
+A license to use Esther can be obtained by requesting access (via email) from the authors (for academic use only).
+As part of the \texttt{simex\_platform}, a user interface is being developed to create the input files necessary for running
+the hydrocode simulations and to write the output data to a openPMD conform hdf5 file.
+
+\subsubsection{MULTI}
+In the MULTI2D hydrocode \cite{Ramis2009},
+the hydrodynamic equations solved by the code are combined with a multigroup method for radiation transport.
+
 \subsection{Scattering}
 TBD
 \subsection{Detector}

@@ -4,3 +4,10 @@
 *.dvi
 *.blg
 *.log
+*.bbl
+*.bcf
+*.xml
+*.out
+*.bib.bak
+**.sw*
+Makefile
