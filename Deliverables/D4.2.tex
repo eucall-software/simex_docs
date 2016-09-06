@@ -1,0 +1,147 @@
+\documentclass[a4paper]{article}
+\usepackage[]{graphicx}
+\usepackage{latexsym}
+\usepackage[centertags]{amsmath}
+\usepackage{amssymb}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   BIBLIOGRAPHY SETTINGS                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[bibstyle=nature,sorting=none,=maxnames=1000,eprint=false, defernumbers=true, backend=biber]{biblatex}
+\usepackage{hyperref}
+
+\renewcommand*\finalnamedelim{, and\addspace}
+\DeclareNameAlias{sortname}{last-first}
+\renewcommand{\newunitpunct}{, }
+
+\AtEveryBibitem{%
+  \clearfield{day}%
+  \clearfield{month}%
+  \clearfield{endday}%
+  \clearfield{endmonth}%
+  \clearfield{issn}%
+  \clearfield{issue}%
+}
+%convert titles to hyperlinks using doi
+\ExecuteBibliographyOptions{doi=false}
+\newbibmacro{string+doi}[1]{%
+  \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+\DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
+
+%\addbibresource{/home/grotec/Documents/LiteratureDB/bibtex/jabref.bib}
+\addbibresource{references.bib}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% END BIBLIOGRAPHY SETTINGS                   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\title{Design Report and Advanced Simulation Software for Laser -- Matter interaction}
+%In fullfilment of deliverables D4.1 and D4.2 in EUCALL SIMEX
+\author{Carsten Fortmann-Grote, Axel Huebl, Michael Bussmann, Richard
+Briggs} % Add yourself.
+\date{\today}
+
+\begin{document}
+\maketitle
+\section{D4.2: Long pulse laser-matter interaction\label{sec:long_pulse}} %%%%%%%%%%%%%%%%%%%%%%ESRF
+\subsection{Introduction}
+Long pulse laser systems are capable of reaching intensities of up to $\sim 10^{12}$ -- 10$^{15} \text{ W}/\text{cm}^2$ with pulse lengths of greater than a few nanoseconds. The pulse length and focal spot of the laser can depend heavily on the sample material and target package. Generally, focal spot sizes range between $\sim$ 100 $\mu$m up to 1 mm. With these specifications, the laser energies now required to reach the highest intensities are on the order of hundreds of joules.
+
+Temporally shaped laser pulses interacting with overdense target material create a rapidly expanding plasma that
+can generate a shockwave in the ablating material. This shock wave can travel through the target at several km/s
+and compress the sample material to pressures reaching several hundred GPa. (For comparison, the Earth's core
+pressure is $\sim$ 330 GPa). By using a ramp temporal pulse, where the laser intensity is slowly increased, the temperatures generated remain much cooler than during rapid shock compression and the solid state of matter can be studied up to several TPa (1 TPa = 1000 GPa).
+
+High-power \marginpar{not "high energy" ?} laser facilities are now becoming increasingly in demand at new
+generation x-ray light sources (X-FELs, 3rd generation synchrotron sources). The potential of long pulse laser experiments are already yielding extreme conditions of matter well beyond the reach of static high-pressure techniques and combinations with X-ray techniques provide enticing experiments at new extreme states of matter.
+
+We design here simulations for a prototypical experiment combining a high-energy laser system and x-ray radiation
+from a 3rd generation synchrotron. The laser shock-compresses a tailored solid density target and the compressed
+matter is subsequently probed by x-rays. X-ray absorption spectroscopy (XAS) allows to monitor the compression and
+to characterize the electronic and structural states in the target. Through variation of the delay between optical
+laser pulse and x-ray probe pulse, time resolved data is obtained.
+
+\begin{table}
+  \centering
+  \begin{tabular}{ll}
+    \hline
+    Photon energy (keV) & 5 - 28 \\
+    Polarization & horizontal \\
+    Focus size ($\mu$m) & 3 (5 keV) - 50 (28 keV)\\
+    Flux (photons/s) & $1\times 10^{14}$  (7 keV) - $4\times 10^{13}$ (28 keV) \\
+    Pulse length (ps) & 100\footnote{for shock compression experiments}\\
+    \hline
+  \end{tabular}
+  \caption{Principal x-ray parameters for shock compression studies at ESRF
+  (beamline ID24)}
+  \label{tab:esrf_parameters}
+\end{table}
+
+\subsection{Optical laser source}
+\subsubsection{ESRF}
+The optical laser source, used at the ESRF for shock compression experiments in May/June 2016,  is described through a set of parameters:
+\begin{table}
+  \centering
+  \begin{tabular}{ll}
+    \hline
+Wavelength (nm) & 1053 \\
+Pulse duration (ns) & 4 - 15 \\
+Intensity (W/cm$^2$) & $2\times 10^{13}$\\
+Pulse energy (J) & 30 \\
+Focus size ($\mu\text{m}^{2}$) & 100 - 300  \\
+Temporal profile  & flat top \\
+Spatial profile & Gaussian in x,y \\
+    \hline
+  \end{tabular}
+  \caption{ESRF optical laser parameters for long pulse laser-matter
+  simulations.}
+  \label{tab:esrf_long_pulse}
+\end{table}
+
+A call for tender will be issued in 2016 for a new high-energy laser system to be installed at the ESRF, with increased energy (200 J) and frequency doubling crystals to take advantage of the 2$\omega$ at $\sim$ 527 nm.
+\subsection{Propagation}
+Propagation of XFEL pulses is modeled through the existing XFELPhotonPropagator calculator as described in Sec.~\ref{sec:short_pulse_prop}.
+\subsection{Photon-Matter interaction}
+Nearly all of the physical processes of long pulse laser-matter interactions are described by partial differential
+equations that can be solved with careful construction of numerical simulation codes. Here, the laser-matter
+interactions are modelled with the 1D radiation-hydrodynamics computer code ``Esther'' \cite{Colombier2005}
+or the 2D code ``MULTI2D'' \cite{Ramis2009}.
+
+Table~\ref{tab:esrf_long_pulse} summarizes the main optical pump laser
+parameters for shock compression experiments at the ESRF.
+
+For the 1D hydrocodes, a moving mesh is applied in an arbitrary Lagrangian-Eulerian framework where the coordinates of
+the mesh contain the variables from which density can be calculated (mass of
+each zone is fixed). The most important variables
+considered in these codes are those associated with the extreme conditions generated by the high-power lasers: pressure (density),
+temperature and velocity. Feedback of these hydrocode outputs are crucial in the design and implementation of laser shock/ramp
+experiments with X-ray interactions.
+
+The X-ray probe duration, during laser shock compression, can range from nanosecond down to femtosecond exposures.
+X-ray pulses for shock compression studies at the ESRF are $\approx$ 100 ps
+long. Table~\ref{tab:esrf_parameters} lists the most important optical laser
+parameters.
+
+It is crucial to have an understanding of shock transit times so that accurate timing of the X-ray probe,
+with respect to the laser initialisation, can be made. The final density state reached by a shock, as calculated
+from the hydrocode simulation packages, can define the shock velocity.
+
+\subsubsection{Esther}
+The Esther hydrocode was written by Patrick Combis and Laurent Videau of the CEA, Paris, France.
+\footnote{The Esther hydrocode is currently presented in French only.}
+A license to use Esther can be obtained by requesting access (via email) from the authors (for academic use only).
+As part of the \texttt{simex\_platform}, a calculator interface is being developed to create the input files necessary for running
+the hydrocode simulations. Esther output can be stored in a openPMD conform hdf5
+file using a conversion tool which is part of \texttt{simex\_platform}.
+
+\subsubsection{MULTI}
+In the MULTI2D hydrocode \cite{Ramis2009},
+the hydrodynamic equations solved by the code are combined with a multigroup method for radiation transport.
+
+\subsection{X-ray matter interaction (Absorption)}
+TBD
+
+\printbibliography
+\end{document}
+
+
