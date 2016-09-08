@@ -241,10 +241,20 @@ Cartesian) using e.g. finite difference time domain techniques~\cite{Yee1966}.
 
 \subsection{X-ray Laser (Scattering)}
 
-Different to the \texttt{HPL}, the X-ray interaction is modeled via a
-Monte-Carlo photon interaction model. Each photon is described by its wave
-vector and a phase\footnote{In the future, the photon model will also include
-polarization.}.
+In principle, all imaging techniques employed for probing the interaction
+of \texttt{HPL} lasers with targets can be used in the case of ultra-short
+pulse lasers as well. However, some of these techniques are limited to slowly
+varying plasma conditions (in comparison to the ultra-short laser pulse duration)
+and thus are not suitable to capture fast, transient processes. Moreover, atomic
+processes, multiple scattering, velocity-dependent scattering and
+non-equilibrium plasma conditions cannot always be taken into account with
+existing modeling techniques, especially if the X-ray laser pulse itself interacts
+with the plasma.
+
+Thus, for ultra-short laser pulses X-ray interaction will in addition to existing
+techniques be modeled via a Monte-Carlo photon interaction model. Each photon is
+described by its wave vector and a phase\footnote{In the future, the photon model
+will also include polarization.}.
 
 The X-ray pulse is described by temporally and spatially varying electric fields
 (amplitude, polarization, and phase). At discrete points in time, the field
@@ -284,9 +294,11 @@ of the matter irradiated by the HPL. In the most simple case, the local free
 electron density is used as an input for calculating the probability for Thomson
 scattering from free electrons.
 
-There are several methods that already are or will be implemented for
+There are several methods that already are or will in the future be implemented for
 scattering. We list them below in order of ascending generality (and technical
-difficulty).
+difficulty). Due to time limitations only some of these methods will be implemented
+during the EUCALL project, but will be added to PIConGPU for future inclusion into
+\texttt{simex\_platform} .
 
 \begin{enumerate}
   \item 3D Fast Fourier Transform of electron density
@@ -306,7 +318,7 @@ library \cite{liblifft_github} and can be performed in a post processing step on
 \texttt{openPMD} outputs of the electron density. Implementation in
 \texttt{simex\_platform} is currently under discussion.
 
-Ex-situ scattering is performed by the \texttt{parataxis} code.
+Ex-situ scattering is performed by the \texttt{paraTAXIS} code.
 The code is still in closed source development and will be released as open source, soon.
 It uses the same libraries and
 techniques as \texttt{PIConGPU}. Specifically, it can read
@@ -314,7 +326,7 @@ techniques as \texttt{PIConGPU}. Specifically, it can read
 \texttt{libSplash}~\cite{libSplash_github} and traces photons through a mesh
 using \texttt{libPMacc}~\cite{picongpu_github}. One can define an arbitrary
 interaction using a C++ function object. The current code version provides
-Thomson Scattering from free electrons based on the local free electron density.
+Thomson Scattering from free electrons based on the local electron density.
 Photon scattering is computed via repeated Monte-Carlo evaluation of the
 scattering function, allowing for multiple scattering.
 
@@ -327,7 +339,7 @@ angular far field scattering spectra during the interaction of the HPL with
 matter.
 
 An implementation of in-situ Monte-Carlo photon scattering in \texttt{PIConGPU}
-would be based on the techniques developed for the \texttt{parataxis} code. Here, the
+would be based on the techniques developed for the \texttt{paraTAXIS} code. Here, the
 main issue is the large memory consumption by the photons traced while the
 simulation is running.
 
@@ -341,7 +353,7 @@ radiation and their consideration is hence an important step towards a more
 realistic simulation of the scattering signal.
 
 In summary, the outlined
-framework of physical models will allow fully kinetic in-situ radiation
+framework of physical models will in the future enable fully kinetic in-situ radiation
 transport modeling in a particle-in-cell code.
 As discussed, development of these capabilities is ongoing and completed tools
 will be made available in \texttt{simex\_platform} and \texttt{PIConGPU}.
@@ -406,9 +418,8 @@ The choice of the target material depends on the precise x-ray photon energy.
 The target material's K-shell absorption edge should be located slightly
 below the probe's wavelength to limit x-ray absorption. In resonant
 SAXS, the target material's K-shell transitions must match the x-ray photon
-energy. Assuming a photon energy of 8.4 keV, Xy is a suitable target material
-for normal SAXS and Ab for resonant SAXS, respectively. \marginpar{Find suitable
-targets}.
+energy. Assuming a photon energy of 8 keV, copper is a suitable target material
+for normal SAXS and resonant SAXS.
 
 The HED PP laser will
 create a plasma of a few to ten micrometer size in the transverse dimension with
@@ -424,7 +435,7 @@ plasma, we will extract information about these modes such as their amplitude
 and growth rate under varying experimental conditions such as laser power,
 incidence and probe angles. Fig.~\ref{fig:saxs_instabilities} shows three
 simulated scattering patterns emerging from interaction of coherent x-rays with
-different types of plasma instabilities \cite{} \marginpar{Reference?}.
+different types of plasma instabilities~\cite{Kluge2014}.
 It should be noted that these simulations make idealistic assumptions about the
 properties of the x-ray probe. An important aspect of this work is the question
 if the observed characteristics will remain so clearly distinct if realistic
