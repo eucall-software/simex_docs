@@ -1,13 +1,83 @@
-\documentclass[a4paper]{article}
-\usepackage[]{graphicx}
+\documentclass[12pt]{scrartcl}
+\usepackage{graphicx}
+\usepackage[default]{opensans}
+\usepackage{sfmath} % sans font also for math
+ \usepackage[binary-units = true]{siunitx}
+
+% defining the paper layout that no text overlaps with the header
+\usepackage[
+  top=35mm,
+  headheight=25mm,
+  headsep=3mm,
+  bottom=30mm,
+  left=25mm,
+  right=25mm
+]{geometry}
+
 \usepackage{latexsym}
 \usepackage[centertags]{amsmath}
 \usepackage{amssymb}
 
+% custom header and footpage
+\usepackage{scrpage2}
+\pagestyle{scrheadings} % you have to set the custom layout
+\ihead{D4.1: Short Pulse Laser -- Matter Interaction} % left head
+\ohead{\includegraphics[height=25mm]{EUCALL.png}}
+\ifoot{\includegraphics[height=13.4mm]{EU.png}} % left foot
+\cfoot{
+  \begin{minipage}{100mm}
+    \begin{scriptsize}
+      \normalfont{This project has received funding from the}
+      \textit{European Union’s Horizon 2020 research and innovation programme}
+      \normalfont{under grant agreement No 654220.}
+    \end{scriptsize}
+  \end{minipage}
+} % center foot
+\ofoot{} % right foot
+\chead{}
+
+\usepackage{booktabs} % more eye candy for tables
+
+% sophisticated linking of references in the pdf and setting some options
+\usepackage{url}                                                  % for correct typesettings of URLs
+\usepackage{hyperref}                                             % for sophisticated linking of urls, dois, pictures, tables, etc.
+\hypersetup{
+    unicode=true,                                                 % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,                                              % show Acrobat’s toolbar?
+    pdfmenubar=true,                                              % show Acrobat’s menu?
+    pdffitwindow=false,                                           % window fit to page when opened
+    pdfstartview={FitH},                                          % fits the width of the page to the window
+    pdftitle={D4.1: Short pulse laser-matter interaction simulations},                                        % title
+    pdfauthor={C. Fortmann-Grote},                                           % author
+    pdfsubject={EUCALL WP4 (SIMEX) deliverable 4.1},                             % subject of the document
+    pdfcreator={pdflatex},                                         % creator of the document
+    pdfkeywords={EUCALL, SIMEX, simulations, PIC, XFEL, scattering},                                         % list of keywords
+    pdfnewwindow=true,                                            % links in new PDF window
+    colorlinks=true,                                              % false: boxed links; true: colored links
+    linkcolor=blue,                                                % color of internal links (change box color with linkbordercolor)
+    citecolor=blue,                                                % color of links to bibliography
+    filecolor=blue,                                               % color of file links
+    urlcolor=blue                                                 % color of external links
+}
+
+
+% for fast reference
+\newcommand{\fig}[1]{{figure\,\ref{#1}}}
+\newcommand{\tab}[1]{{table\,\ref{#1}}}
+\newcommand{\eq}[1]{{equation~(\ref{#1})}}
+
+
+% Zeilenabstand
+\renewcommand{\baselinestretch}{1.2}
+
+
+%\renewcommand*\chapterpagestyle{scrheadings} % otherwise chapter start is plain ;-); works only for KOMA script; plain LaTeX works different
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   BIBLIOGRAPHY SETTINGS                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[bibstyle=nature,sorting=none,=maxnames=1000,eprint=false, defernumbers=true, backend=biber]{biblatex}
+\usepackage[bibstyle=nature,sorting=none,=maxnames=1000,eprint=false,
+defernumbers=true, backend=biber]{biblatex}
 \usepackage{hyperref}
 
 \renewcommand*\finalnamedelim{, and\addspace}
@@ -23,10 +93,9 @@
   \clearfield{issue}%
 }
 %convert titles to hyperlinks using doi
-\ExecuteBibliographyOptions{doi=false}
-\newbibmacro{string+doi}[1]{%
+\ExecuteBibliographyOptions{doi=false} \newbibmacro{string+doi}[1]{%
   \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
-\DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
+  \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
 
 %\addbibresource{/home/grotec/Documents/LiteratureDB/bibtex/jabref.bib}
 \addbibresource{references.bib}
@@ -34,17 +103,30 @@
 % END BIBLIOGRAPHY SETTINGS                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-\title{Design Report and Advanced Simulation Software for Laser -- Matter interaction}
-%In fullfilment of deliverables D4.1 and D4.2 in EUCALL SIMEX
-\author{Carsten Fortmann-Grote, Axel Huebl, Michael Bussmann, Richard
-Briggs} % Add yourself.
-\date{\today}
-
 \begin{document}
-\maketitle
-\section{D4.2: Long pulse laser-matter interaction\label{sec:long_pulse}} %%%%%%%%%%%%%%%%%%%%%%ESRF
-\subsection{Introduction}
+\makeatletter
+\begin{titlepage}
+\thispagestyle{scrheadings}
+\begin{center}
+$~$\\
+\vspace{2cm}
+\Huge{\textbf{Design Report and Advanced Simulation Software for Long Pulse Laser -- Matter Interaction}}\\[5mm]
+\vspace{2cm}
+\large{
+Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs,\\ Michael Bussmann,
+  Axel Huebl, Thomas Kluge,\\
+ S. Pascarelli, Ashutosh Sharma, and Adrian P. Mancuso\\
+ }
+\vspace{1cm}
+\@date
+\end{center}
+\vspace{5cm}
+\includegraphics[width=\textwidth]{./PartnerLogos.pdf}
+\normalfont
+\end{titlepage}
+\makeatother
+
+\section{Introduction}
 Long pulse laser systems are capable of reaching intensities of up to $\sim 10^{12}$ -- 10$^{15} \text{ W}/\text{cm}^2$ with pulse lengths of greater than a few nanoseconds. The pulse length and focal spot of the laser can depend heavily on the sample material and target package. Generally, focal spot sizes range between $\sim$ 100 $\mu$m up to 1 mm. With these specifications, the laser energies now required to reach the highest intensities are on the order of hundreds of joules.
 
 Temporally shaped laser pulses interacting with overdense target material create a rapidly expanding plasma that
@@ -65,11 +147,11 @@ laser pulse and x-ray probe pulse, time resolved data is obtained.
   \centering
   \begin{tabular}{ll}
     \hline
-    Photon energy (keV) & 5 - 28 \\
+    Photon energy & 5 keV - 28 keV \\
     Polarization & horizontal \\
-    Focus size ($\mu$m) & 3 (5 keV) - 50 (28 keV)\\
-    Flux (photons/s) & $1\times 10^{14}$  (7 keV) - $4\times 10^{13}$ (28 keV) \\
-    Pulse length (ps) & 100\footnote{for shock compression experiments}\\
+    Focus size (fwhm) & 3 $\mu$m (5 keV) - 50 $\mu$m (28 keV)\\
+    Pulse length & 100 ps\footnote{for shock compression experiments}\\
+    Flux  & $1\times 10^{14}$ photons/s (7 keV) - $4\times 10^{13}$ photons/s (28 keV) \\
     \hline
   \end{tabular}
   \caption{Principal x-ray parameters for shock compression studies at ESRF
@@ -77,18 +159,16 @@ laser pulse and x-ray probe pulse, time resolved data is obtained.
   \label{tab:esrf_parameters}
 \end{table}
 
-\subsection{Optical laser source}
-\subsubsection{ESRF}
 The optical laser source, used at the ESRF for shock compression experiments in May/June 2016,  is described through a set of parameters:
 \begin{table}
   \centering
   \begin{tabular}{ll}
     \hline
-Wavelength (nm) & 1053 \\
-Pulse duration (ns) & 4 - 15 \\
-Intensity (W/cm$^2$) & $2\times 10^{13}$\\
-Pulse energy (J) & 30 \\
-Focus size ($\mu\text{m}^{2}$) & 100 - 300  \\
+Wavelength & 1053 nm \\
+Pulse duration & 4 ns - 15 ns \\
+Intensity & $2\times 10^{13}$ W/cm$^2$ \\
+Pulse energy & 30 J \\
+Focus size (fhwm) & 100 $\mu\text{m}^{2}$ - 300 $\mu\text{m}^{2}$  \\
 Temporal profile  & flat top \\
 Spatial profile & Gaussian in x,y \\
     \hline
@@ -98,10 +178,11 @@ Spatial profile & Gaussian in x,y \\
   \label{tab:esrf_long_pulse}
 \end{table}
 
-A call for tender will be issued in 2016 for a new high-energy laser system to be installed at the ESRF, with increased energy (200 J) and frequency doubling crystals to take advantage of the 2$\omega$ at $\sim$ 527 nm.
-\subsection{Propagation}
-Propagation of XFEL pulses is modeled through the existing XFELPhotonPropagator calculator as described in Sec.~\ref{sec:short_pulse_prop}.
-\subsection{Photon-Matter interaction}
+A call for tender will be issued in 2016 for a new high-energy laser system to be installed at the ESRF, with increased energy (200 J) and
+frequency doubling crystals.
+
+\section{Photon-Matter interaction}
+\subsection{Optical Laser}
 Nearly all of the physical processes of long pulse laser-matter interactions are described by partial differential
 equations that can be solved with careful construction of numerical simulation codes. Here, the laser-matter
 interactions are modelled with the 1D radiation-hydrodynamics computer code ``Esther'' \cite{Colombier2005}
@@ -138,8 +219,13 @@ file using a conversion tool which is part of \texttt{simex\_platform}.
 In the MULTI2D hydrocode \cite{Ramis2009},
 the hydrodynamic equations solved by the code are combined with a multigroup method for radiation transport.
 
-\subsection{X-ray matter interaction (Absorption)}
-TBD
+\subsection{X-ray matter interaction}
+In the proposed experimental setup, discussed in detail further below, the shock compressed matter is diagnosed by
+X-ray Absorption Fine Structure (XAFS) spectroscopy and radiography. Both techniques can be modeled with appropriate simulation tools as
+described in the following.
+\subsection{XAFS}
+The XAFS signal reflects the near order of the shock compressed matter. The absorption edge is modulated by the ion-ion correlation function
+$\Xi(\vec q)$.
 
 \printbibliography
 \end{document}
