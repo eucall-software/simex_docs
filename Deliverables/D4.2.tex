@@ -21,7 +21,7 @@
 % custom header and footpage
 \usepackage{scrpage2}
 \pagestyle{scrheadings} % you have to set the custom layout
-\ihead{D4.1: Short Pulse Laser -- Matter Interaction} % left head
+\ihead{D4.2: Long Pulse Laser -- Matter Interaction} % left head
 \ohead{\includegraphics[height=25mm]{EUCALL.png}}
 \ifoot{\includegraphics[height=13.4mm]{EU.png}} % left foot
 \cfoot{
@@ -110,7 +110,8 @@ defernumbers=true, backend=biber]{biblatex}
 \begin{center}
 $~$\\
 \vspace{2cm}
-\Huge{\textbf{Design Report and Advanced Simulation Software for Long Pulse Laser -- Matter Interaction}}\\[5mm]
+\Huge{\textbf{WP 4 -- SIMEX\\[1cm]
+Design Report and Advanced Simulation Software for Long Pulse Laser -- Matter Interaction}}\\[5mm]
 \vspace{2cm}
 \large{
 Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs,\\ Michael Bussmann,
@@ -120,7 +121,7 @@ Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs,\\ Michael Bussmann,
 \vspace{1cm}
 \@date
 \end{center}
-\vspace{5cm}
+\vfill%
 \includegraphics[width=\textwidth]{./PartnerLogos.pdf}
 \normalfont
 \end{titlepage}
@@ -134,7 +135,7 @@ can generate a shockwave in the ablating material. This shock wave can travel th
 and compress the sample material to pressures reaching several hundred GPa. (For comparison, the Earth's core
 pressure is $\sim$ 330 GPa). By using a ramp temporal pulse, where the laser intensity is slowly increased, the temperatures generated remain much cooler than during rapid shock compression and the solid state of matter can be studied up to several TPa (1 TPa = 1000 GPa).
 
-High-power \marginpar{not "high energy" ?} laser facilities are now becoming increasingly in demand at new
+High-energy laser facilities are now becoming increasingly in demand at new
 generation x-ray light sources (X-FELs, 3rd generation synchrotron sources). The potential of long pulse laser experiments are already yielding extreme conditions of matter well beyond the reach of static high-pressure techniques and combinations with X-ray techniques provide enticing experiments at new extreme states of matter.
 
 We design here simulations for a prototypical experiment combining a high-energy laser system and x-ray radiation
@@ -206,26 +207,102 @@ parameters.
 It is crucial to have an understanding of shock transit times so that accurate timing of the X-ray probe,
 with respect to the laser initialisation, can be made. The final density state reached by a shock, as calculated
 from the hydrocode simulation packages, can define the shock velocity.
-
 \subsubsection{Esther}
 The Esther hydrocode was written by Patrick Combis and Laurent Videau of the CEA, Paris, France.
 \footnote{The Esther hydrocode is currently presented in French only.}
 A license to use Esther can be obtained by requesting access (via email) from the authors (for academic use only).
-As part of the \texttt{simex\_platform}, a calculator interface is being developed to create the input files necessary for running
-the hydrocode simulations. Esther output can be stored in a openPMD conform hdf5
-file using a conversion tool which is part of \texttt{simex\_platform}.
+
+As a necessary step for integration of hydrocode modelling in SIMEX, we have
+developed interfaces Esther. An interactive input file generator sets up
+the configuration files for the hydrocode based on user provided information
+about the target and the laser pulse. After the simulation completed, a
+converter reformats the hydrocode data (pressure, density, temperature, and
+shock velocity as function of space and time) from the native format into an
+openPMD conform hdf5 file. In this context, it is worth mentioning, that a new
+openPMD standard extension is currently being developed to enable facilitate the
+usage of openPMD as a standard format for rad-hydro codes.
 
 \subsubsection{MULTI}
 In the MULTI2D hydrocode \cite{Ramis2009},
 the hydrodynamic equations solved by the code are combined with a multigroup method for radiation transport.
 
-\subsection{X-ray matter interaction}
-In the proposed experimental setup, discussed in detail further below, the shock compressed matter is diagnosed by
-X-ray Absorption Fine Structure (XAFS) spectroscopy and radiography. Both techniques can be modeled with appropriate simulation tools as
-described in the following.
-\subsection{XAFS}
-The XAFS signal reflects the near order of the shock compressed matter. The absorption edge is modulated by the ion-ion correlation function
-$\Xi(\vec q)$.
+%\subsection{X-ray matter interaction}
+%In the proposed experimental setup, discussed in detail further below, the shock compressed matter is diagnosed by
+%X-ray Absorption Fine Structure (XAFS) spectroscopy and radiography. Both techniques can be modeled with appropriate simulation tools as
+%described in the following.
+
+%\subsection{XAFS}
+%The XAFS signal reflects the near order of the shock compressed matter. The
+%absorption edge is modulated by the ion-ion correlation function $\chi(\vec q)$.
+
+\section{Application: Pulse optimization via feedback loop}
+Radiation-hydrodynamic simulations are an indispensable tool to estimate the
+achievable level of compression and pressures in a dynamic compression
+experiment. Tailored (ramp) pulses can be employed to generate low-isentrope
+compressions, i.e. reaching high densities at low temperatures, below the
+principal Hugoniot and below the melting temparature. This technique makes
+accessible the range of strongly compressed solid matter and study pressure
+induced structural and electronic phase transitions.
+
+To facilitate pre-shot simulations and pulse optimization, we will utilize the
+simulation capabilities of \textit{simex\_platform} inside an optimization loop.
+Using an initial guess for the (temporal) pulse shape, we run the
+radiation-hydrodynamics simulations and monitor the evolution of density,
+pressure, and temperature over the pulse duration. This information is then fed
+to an algorithm that sets up a new, improved pulse shape based on given criteria
+like maximum allowable temperature or minimal compression ratio, to run the next
+iteration of the process.
+The pulse shaping tool can be implemented in various
+ways including nonlinear multidimensional optimization of pulse parameters or genetic algorithms.
+
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=1.0\textwidth,angle=0,clip]{lp_optimization_scheme-crop}
+  \end{center}
+  \caption{Optimization of pulse shapes for low isentrope compression. The
+  output of radiation-hydrodynamics simulations is fed into a pulse shape
+generator to optimise the laser-matter interaction for maximum compression at
+low temperature increase. Once an optimized pulse is generated, the simulation
+continues with calculating the x-ray -- matter interaction and synthesizing the
+diagnostic signals}
+  \label{fig:lp_optimization_schem}
+\end{figure}
+
+
+\section{Experimental scenario}
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=1.0\textwidth,angle=0,clip]{torchio2016_setup-crop.pdf}
+  \end{center}
+  \caption{Schematic rendering of a laser driven shock compression experiment
+  and x-ray absorption spectroscopy (a). XANES signal as function of time
+indicating structural phase transition from bcc to hcp phase (b). 1-D
+Radiation-hydrodynamics simulation of the shock
+propagation and pressure dynamics during laser-matter interaction (c).
+Figure taken from Ref.~\cite{Torchio2016}.}
+  \label{fig:exp_setup}
+\end{figure}
+Fig.~\ref{fig:exp_setup} shows the experimental setup, optical laser and x-ray
+probe pulse timings (a), measured XANES spectra (b) and 1-D radiation-hydrodynamic
+simulations of shock propagation through the a sandwiched iron target.
+The figure is taken from Ref.~\cite{Torchio2016}. The drive pulse compresses the
+target as modeled by radiation hydrodynamics simulations reaching pressures in
+the range of 40 -- 60 GPa. The x-ray pulse of $\approx 100\,\text{ps}$ probes
+the compressed target after a variable time delay. Transmitted x-ray photons are
+detected in a position sensitive Ge detector. The position of the detected
+photon can be converted into photon energy employing the dispersion curve of the
+focussing mirror.
+
+\section{Synergy}
+Although our pulse optimization scheme is  independent of the technological and
+physical realization of pulse generation and control, it is desirable to
+incorporate the actual pulse generation mechanism, it's capabilities as well as
+it's limitations into the simulation workflow.  This opens an opportunity for
+a cross-workpackage collaboration with the EUCALL workpackage 7 (``Pulse Control and
+ChAracterization -- PUCCA'')).
+
+
+
 
 \printbibliography
 \end{document}
