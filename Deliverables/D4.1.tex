@@ -110,9 +110,11 @@ defernumbers=true, backend=biber]{biblatex}
 \begin{center}
 $~$\\
 \vspace{2cm}
-\Huge{\textbf{Design Report and Advanced Simulation Software for Short Pulse Laser -- Matter Interaction}}\\[5mm]
+\Huge{\textbf{WP 4 -- SIMEX\\[1cm]Design Report and Advanced Simulation Software for Short Pulse Laser -- Matter Interaction}}\\[5mm]
+%\vspace{2cm}
+%\large{Deliverable D4.1\\}
 \vspace{2cm}
-\large{
+\large{%
 Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs,\\ Michael Bussmann,
   Axel Huebl, Thomas Kluge,\\
  S. Pascarelli, Ashutosh Sharma, and Adrian P. Mancuso\\
@@ -120,7 +122,7 @@ Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs,\\ Michael Bussmann,
 \vspace{1cm}
 \@date
 \end{center}
-\vspace{5cm}
+\vfill
 \includegraphics[width=\textwidth]{./PartnerLogos.pdf}
 \normalfont
 \end{titlepage}
@@ -145,7 +147,7 @@ Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs,\\ Michael Bussmann,
 %
 \section{Introduction} Ultrashort pulsed high power lasers (HPLs) typically deliver laser
 pulses in the infrared (800~nm to 1000~nm) at pulse durations below one
-picosecond. Todays high power lasers \cite{Siebold2008} can reach intensities of
+picosecond. Today's high power lasers \cite{Siebold2008} can reach intensities of
 up to $10^{21}~\text{W}/\text{cm}^2$ on spot sizes of a few microns and pulse
 durations on the order of a few ten femtoseconds.
 
@@ -219,12 +221,13 @@ Table~\ref{tab:short_pulse_laser_parameters}.
 \centering
 \begin{tabular}{|l|l|}
   \hline wavelength & 800 nm \\
-  pulse duration (fwhm) & 15 - 80 \\
+  pulse duration (fwhm) & 15 fs - 80 fs \\
   focus size (fwhm)  & 3 $\mu\text{m}$ \\
   temporal profile &  Gaussian \\
   spatial profile &  Gaussian \\
   pulse energy & 2 mJ \\
-  intensity  & $1\times 10^{17}$ W/cm$^2$ \\
+  prepulse contrast & $\approx 10^{-4}$ (energy)\\
+  intensity  & $10^{17}$ W/cm$^2$ \\
   \hline
 \end{tabular}
 \caption{European XFEL HED pump-probe laser parameters for optical laser-matter interaction
@@ -376,7 +379,7 @@ pulse generation and propagation is modeled in \texttt{simex\_platform} with the
 corresponding simulation codes. The simulated wavefronts are evaluated at the
 target surface and converted into a photon distribution. The photons are then
 propagated through the target. At discrete timesteps, each photon's wavevector
-undergoes a change in magnitude and direction \marginpar{correct?} with a
+undergoes a change in magnitude and direction with a
 certain probability, given by the Thomson scattering cross section
 \cite{Jackson1975}. In this way, multiple scattering events that become
 important especially in compressed regions of the target, are naturally
@@ -388,7 +391,7 @@ and integrated over the exposure time to obtain the simulated scattering image.
 %
 \begin{figure}[ht]
   \begin{center}
-    \includegraphics[width=1.0\textwidth,angle=0,clip]{bussmann_saxs_setup}
+    \includegraphics[width=1.0\textwidth,angle=0,clip, viewport=0 30 700 480]{bussmann_saxs_setup}
   \end{center}
   \caption{Schematic rendering of the proposed experiment to be simulated.
   Ultrashort pulsed optical laser radiation (red beam) creates a plasma layer on
@@ -480,7 +483,7 @@ scientists to develop precise and realistic concepts for such a laser based FEL.
 %assess the reliability of the phasing algorithm under given realistic
 %experimental condition. \marginpar{What else would be of interest here?}
 \section{Summary and Outlook}
-In this report we have layed out concepts for the simulation of a small-angle
+In this report we have outlined concepts for the simulation of a small-angle
 x-ray scattering experiment probing the interaction of solid density matter
 (e.g. a metal foil) with ultrashort (femtosecond) high power optical laser
 radiation. The simulations describe all parts of the experiment by exploiting
