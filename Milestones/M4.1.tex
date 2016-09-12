@@ -95,7 +95,8 @@ defernumbers=true, backend=biber]{biblatex}
   \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
   \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
 
-\addbibresource{/home/grotec/Documents/LiteratureDB/bibtex/jabref.bib}
+%\addbibresource{/home/grotec/Documents/LiteratureDB/bibtex/jabref.bib}
+\addbibresource{/home/carsten/Documents/LiteratureDB/bibtex/jabref.bib}
 %\addbibresource{references.bib}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END BIBLIOGRAPHY SETTINGS                   %
@@ -301,7 +302,7 @@ during the interaction with the external light source.
   \item[Provided data:]
 \end{description}
 
-\subsubsection{High-power laser}
+\subsubsection{High-power laser\label{sec:hpl}}
 \begin{description}
   \item[Backengine:] Particle in cell code PIConGPU \cite{Bussmann2013}
   \item[Required data:] Initial atom positions and optical laser parameters
@@ -322,51 +323,67 @@ during the interaction with the external light source.
 \end{description}
 
 \subsection{Photon Scattering and Diffraction (Task 4.1.3)}
-Typically in a photon experiment, the scattered or transmitted radiation, or
-reaction products from the photon-matter interaction, such as photo-electrons,
-are detected and used to infer information about the sample/target.  This module
-is named \textit{Diffractor} although diffraction is by far not the only
-anticipated diagnostic method to be simulated.  \begin{description}
-  \item[Abstract calculator:] AbstractPhotonDiffractor
-  \item[Physics:] Absorption, emission, and scattering of radiation by the target/sample.
-  \item[Input data:] Wavefront or rays at sample/target interaction point and
-    electronic state trajectory.
-  \item[Output data:] Radiation signal at a given position of a radiation detector.
-  \item[Backengines:] Born approximation scattering from single molecules,
-    small-angle x-ray scattering (SAXS), x-ray Thomson
-    scattering (XRTS).
+
+\subsubsection{X-ray absorption fine structure}
+\begin{description}
+  \item[Backengine:] FEFF
+  \item[Required data:] Rad-hydro output, ion structure (??)
+  \item[Provided data:] Synthetic XAFS signal (??)
+\end{description}
+
+\subsubsection{X-ray radiography}
+\begin{description}
+  \item[Backengine:] Shadow \cite{}
+  \item[Required data:] Rad-hydro output
+  \item[Provided data:] Synthetic radiograph
+\end{description}
+\subsubsection{Ex-situ scattering}
+\begin{description}
+  \item[Backengine:] paraTaxis \cite{paraTaxis_github}
+  \item[Required data:] PIC data (see \ref{sec:hpl}) and x-ray photon distribution
+  \item[Provided data:] Synthetic diffraction image (photon count per pixel)
+\end{description}
+
+\subsubsection{Single-particle diffraction}
+\begin{description}
+  \item[Backengine:] SingFEL, implements 2nd order Born approximation scattering using via electronic form factors.
+  \item[Required data:]
+  \item[Provided data:]
+\end{description}
+%
+\subsubsection{Plasma X-ray Thomson Scattering}
+\begin{description}
+  \item[Backengine:] XRTS, differential inelastic scattering cross section for scattering from warm and hot dense plasmas in various
+    approximations \cite{Gregori2009, Fortmann2009d, Fortmann2010a}
+  \item[Required data:]
+  \item[Provided data:]
 \end{description}
 %
 \subsection{Photon Detector (Task 4.1.4)}
-The scattered radiation will ultimately  be collected in a detection device. The
-Photon Detector models the response of the detector to the incoming radiation.
+\subsubsection{Pixel area detectors}
 \begin{description}
-  \item[Abstract calculator:] AbstractPhotonDetector
-  \item[Physics:] Response of the detector to incoming radiation, e.g.
-    photoelectron conversion, charge transport, and counting in a photon
-    detector.
-  \item[Input data:] Intensity or photon distribution at the detector.
-  \item[Output data:] Detector response to the signal, e.g. photons per pixel in an area detector.
   \item[Backengine:] X-ray camera simulation toolkit X-CSIT \cite{Joy2015}.
+  \item[Required data:] Intensity or photon distribution at the detector.
+  \item[Provided data:] Detector response to the signal, e.g. photons per pixel in an area detector.
 \end{description}
-%
-\subsection{Photon Analysis}
-Following the detector readout, the recorded raw data has to be analyzed in
-order to extract the desired information about the target/sample. The specific
-algorithms depend largely on the details of the experiment and the underlying
-questions. Here, we discuss the analysis steps to be taken in a single particle
-diffractive imaging experiment.
-\begin{description}
-  \item[Abstract calculator:] AbstractPhotonAnalyzer
-  \item[Physics:]  Analysis of raw detector data. In SPI, the electron density
-    of the sample is reconstructed by assembling a 3D diffraction volume
-    from measured 2D diffraction patterns and subsequent phasing of the data to
-    solve the inverse scattering problem.
-  \item[Input data:] Detector response (raw data)
-  \item[Output data:] Reduced data to describe the investigated processes in the target/sample.
-  \item[Backengine:] Expand-Maximize-Compress (EMC)  for orientation,
-    Difference-Map for phasing \cite{Loh2009, s2e_recon_bitbucket}.
-\end{description}
+%%
+%\subsection{Photon Analysis}
+%Following the detector readout, the recorded raw data has to be analyzed in
+%order to extract the desired information about the target/sample. The specific
+%algorithms depend largely on the details of the experiment and the underlying
+%questions. Here, we discuss the analysis steps to be taken in a single particle
+%diffractive imaging experiment.
+%\begin{description}
+  %\item[Abstract calculator:] AbstractPhotonAnalyzer
+  %\item[Physics:]  Analysis of raw detector data. In SPI, the electron density
+    %of the sample is reconstructed by assembling a 3D diffraction volume
+    %from measured 2D diffraction patterns and subsequent phasing of the data to
+    %solve the inverse scattering problem.
+  %\item[Input data:] Detector response (raw data)
+  %\item[Output data:] Reduced data to describe the investigated processes in the target/sample.
+  %\item[Backengine:] Expand-Maximize-Compress (EMC)  for orientation,
+    %Difference-Map for phasing \cite{Loh2009, s2e_recon_bitbucket}.
+%\end{description}
 
 \printbibliography
 \end{document}
