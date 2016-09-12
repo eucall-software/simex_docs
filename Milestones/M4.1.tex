@@ -255,16 +255,58 @@ We will now list the simulation codes (backengines), the interfaces and
 Description of the x-ray source.
 \subsubsection{European XFEL}
 \begin{description}
-  \item[Backengine:] The code FAST \cite{Saldin1999} generates 3D (x-y-t) wavefronts at the exit of the undulator in an x-ray free electron laser.
+  \item[Backengine:] FAST \cite{Saldin1999}. Generates 3D (x-y-t) wavefronts at the exit of the undulator in an x-ray free electron laser.
   \item[Method:] 3D time resolved explicit solver for SASE FEL radiation
-  \item[Provided data:]
+  \item[Provided data:]\ \\
 \end{description}
+    {%
+      \scriptsize
+    \begin{tabular}{l|l}
+      \hline
+      \hline
+      /data/arrEhor     & horizontal electric field component \\
+      /data/arrEver     & vertical electric field component \\
+      /params/Mesh/nSlices    & number of time slices \\
+      /params/Mesh/nx     & number of grid points in horizontal dimension (x) \\
+      /params/Mesh/ny     & number of grid points in vertical dimension (y) \\
+      /params/Mesh/sliceMax     & time corresponding to last slice \\
+      /params/Mesh/sliceMin     & time corresponding to first slice \\
+      /params/Mesh/xMax     & x coordinate of last grid point in horizontal dimension \\
+      /params/Mesh/xMin     & x coordinate of first grid point in horizontal dimension \\
+      /params/Mesh/yMax     & y coordinate of last grid point in vertical dimension \\
+      /params/Mesh/yMin     & y coordinate of first grid point in vertical dimension \\
+      /params/Mesh/zCoord     & z coordinate of the wavefront \\
+      /params/Rx    &  \\
+      /params/Ry    &  \\
+      /params/dRx     & <++> \\
+      /params/dRy     & <++> \\
+      /params/nval    &  \\
+      /params/photonEnergy    & central photon energy (mean of spectrum) \\
+      /params/wDomain     & direct (r-space) or reciprocal (q-space)\\
+      /params/wEFieldUnit     & Electric field unit \\
+      /params/wFloatType    &  \\
+      /params/wSpace    &  \\
+      /params/xCentre     & x coordinate of wavefront center \\
+      /params/yCentre     & y coordinate of wavefront center \\
+      /history/parent/info/data\_description     & data documentation \\
+      /history/parent/info/package\_version    & code version \\
+      /history/parent/misc/FAST2XY.DAT    &  \\
+      /history/parent/misc/angular\_distribution     & angular distribution of source pulse \\
+      /history/parent/misc/spot\_size    & fhwm spot size \\
+      /history/parent/misc/gain\_curve     & gain curve \\
+      /history/parent/misc/nzc    & Undulator length (point on gain curve0 \\
+      /history/parent/misc/temporal\_struct    & Temporal pulse structure (on-axis projection) \\
+      \hline
+      \hline
+    \end{tabular}
+    }
 
 \subsubsection{ESRF}
 \begin{description}
   \item[Backengine:]
   \item[Method:]
   \item[Provided data:]
+
 \end{description}
 
 \subsection{Photon Propagation (Task 4.1.1)}
@@ -275,6 +317,7 @@ effects realized through lenses, mirrors, apertures, grids etc.
 \subsubsection{European XFEL}
 \begin{description}
   \item[Backengine:] WPG \cite{Samoylova2016, wpg_github}
+  \item[Method:] Fourier optical wave propagation
   \item[Required data:]
   \item[Provided data:]
 \end{description}
@@ -282,6 +325,7 @@ effects realized through lenses, mirrors, apertures, grids etc.
 \subsubsection{ESRF}
 \begin{description}
   \item[Backengine:] Shadow / Oasys
+  \item[Method:] X-ray raytracing
   \item[Required data:]
   \item[Provided data:]
 \end{description}
@@ -295,7 +339,8 @@ product is the electronic state of the sample/target as a function of time
 during the interaction with the external light source.
 \subsubsection{Single-particle imaging}
 \begin{description}
-  \item[Backengine:] XMDYN and XATOM: Molecular Dynamics and ab-initio
+  \item[Backengine:] XMDYN/XATOM
+  \item[Method:] Molecular Dynamics and ab-initio
     electronic structure in intense x-ray fields \cite{Jurek2016, Son2013,
     Ziaja2015}
   \item[Required data:]
@@ -304,7 +349,8 @@ during the interaction with the external light source.
 
 \subsubsection{High-power laser\label{sec:hpl}}
 \begin{description}
-  \item[Backengine:] Particle in cell code PIConGPU \cite{Bussmann2013}
+  \item[Backengine:] PIConGPU \cite{Bussmann2013}
+  \item[Method:] 3D3V Particle-In-Cell (PIC)
   \item[Required data:] Initial atom positions and optical laser parameters
     (pulse duration, focal spotsize, wavelength, pulse energy)
   \item[Provided data:] Electron density, atom positions, electromagnetic field
@@ -313,7 +359,8 @@ during the interaction with the external light source.
 %
 \subsubsection{High-energy laser}
 \begin{description}
-  \item[Backengine:] 1-D radiation hydrodynamic simulations
+  \item[Backengine:] Esther
+  \item[Method:] 1-D radiation-hydrodynamics
   \item[Required data:] Target specification (mass density profile, zone
     boundaries, initial temperature and pressure and optical laser parameters
     (pulse duration, focal spotsize, wavelength, pulse energy)
@@ -327,6 +374,7 @@ during the interaction with the external light source.
 \subsubsection{X-ray absorption fine structure}
 \begin{description}
   \item[Backengine:] FEFF
+  \item[Method:] ??
   \item[Required data:] Rad-hydro output, ion structure (??)
   \item[Provided data:] Synthetic XAFS signal (??)
 \end{description}
@@ -334,26 +382,30 @@ during the interaction with the external light source.
 \subsubsection{X-ray radiography}
 \begin{description}
   \item[Backengine:] Shadow \cite{}
+  \item[Method:] X-ray raytracing
   \item[Required data:] Rad-hydro output
   \item[Provided data:] Synthetic radiograph
 \end{description}
 \subsubsection{Ex-situ scattering}
 \begin{description}
   \item[Backengine:] paraTaxis \cite{paraTaxis_github}
+  \item[Method:] MonteCarlo tracing of individual photons
   \item[Required data:] PIC data (see \ref{sec:hpl}) and x-ray photon distribution
   \item[Provided data:] Synthetic diffraction image (photon count per pixel)
 \end{description}
 
 \subsubsection{Single-particle diffraction}
 \begin{description}
-  \item[Backengine:] SingFEL, implements 2nd order Born approximation scattering using via electronic form factors.
+  \item[Backengine:] SingFEL
+  \item[Method:] 2nd order Born approximation scattering using via electronic form factors.
   \item[Required data:]
   \item[Provided data:]
 \end{description}
 %
 \subsubsection{Plasma X-ray Thomson Scattering}
 \begin{description}
-  \item[Backengine:] XRTS, differential inelastic scattering cross section for scattering from warm and hot dense plasmas in various
+  \item[Backengine:] XRTS code
+  \item[Method:] 2nd Born approximation for differential inelastic scattering cross section for scattering from warm and hot dense plasmas in various
     approximations \cite{Gregori2009, Fortmann2009d, Fortmann2010a}
   \item[Required data:]
   \item[Provided data:]
@@ -363,6 +415,7 @@ during the interaction with the external light source.
 \subsubsection{Pixel area detectors}
 \begin{description}
   \item[Backengine:] X-ray camera simulation toolkit X-CSIT \cite{Joy2015}.
+  \item[Method:] Combined particle, charge, and electronics simulation
   \item[Required data:] Intensity or photon distribution at the detector.
   \item[Provided data:] Detector response to the signal, e.g. photons per pixel in an area detector.
 \end{description}
