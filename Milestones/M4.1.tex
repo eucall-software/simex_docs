@@ -95,8 +95,8 @@ defernumbers=true, backend=biber]{biblatex}
   \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
   \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
 
-%\addbibresource{/home/grotec/Documents/LiteratureDB/bibtex/jabref.bib}
-\addbibresource{/home/carsten/Documents/LiteratureDB/bibtex/jabref.bib}
+\addbibresource{/home/grotec/Documents/LiteratureDB/bibtex/jabref.bib}
+%\addbibresource{/home/carsten/Documents/LiteratureDB/bibtex/jabref.bib}
 %\addbibresource{references.bib}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END BIBLIOGRAPHY SETTINGS                   %
@@ -237,31 +237,121 @@ executables and scripts as the \textit{Backengines}. One \textit{Calculator}
 always wraps exactly one \textit{Backengine}, but one \textit{Backengine} can be
 wrapped by more than one \textit{Calculator}.
 
-\section{Documentation of \textit{Calculators} and their Interfaces}
 
+\section{Baseline science applications and required simulation codes}
 An intermediate goal in SIMEX is to enable simulation of three distinct baseline
-experiments:
+experiments. The fowolling tables list the simulation codes (backengines) that
+will be employed for the simulation, as well as relevant references and links to
+further details. The linked sections give a brief description of the numerical and physical
+methods and specify the data interfaces.
 \begin{enumerate}
-  \item Single-particle imaging at the European XFEL (SPB-SFX instrument)
+  \item Single-particle imaging at the European XFEL (SPB-SFX
+    instrument)\label{baseline_application_spi}\\
+    {\scriptsize%
+    \begin{tabular}{l|l|l|l}
+      \hline
+      \hline
+      \textbf{Module} & \textbf{Backengine}
+      & \textbf{References} & \textbf{Details} \\
+      \hline
+      %
+      Photon source &  FAST, XPD database &
+      \cite{Saldin1999,xpd_xfel} & \ref{sec:interface_source_fast} \\
+      %
+      Propagation &  WPG/SRW &
+      \cite{Samoylova2016, wpg_github} & \ref{sec:interface_prop_wpg} \\
+      %
+      Photon-Matter Interaction & XMDYNandXATOM
+      & \cite{Jurek2016, Son2011, Ziaja2015} & \ref{sec:interface_pmi_xmdyn} \\
+      %
+      Photon diffraction &  singFEL & \cite{Yoon2016} &
+      \ref{sec:interface_diffr_singfel} \\
+      %
+      Photon detection &  X-CSIT & \cite{Joy2015} &
+      \ref{sec:interface_det_xcsit} \\
+      %
+      Photon data analysis &  RECON & \cite{Loh2009} &
+      \ref{sec:interface_ana_recon} \\
+      \hline
+      \hline
+    \end{tabular}
+  }
   \item Small-angle x-ray scattering from high power laser excited overdense
-    plasmas (XFEL, HED instrument)
-  \item Dynamic compression of solid matter using high energy lasers and x-ray
-    absorption (ESRF, beamline ID24)
+    plasmas (XFEL, HED instrument)\label{baseline_application_hpl}\\
+    {\scriptsize%
+    \begin{tabular}{l|l|l|l}
+      \hline
+      \hline
+      \textbf{Module} & \textbf{Backengine}
+      & \textbf{References} & \textbf{Details} \\
+      \hline
+      %
+      Photon source &  FAST, XPD database &
+      \cite{Saldin1999,xpd_xfel} & \ref{sec:interface_source_fast} \\
+      %
+      Propagation &  WPG/SRW &
+      \cite{Samoylova2016, wpg_github} & \ref{sec:interface_prop_wpg} \\
+      %
+      Photon-Matter Interaction & PIConGPU
+      & \cite{Bussmann2013} & \ref{sec:interface_pmi_pic} \\
+      %
+      Photon scattering &  paraTaxis & \cite{parataxis_github} &
+      \ref{sec:interface_diffr_parataxis} \\
+      %
+      Photon detection &  X-CSIT & \cite{Joy2015} &
+      \ref{sec:interface_det_xcsit} \\
+      %
+      \hline
+      \hline
+    \end{tabular}
+  }
+
+  \item Warm dense matter production through high energy laser shock compression
+    and x-ray absorption diagnostics (ESRF, beamline ID24)\label{baseline_application_wdm}\\
+    {\scriptsize%
+    \begin{tabular}{l|l|l|l}
+      \hline
+      \hline
+      \textbf{Module} & \textbf{Backengine}
+      & \textbf{References} & \textbf{Details} \\
+      \hline
+      %
+      Photon source & ?? &
+      ?? & \ref{sec:interface_source_esrf} \\
+      %
+      Propagation &  Shadow/XRT &
+      \cite{shadow,xrt} & \ref{sec:interface_prop_shadow},
+      \ref{sec:interface_prop_xrt} \\
+      %
+      Photon-Matter Interaction & Esther, Multi2D
+      & \cite{Colombier2005, Ramis2009} & \ref{sec:interface_pmi_radhydro} \\
+      %
+      Photon absorption &  ?? & \cite{XAFS} &
+      \ref{sec:interface_diffr_xafs} \\
+      \hline
+      \hline
+    \end{tabular}
+  }
+
 \end{enumerate}
+
+\section{\textit{Backengines}, \textit{Calculators}, and interfaces}
 We will now list the simulation codes (backengines), the interfaces and
 \textit{Calculators} that have been developed to simulate these experiments.
 
-\subsection{Photon source}
-Description of the x-ray source.
-\subsubsection{European XFEL}
+The EUCALL github repository www.github.com/eucall-software
+is the single-entry point to \texttt{simex\_platform} and its integrated
+\textit{Calculators} plus additional \textit{Backengines} that have not become a
+fully integrated part of \texttt{simex\_platform} yet.
+
+\subsection{Photon source }
+\subsubsection{FAST\label{sec:interface_source_fast}}
 \begin{description}
-  \item[Backengine:] FAST \cite{Saldin1999}. Generates 3D (x-y-t) wavefronts at the exit of the undulator in an x-ray free electron laser.
   \item[Method:] 3D time resolved explicit solver for SASE FEL radiation
-  \item[Provided data:]\ \\
+  \item[Data format (output):]\ \\
 \end{description}
-    {%
-      \scriptsize
-    \begin{tabular}{l|l}
+    {\scriptsize%
+   \begin{tabular}{l|l}
       \hline
       \hline
       /data/arrEhor     & horizontal electric field component \\
@@ -276,16 +366,16 @@ Description of the x-ray source.
       /params/Mesh/yMax     & y coordinate of last grid point in vertical dimension \\
       /params/Mesh/yMin     & y coordinate of first grid point in vertical dimension \\
       /params/Mesh/zCoord     & z coordinate of the wavefront \\
-      /params/Rx    &  \\
-      /params/Ry    &  \\
-      /params/dRx     & <++> \\
-      /params/dRy     & <++> \\
-      /params/nval    &  \\
+      /params/Rx    &  instantaneous horizontal wavefront radius\\
+      /params/Ry    &  instantaneous vertical wavefront radius\\
+      /params/dRx     & error in Rx \\
+      /params/dRy     & error on Ry \\
+      /params/nval    &  data type of field values, 2 for complex \\
       /params/photonEnergy    & central photon energy (mean of spectrum) \\
-      /params/wDomain     & direct (r-space) or reciprocal (q-space)\\
+      /params/wDomain     & time or frequency domain\\
       /params/wEFieldUnit     & Electric field unit \\
-      /params/wFloatType    &  \\
-      /params/wSpace    &  \\
+      /params/wFloatType    &  field numerical type \\
+      /params/wSpace    &  direct (r-space) or reciprocal (q-space)\\
       /params/xCentre     & x coordinate of wavefront center \\
       /params/yCentre     & y coordinate of wavefront center \\
       /history/parent/info/data\_description     & data documentation \\
@@ -299,28 +389,72 @@ Description of the x-ray source.
       \hline
       \hline
     \end{tabular}
-    }
+      }
 
-\subsubsection{ESRF}
+\subsubsection{ESRF source code ???}
 \begin{description}
-  \item[Backengine:]
-  \item[Method:]
-  \item[Provided data:]
-
+  \item[Method:] ??
+  \item[Data format (output):]
 \end{description}
-
+%
 \subsection{Photon Propagation (Task 4.1.1)}
 Propagates the radiation as described by the photon source calculator from the
 source to the point of interaction with the sample or target under
 investigation. Describes focussing, filtering, pulse shaping, and other optical
 effects realized through lenses, mirrors, apertures, grids etc.
-\subsubsection{European XFEL}
+\subsubsection{WPG/SRW\ref{sec:interface_prop_wpg}}
 \begin{description}
-  \item[Backengine:] WPG \cite{Samoylova2016, wpg_github}
   \item[Method:] Fourier optical wave propagation
-  \item[Required data:]
-  \item[Provided data:]
+  \item[Data format (output)]:
 \end{description}
+{\scriptsize%
+\begin{tabular}{l|l}
+  \hline
+  \hline
+  /data/arrEhor     & horizontal electric field component \\
+  /data/arrEver     & vertical electric field component \\
+  /params/Mesh/nSlices    & number of time slices \\
+  /params/Mesh/nx     & number of grid points in horizontal dimension (x) \\
+  /params/Mesh/ny     & number of grid points in vertical dimension (y) \\
+  /params/Mesh/qxMax        & x coordinate of last q-grid point in horizontal
+  dimension \\
+  /params/Mesh/qxMin        & x coordinate of first q-grid point in horizontal
+  dimension \\
+  /params/Mesh/qyMax        & y coordinate of last q-grid point in vertical dimension \\
+  /params/Mesh/qyMin        & y coordinate of first q-grid point in vertical
+  dimension \\
+  /params/Mesh/sliceMax     & time corresponding to last slice \\
+  /params/Mesh/sliceMin     & time corresponding to first slice \\
+  /params/Mesh/xMax     & x coordinate of last grid point in horizontal dimension \\
+  /params/Mesh/xMin     & x coordinate of first grid point in horizontal dimension \\
+  /params/Mesh/yMax     & y coordinate of last grid point in vertical dimension \\
+  /params/Mesh/yMin     & y coordinate of first grid point in vertical dimension \\
+  /params/Mesh/zCoord     & z coordinate of the wavefront \\
+  /params/Rx    &  instantaneous horizontal wavefront radius\\
+  /params/Ry    &  instantaneous vertical wavefront radius\\
+  /params/dRx     & error in Rx \\
+  /params/dRy     & error on Ry \\
+  /params/nval    &  data type of field values, 2 for complex \\
+  /params/photonEnergy    & central photon energy (mean of spectrum) \\
+  /params/wDomain     & time or frequency domain\\
+  /params/wEFieldUnit     & Electric field unit \\
+  /params/wFloatType    &  field numerical type \\
+  /params/wSpace    &  direct (r-space) or reciprocal (q-space)\\
+  /params/xCentre     & x coordinate of wavefront center \\
+  /params/yCentre     & y coordinate of wavefront center \\
+  /info/package\_version        & WPG version \\
+  /info/contact        & Support contact details \\
+  /info/data\_description        & Data documentation \\
+  /info/method\_description        & Method documentation \\
+  /misc/xFWHM        & Full width at half maximum of the intensity distribution in horizontal dimension\\
+  /misc/yFWHM        & Full width at half maximum of the intensity distribution in
+  vertical dimension\\
+  /version        & Interface version \\
+  \hline
+  \hline
+\end{tabular}
+}
+
 %
 \subsubsection{ESRF}
 \begin{description}
@@ -337,89 +471,170 @@ elementary processes like absorption, emission, scattering of radiation and
 secondary processes like collisional ionization and recombination. The end
 product is the electronic state of the sample/target as a function of time
 during the interaction with the external light source.
-\subsubsection{Single-particle imaging}
+\subsubsection{XMDYNandXATOM\label{sec:interface_pmi_xmdyn}}
 \begin{description}
-  \item[Backengine:] XMDYN/XATOM
   \item[Method:] Molecular Dynamics and ab-initio
-    electronic structure in intense x-ray fields \cite{Jurek2016, Son2013,
-    Ziaja2015}
-  \item[Required data:]
-  \item[Provided data:]
+    electronic structure in intense x-ray fields
+  \item[Data format (output):]
 \end{description}
-
+{\scriptsize%
+\begin{tabular}{l|l}
+  \hline
+  \hline
+  /data/snp*/ff        & 2D array of form factors. Rows: Atomic number, Columns: q  \\
+  /data/snp*/halfQ        & 1D array of half-period resolutions corresponding to
+  column index in form factor arrays \\
+  /data/snp*/Nph        & number of photons in the calculation \\
+  /data/snp*/r        & 2D array of atomic position vectors. Rows: Atom index,
+  columns: x,y,z coordinates \\
+  /data/snp*/T        & 1D array of unique ID per atomic number \\
+  /data/snp*/Z        &  1D array of atom types per atomic position vector
+  $r$\\
+  /data/snp*/xyz        & 1D array of indices of ff for each atom in Z \\
+  /data/snp*/Sq\_halfQ        & half period resolution q space spanned by
+  Sq\_bound, Sq\_free \\
+  /data/snp*/Sq\_bound        & 1D array for Compton scattering from bound electrons \\
+  /data/snp*/Sq\_free        & 1D array for Compton scattering from free
+  electrons \\
+  /history/parent/detail        & Input parameters used to run the code \\
+  /info/package\_version        & backengine code version \\
+  /info/contact        & Support contact for backengine code \\
+  /info/data\_description        & Data documentation \\
+  /info/method\_description        & Method documentation \\
+  /version                   & hdf5 format version \\
+  \hline
+  \hline
+\end{tabular}
+}
+%
 \subsubsection{High-power laser\label{sec:hpl}}
 \begin{description}
   \item[Backengine:] PIConGPU \cite{Bussmann2013}
   \item[Method:] 3D3V Particle-In-Cell (PIC)
-  \item[Required data:] Initial atom positions and optical laser parameters
-    (pulse duration, focal spotsize, wavelength, pulse energy)
-  \item[Provided data:] Electron density, atom positions, electromagnetic field
-    as function in 6D phase space and time.
+  \item[Required data:] ??
+  \item[Provided data:] ??
 \end{description}
 %
 \subsubsection{High-energy laser}
 \begin{description}
   \item[Backengine:] Esther
   \item[Method:] 1-D radiation-hydrodynamics
-  \item[Required data:] Target specification (mass density profile, zone
-    boundaries, initial temperature and pressure and optical laser parameters
-    (pulse duration, focal spotsize, wavelength, pulse energy)
-  \item[Provided data:] Mass density distribution, temperature, pressure and
-    shock front velocity in 1D space as function of time.
-    as function in 6D phase space and time.
+  \item[Required data:] ??
+  \item[Provided data:] ??
 \end{description}
 
 \subsection{Photon Scattering and Diffraction (Task 4.1.3)}
 
 \subsubsection{X-ray absorption fine structure}
 \begin{description}
-  \item[Backengine:] FEFF
+  \item[Backengine:] ??
   \item[Method:] ??
-  \item[Required data:] Rad-hydro output, ion structure (??)
-  \item[Provided data:] Synthetic XAFS signal (??)
+  \item[Required data:] ??
+  \item[Provided data:] ??
 \end{description}
 
 \subsubsection{X-ray radiography}
 \begin{description}
   \item[Backengine:] Shadow \cite{}
   \item[Method:] X-ray raytracing
-  \item[Required data:] Rad-hydro output
-  \item[Provided data:] Synthetic radiograph
+  \item[Required data:] ??
+  \item[Provided data:] ??
 \end{description}
 \subsubsection{Ex-situ scattering}
 \begin{description}
   \item[Backengine:] paraTaxis \cite{paraTaxis_github}
   \item[Method:] MonteCarlo tracing of individual photons
-  \item[Required data:] PIC data (see \ref{sec:hpl}) and x-ray photon distribution
-  \item[Provided data:] Synthetic diffraction image (photon count per pixel)
+  \item[Required data:] ??
+  \item[Provided data:] ??
 \end{description}
 
-\subsubsection{Single-particle diffraction}
+\subsubsection{singFEL}
 \begin{description}
-  \item[Backengine:] SingFEL
   \item[Method:] 2nd order Born approximation scattering using via electronic form factors.
-  \item[Required data:]
-  \item[Provided data:]
+  \item[Data format (output)]
 \end{description}
+{\scriptsize%
+  \begin{tabular}{l|l}
+    \hline
+    \hline
+/data/data        & 2D array. Integrated intensity per pixel \\
+/data/diffr        & 2D array. Integrated intensity converted to photon count
+(Poissonized) \\
+/data/angle        & Euler angles applied to atomic positions \\
+/history/parent/detail        &  Details of parent data\\
+/history/parent/parent        & Parent data, hierarchical \\
+/info/package\_version        & Backengine code version \\
+/info/contact        & Support contact \\
+/info/data\_description        & Data documentation \\
+/info/method\_description        & Method documentation \\
+/params/geom/detectorDist        & Detector distance \\
+/params/geom/pixelWidth        & Pixel width (x) \\
+/params/geom/pixelHeight        & Pixel height (y) \\
+/params/geom/mask        & Masked pixels \\
+/params/beam/photonEnergy        & Central photon energy  \\
+/params/beam/photons        & Number of photons in beam \\
+/params/beam/focusArea        & Beam focus area \\
+/params/info        & Input parameter for backengine code \\
+\hline
+\hline
+\end{tabular}
+}
 %
-\subsubsection{Plasma X-ray Thomson Scattering}
+\subsubsection{XRTS code}
 \begin{description}
-  \item[Backengine:] XRTS code
   \item[Method:] 2nd Born approximation for differential inelastic scattering cross section for scattering from warm and hot dense plasmas in various
-    approximations \cite{Gregori2009, Fortmann2009d, Fortmann2010a}
-  \item[Required data:]
-  \item[Provided data:]
+    approximations \cite{Gregori2006a, Fortmann2009d, Fortmann2010a}
 \end{description}
 %
+{\scriptsize%
+  \begin{tabular}[ ]{l|l}
+    /data/dynamic/Skw\_bound & Bound electron Compton scattering structure factor \\
+    /data/dynamic/Skw\_free &  Free electron scattering structure factor\\
+    /data/dynamic/Skw\_total & Total scattering structure factor \\
+    /data/dynamic/energy\_shifts & Range of energy shifts spanned by dynamic
+    structure factors \\
+    /data/static/Sk\_core     & Core electron static structure factor \\
+    /data/static/Sk\_free      & Free electron static structure factor \\
+    /data/static/Sk\_ion           & Ion static structure factor \\
+    /data/static/Sk\_total         & Total static structure factor \\
+    /data/static/Wk               & Ion feature $|f+q|^2 S_{ii}(k)$ \\
+    /data/static/debye\_waller     & Debye-Waller factor \\
+    /data/static/fk               & Atomic form factor $f(k)$ \\
+    /data/static/ipl              & Ionization potential lowering \\
+    /data/static/lfc              & Local field factor \\
+    /data/static/qk               & Screening cloud $q(k)$ \\
+  \end{tabular}
+}
 \subsection{Photon Detector (Task 4.1.4)}
-\subsubsection{Pixel area detectors}
+\subsubsection{X-CSIT}
 \begin{description}
-  \item[Backengine:] X-ray camera simulation toolkit X-CSIT \cite{Joy2015}.
   \item[Method:] Combined particle, charge, and electronics simulation
-  \item[Required data:] Intensity or photon distribution at the detector.
-  \item[Provided data:] Detector response to the signal, e.g. photons per pixel in an area detector.
+  \item[Data format (output):] Detector response to the signal, e.g. photons per pixel in an area detector.
 \end{description}
-%%
+{\scriptsize%
+  \begin{tabular}{l|l}
+    \hline
+    \hline
+/data/diffr        & 2D array. Photon count per pixel
+(Poissonized) \\
+/history/parent/detail        &  Details of parent data\\
+/history/parent/parent        & Parent data, hierarchical \\
+/info/package\_version        & Backengine code version \\
+/info/contact        & Support contact \\
+/info/data\_description        & Data documentation \\
+/info/method\_description        & Method documentation \\
+/params/geom/detectorDist        & Detector distance \\
+/params/geom/pixelWidth        & Pixel width (x) \\
+/params/geom/pixelHeight        & Pixel height (y) \\
+/params/geom/mask        & Masked pixels \\
+/params/beam/photonEnergy        & Central photon energy  \\
+/params/beam/photons        & Number of photons in beam \\
+/params/beam/focusArea        & Beam focus area \\
+/params/info        & Input parameter for backengine code \\
+\hline
+\hline
+\end{tabular}
+}%%
 %\subsection{Photon Analysis}
 %Following the detector readout, the recorded raw data has to be analyzed in
 %order to extract the desired information about the target/sample. The specific
