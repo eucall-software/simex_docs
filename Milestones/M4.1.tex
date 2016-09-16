@@ -131,28 +131,39 @@ Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs,\\ Michael Bussmann,
 \section{Introduction}
 The computer program \texttt{simex\_platform} \cite{simex_github} is a modular
 software environment for the simulation of experiments at advanced laser light
-sources. It allows the user to assemble a virtual experiment through combination
-of suitable programs for the light source (e.g. a synchrotron, an x-ray free
-electron laser, or an optical laser), beam transport from the source to the
-sample or target, interaction of the light with the sample or target,
-propagation of the scattered light behind the sample or target, and detection in
-a light detector. \texttt{simex\_platform} comes preloaded with a number of such
-\textit{Calculators}, aimed at the simulation of various typical laser light
-experiments. Furthermore, researchers can replace individual built-in
-\textit{Calculators} by their own codes. In this way, they can embed their codes
+sources. Users can assemble a virtual experiment through combination
+of suitable simulation codes for the various instrumental parts of the
+experiment: the light source (e.g. a synchrotron, an x-ray free
+electron laser), propagation of radiation the source to the
+point of interaction with a sample or target, interaction of the light with the sample,
+propagation of the scattered and trasmitted light after the
+interaction, and detection. By default, \texttt{simex\_platform} is equipped
+with a number of such codes and user interfaces to ease setup and execution of
+simulation runs. A ligthweight abstraction mechanism and interface templates
+makes the integration of further simulation codes straightforward, so users can
+include their own or 3rd party simulation codes in the framework.
+In this way, they can embed their codes
 into a more realistic simulation environment compared to running the code in
-stand-alone fashion with more or less idealized param
+stand-alone fashion with more or less idealized parameters and initial
+conditions.
 
 \subsection{The EUCALL Software repository}
-github, other codes.
+The central access point for all codes, scripts, and documentation in SIMEX is
+the EUCALL software repository at
+\url{https://github.com/eucall-software}. The repository hosts
+the code for \texttt{simex\_platform} at
+\url{https://github.com/eucall-software/simex\_platform} next to a number of code
+projects for various simulation tasks, e.g. short-pulse laser matter interaction
+(\url{https://github.com/eucall-software/picongpu}) and coherent diffraction
+(\url{https://github.com/eucall-software/singfel}). The repository is
+also used for non-software collaborative projects, e.g. publication manuscripts
+and presentations.
 
 \subsection{Software requirements}
-\texttt{simex\_platform} is implemented in the python programming language. To
-ensure support on as many hardware platforms and operating systems as possible,
-we chose python 2.7. The software requirements for
+\texttt{simex\_platform} is implemented in the python programming language
+version 2.7. The software requirements for
 \texttt{simex\_platform} as well as for the backengine calculators that ship
-with it can be found on the github repository \cite{simex_github} and are listed
-in the appendix.
+with it are given in the documentation and in the appendix.
 %
 \section{Modular structure of virtual photon experiments and simulation
   \textit{Calculators}}
@@ -176,7 +187,7 @@ experiment: X-ray photons delivered by a synchrotron or an FEL, scatter from a
 sample (e.g. a crystal), and the scattered or diffracted photons are captured in
 an area detector behind the sample. Other baseline applications are e.g. small
 and wide angle scattering, inelastic x-ray scattering, or x-ray absorption
-spectroscopy. Simulation of experiments that are not directly
+spectroscopy. Simulation of experiments in \texttt{simex\_platform} that are not directly
 representable in this ordered linear pattern are possible but not supported in the same way and
 to the same extent as baseline applications. E.g.
 experiments that involve more than one photon source, or applications where
@@ -188,7 +199,7 @@ A baseline application encapsulates six parts:
 The photon source, the photon transport from the source to the
 experiment, the interaction of photons and matter, propagation of scattered and
 transmitted radiation from the target/sample to the detector, photon
-detection, an data analysis. In \texttt{simex\_platform}
+detection, and data analysis. In \texttt{simex\_platform}
 each of these blocks is represented by a suitable \textit{Calculator}. A
 \textit{Calculator} can be seen as an operator acting on the data representing
 radiation. It reads data from an input, performs a calculation with the data,
@@ -216,9 +227,9 @@ user friendly and opening collaborative opportunities also beyond EUCALL.
 Start-to-end simulations in \texttt{simex\_platform} require that any two
 subsequent \textit{Calculators} employed in the simulation pipeline can
 communicate data amongst each other. The data source has to write the data in a
-format that the data sink can handle and interpret correctly. In
-\texttt{simex\_platform}, we chose the hdf5 \cite{hdf5} hierarchical data format
-as the underlying format for all simulation data files. Data consistency in the
+format that the ensuing data sink can handle and interpret correctly. In
+\texttt{simex\_platform}, we chose the Hierarchical Data Format (hdf5) \cite{HDFGroup1997}
+as the underlying format for all simulation data files.  Data consistency in the
 workflow is realized by each \textit{Calculator} defining the names of hdf
 datasets and attributes that it requires to perform its calculation task and the
 names of all datasets and attributes that it provides to the subsequent
@@ -226,7 +237,11 @@ calculator. In this way, after instantiating the \textit{Calculators} for a
 simulation, the user or a workflow manager can check if the data can be
 channeled through the \textit{Calculators} and give a feedback if there is a
 mismatch between provided and expected data for two subsequent
-\textit{Calculators}.
+\textit{Calculators}. This approach is inherited from the preceding simulation
+framework \texttt{simS2E} \cite{Yoon2016, simS2E_doc}. Recently, we have started
+to adopt a more general approach of defining inter-calculator interfaces based
+on the open standard for particle-mesh data \texttt{openPMD}
+(\url{www.openpmd.org}).
 
 
 \subsection{Backengines}
@@ -240,7 +255,8 @@ wrapped by more than one \textit{Calculator}.
 
 \section{Baseline science applications and required simulation codes}
 An intermediate goal in SIMEX is to enable simulation of three distinct baseline
-experiments. The fowolling tables list the simulation codes (backengines) that
+experiments. The fowolling tables list the simulation codes
+(\textit{backengines}) that
 will be employed for the simulation, as well as relevant references and links to
 further details. The linked sections give a brief description of the numerical and physical
 methods and specify the data interfaces.
@@ -270,8 +286,8 @@ methods and specify the data interfaces.
       Photon detection &  X-CSIT & \cite{Joy2015} &
       \ref{sec:interface_det_xcsit} \\
       %
-      Photon data analysis &  RECON & \cite{Loh2009} &
-      \ref{sec:interface_ana_recon} \\
+      %Photon data analysis &  RECON & \cite{Loh2009} &
+      %\ref{sec:interface_ana_recon} \\
       \hline
       \hline
     \end{tabular}
@@ -293,10 +309,10 @@ methods and specify the data interfaces.
       \cite{Samoylova2016, wpg_github} & \ref{sec:interface_prop_wpg} \\
       %
       Photon-Matter Interaction & PIConGPU
-      & \cite{Bussmann2013} & \ref{sec:interface_pmi_pic} \\
+      & \cite{Bussmann2013} & \ref{sec:interface_pmi_picongpu} \\
       %
-      Photon scattering &  paraTaxis & \cite{parataxis_github} &
-      \ref{sec:interface_diffr_parataxis} \\
+      Photon scattering &  paraTaxis & \cite{Kluge2016b} &
+      \ref{sec:interface_scat_parataxis} \\
       %
       Photon detection &  X-CSIT & \cite{Joy2015} &
       \ref{sec:interface_det_xcsit} \\
@@ -317,38 +333,30 @@ methods and specify the data interfaces.
       \hline
       %
       Photon source & ?? &
-      ?? & \ref{sec:interface_source_esrf} \\
+      ?? & \ref{sec:interface_esrf_source_code} \\
       %
-      Propagation &  Shadow/XRT &
-      \cite{shadow,xrt} & \ref{sec:interface_prop_shadow},
-      \ref{sec:interface_prop_xrt} \\
+      Propagation &  Shadow &
+      \cite{Rio2013} & \ref{sec:interface_prop_shadow}\\
       %
       Photon-Matter Interaction & Esther, Multi2D
-      & \cite{Colombier2005, Ramis2009} & \ref{sec:interface_pmi_radhydro} \\
+      & \cite{Colombier2005, Ramis2009} & \ref{sec:interface_pmi_esther} \\
       %
       Photon absorption &  ?? & \cite{XAFS} &
-      \ref{sec:interface_diffr_xafs} \\
+      \ref{sec:interface_xafs_code} \\
       \hline
       \hline
     \end{tabular}
   }
 
 \end{enumerate}
-
+%
 \section{\textit{Backengines}, \textit{Calculators}, and interfaces}
-We will now list the simulation codes (backengines), the interfaces and
-\textit{Calculators} that have been developed to simulate these experiments.
-
-The EUCALL github repository www.github.com/eucall-software
-is the single-entry point to \texttt{simex\_platform} and its integrated
-\textit{Calculators} plus additional \textit{Backengines} that have not become a
-fully integrated part of \texttt{simex\_platform} yet.
-
 \subsection{Photon source }
 \subsubsection{FAST\label{sec:interface_source_fast}}
 \begin{description}
-  \item[Method:] 3D time resolved explicit solver for SASE FEL radiation
-  \item[Data format (output):]\ \\
+  \item[Method:] 3D time resolved explicit solver
+  \item[Domain:] SASE FEL simulation
+  \item[Data format:]\ \\
 \end{description}
     {\scriptsize%
    \begin{tabular}{l|l}
@@ -375,7 +383,7 @@ fully integrated part of \texttt{simex\_platform} yet.
       /params/wDomain     & time or frequency domain\\
       /params/wEFieldUnit     & Electric field unit \\
       /params/wFloatType    &  field numerical type \\
-      /params/wSpace    &  direct (r-space) or reciprocal (q-space)\\
+      /params/wSpace      &  direct (r-space) or reciprocal (q-space)\\
       /params/xCentre     & x coordinate of wavefront center \\
       /params/yCentre     & y coordinate of wavefront center \\
       /history/parent/info/data\_description     & data documentation \\
@@ -391,10 +399,10 @@ fully integrated part of \texttt{simex\_platform} yet.
     \end{tabular}
       }
 
-\subsubsection{ESRF source code ???}
+      \subsubsection{ESRF source code \label{sec:interface_esrf_source_code}}
 \begin{description}
   \item[Method:] ??
-  \item[Data format (output):]
+  \item[Data format:] ??
 \end{description}
 %
 \subsection{Photon Propagation (Task 4.1.1)}
@@ -402,10 +410,10 @@ Propagates the radiation as described by the photon source calculator from the
 source to the point of interaction with the sample or target under
 investigation. Describes focussing, filtering, pulse shaping, and other optical
 effects realized through lenses, mirrors, apertures, grids etc.
-\subsubsection{WPG/SRW\ref{sec:interface_prop_wpg}}
+\subsubsection{WPG/SRW\label{sec:interface_prop_wpg}}
 \begin{description}
   \item[Method:] Fourier optical wave propagation
-  \item[Data format (output)]:
+  \item[Data format]:
 \end{description}
 {\scriptsize%
 \begin{tabular}{l|l}
@@ -433,7 +441,7 @@ effects realized through lenses, mirrors, apertures, grids etc.
   /params/Rx    &  instantaneous horizontal wavefront radius\\
   /params/Ry    &  instantaneous vertical wavefront radius\\
   /params/dRx     & error in Rx \\
-  /params/dRy     & error on Ry \\
+  /rtreparams/dRy     & error on Ry \\
   /params/nval    &  data type of field values, 2 for complex \\
   /params/photonEnergy    & central photon energy (mean of spectrum) \\
   /params/wDomain     & time or frequency domain\\
@@ -441,11 +449,11 @@ effects realized through lenses, mirrors, apertures, grids etc.
   /params/wFloatType    &  field numerical type \\
   /params/wSpace    &  direct (r-space) or reciprocal (q-space)\\
   /params/xCentre     & x coordinate of wavefront center \\
-  /params/yCentre     & y coordinate of wavefront center \\
-  /info/package\_version        & WPG version \\
+  /params/yCentre                 & y coordinate of wavefront center \\
+  /info/package\_version          & WPG version \\
   /info/contact        & Support contact details \\
-  /info/data\_description        & Data documentation \\
-  /info/method\_description        & Method documentation \\
+  /info/data\_description         & Data documentation \\
+  /info/method\_description       & Method documentation \\
   /misc/xFWHM        & Full width at half maximum of the intensity distribution in horizontal dimension\\
   /misc/yFWHM        & Full width at half maximum of the intensity distribution in
   vertical dimension\\
@@ -454,17 +462,14 @@ effects realized through lenses, mirrors, apertures, grids etc.
   \hline
 \end{tabular}
 }
-
 %
-\subsubsection{ESRF}
+\subsubsection{Shadow\label{sec:interface_prop_shadow}}
 \begin{description}
-  \item[Backengine:] Shadow / Oasys
   \item[Method:] X-ray raytracing
-  \item[Required data:]
-  \item[Provided data:]
+  \item[Domain:] ??
+  \item[Data format:]
 \end{description}
-
-
+%
 \subsection{Photon Interactor (Task 4.1.2)}
 Interaction of the photons with the target or sample. Takes into account
 elementary processes like absorption, emission, scattering of radiation and
@@ -473,9 +478,9 @@ product is the electronic state of the sample/target as a function of time
 during the interaction with the external light source.
 \subsubsection{XMDYNandXATOM\label{sec:interface_pmi_xmdyn}}
 \begin{description}
-  \item[Method:] Molecular Dynamics and ab-initio
-    electronic structure in intense x-ray fields
-  \item[Data format (output):]
+  \item[Method:] Molecular Dynamics and Hartree-Fock electronic structure
+  \item[Domain:] Atoms and Molecules in intense x-ray fields
+  \item[Data format:]
 \end{description}
 {\scriptsize%
 \begin{tabular}{l|l}
@@ -507,51 +512,34 @@ during the interaction with the external light source.
 \end{tabular}
 }
 %
-\subsubsection{High-power laser\label{sec:hpl}}
+\subsubsection{PIConGPU\label{sec:interface_pmi_picongpu}}
 \begin{description}
-  \item[Backengine:] PIConGPU \cite{Bussmann2013}
   \item[Method:] 3D3V Particle-In-Cell (PIC)
-  \item[Required data:] ??
-  \item[Provided data:] ??
+  \item[Data format:] openPMD incl. domiain extension for PIC.
 \end{description}
 %
-\subsubsection{High-energy laser}
+\subsubsection{Esther\label{sec:interface_pmi_esther}}
 \begin{description}
-  \item[Backengine:] Esther
-  \item[Method:] 1-D radiation-hydrodynamics
-  \item[Required data:] ??
-  \item[Provided data:] ??
+  \item[Data format descriptor]: openPMD
 \end{description}
 
 \subsection{Photon Scattering and Diffraction (Task 4.1.3)}
-
-\subsubsection{X-ray absorption fine structure}
+\subsubsection{\textbf{Code for XAFS simulation}\label{sec:interface_xafs_code}}
 \begin{description}
-  \item[Backengine:] ??
   \item[Method:] ??
-  \item[Required data:] ??
-  \item[Provided data:] ??
+  \item[Data format:] ??
 \end{description}
 
-\subsubsection{X-ray radiography}
+\subsubsection{paraTaxis\label{sec:interface_scat_parataxis}}
 \begin{description}
-  \item[Backengine:] Shadow \cite{}
-  \item[Method:] X-ray raytracing
-  \item[Required data:] ??
-  \item[Provided data:] ??
-\end{description}
-\subsubsection{Ex-situ scattering}
-\begin{description}
-  \item[Backengine:] paraTaxis \cite{paraTaxis_github}
-  \item[Method:] MonteCarlo tracing of individual photons
-  \item[Required data:] ??
-  \item[Provided data:] ??
+  \item[Method:] MonteCarlo tracking of individual photons
+  \item[Data format:] openPMD particles
 \end{description}
 
-\subsubsection{singFEL}
+\subsubsection{singFEL\label{sec:interface_diffr_singfel} }
 \begin{description}
-  \item[Method:] 2nd order Born approximation scattering using via electronic form factors.
-  \item[Data format (output)]
+  \item[Method:] 2nd order Born approximation scattering using electronic form factors.
+  \item[Data format:]
 \end{description}
 {\scriptsize%
   \begin{tabular}{l|l}
@@ -580,14 +568,17 @@ during the interaction with the external light source.
 \end{tabular}
 }
 %
-\subsubsection{XRTS code}
+\subsubsection{XRTS code\label{sec:interface_scat_xrts}}
 \begin{description}
   \item[Method:] 2nd Born approximation for differential inelastic scattering cross section for scattering from warm and hot dense plasmas in various
     approximations \cite{Gregori2006a, Fortmann2009d, Fortmann2010a}
+  \item[Domain:] X-ray Thomson Scattering in Dense Plasmas
 \end{description}
 %
 {\scriptsize%
   \begin{tabular}[ ]{l|l}
+    \hline
+    \hline
     /data/dynamic/Skw\_bound & Bound electron Compton scattering structure factor \\
     /data/dynamic/Skw\_free &  Free electron scattering structure factor\\
     /data/dynamic/Skw\_total & Total scattering structure factor \\
@@ -603,13 +594,16 @@ during the interaction with the external light source.
     /data/static/ipl              & Ionization potential lowering \\
     /data/static/lfc              & Local field factor \\
     /data/static/qk               & Screening cloud $q(k)$ \\
+    \hline
+    \hline
   \end{tabular}
 }
 \subsection{Photon Detector (Task 4.1.4)}
-\subsubsection{X-CSIT}
+\subsubsection{X-CSIT\label{sec:interface_det_xcsit}}
 \begin{description}
   \item[Method:] Combined particle, charge, and electronics simulation
-  \item[Data format (output):] Detector response to the signal, e.g. photons per pixel in an area detector.
+  \item[Domain:] Pixel area detectors
+  \item[Data format:]
 \end{description}
 {\scriptsize%
   \begin{tabular}{l|l}
