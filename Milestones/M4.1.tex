@@ -95,9 +95,8 @@ defernumbers=true, backend=biber]{biblatex}
   \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
   \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
 
-\addbibresource{/home/grotec/Documents/LiteratureDB/bibtex/jabref.bib}
-%\addbibresource{/home/carsten/Documents/LiteratureDB/bibtex/jabref.bib}
-%\addbibresource{references.bib}
+%\addbibresource{/home/grotec/Documents/LiteratureDB/bibtex/jabref.bib}
+\addbibresource{references.bib}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END BIBLIOGRAPHY SETTINGS                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -134,10 +133,10 @@ software environment for the simulation of experiments at advanced laser light
 sources. Users can assemble a virtual experiment through combination
 of suitable simulation codes for the various instrumental parts of the
 experiment: the light source (e.g. a synchrotron, an x-ray free
-electron laser), propagation of radiation the source to the
+electron laser), propagation of radiation from the source to the
 point of interaction with a sample or target, interaction of the light with the sample,
 propagation of the scattered and trasmitted light after the
-interaction, and detection. By default, \texttt{simex\_platform} is equipped
+interaction, and detection. We have equipped \texttt{simex\_platform}
 with a number of such codes and user interfaces to ease setup and execution of
 simulation runs. A ligthweight abstraction mechanism and interface templates
 makes the integration of further simulation codes straightforward, so users can
@@ -158,14 +157,8 @@ projects for various simulation tasks, e.g. short-pulse laser matter interaction
 (\url{https://github.com/eucall-software/singfel}). The repository is
 also used for non-software collaborative projects, e.g. publication manuscripts
 and presentations.
-
-\subsection{Software requirements}
-\texttt{simex\_platform} is implemented in the python programming language
-version 2.7. The software requirements for
-\texttt{simex\_platform} as well as for the backengine calculators that ship
-with it are given in the documentation and in the appendix.
 %
-\section{Modular structure of virtual photon experiments and simulation
+\subsection{Modular structure of virtual photon experiments and simulation
   \textit{Calculators}}
 \begin{figure}[ht]
   \begin{center}
@@ -181,10 +174,10 @@ photon experiments, that follow a linear base pattern: The radiation is produced
 in a photon source, propagated through a beamline, it interacts with a sample
 (target), and photons leaving the sample after scattering or emission are
 detected in a photon detector. This linear progression, depicted in
-Fig.~\ref{fig:simex_baseline_workflow} will be referred to as
+Fig.~\ref{fig:simex_baseline_workflow}, will be referred to as
 the simulation  baseline in the following. A typical example is a x-ray diffraction
 experiment: X-ray photons delivered by a synchrotron or an FEL, scatter from a
-sample (e.g. a crystal), and the scattered or diffracted photons are captured in
+sample (e.g. a crystal), and diffracted photons are captured in
 an area detector behind the sample. Other baseline applications are e.g. small
 and wide angle scattering, inelastic x-ray scattering, or x-ray absorption
 spectroscopy. Simulation of experiments in \texttt{simex\_platform} that are not directly
@@ -195,11 +188,11 @@ products from photon-matter interaction (e.g. accelerated electrons or ions) are
 utilized for further interactions, such as laser-plasma based x-ray sources or
 proton radiography using laser accelerated protons.
 
-A baseline application encapsulates six parts:
+A baseline application encapsulates five parts:
 The photon source, the photon transport from the source to the
 experiment, the interaction of photons and matter, propagation of scattered and
-transmitted radiation from the target/sample to the detector, photon
-detection, and data analysis. In \texttt{simex\_platform}
+transmitted radiation from the target/sample to the detector, and photon
+detection. In \texttt{simex\_platform}
 each of these blocks is represented by a suitable \textit{Calculator}. A
 \textit{Calculator} can be seen as an operator acting on the data representing
 radiation. It reads data from an input, performs a calculation with the data,
@@ -238,14 +231,14 @@ simulation, the user or a workflow manager can check if the data can be
 channeled through the \textit{Calculators} and give a feedback if there is a
 mismatch between provided and expected data for two subsequent
 \textit{Calculators}. This approach is inherited from the preceding simulation
-framework \texttt{simS2E} \cite{Yoon2016, simS2E_doc}. Recently, we have started
+framework \texttt{simS2E} \cite{Yoon2016, simS2Edoc}. Recently, we have started
 to adopt a more general approach of defining inter-calculator interfaces based
 on the open standard for particle-mesh data \texttt{openPMD}
 (\url{www.openpmd.org}).
 
 
 \subsection{Backengines}
-The \textit{Calculators} in \texttt{simex\_platform} are mere user interfaces to
+The \textit{Calculators} in \texttt{simex\_platform} are user interfaces to
 software executables or scripts that perform the actual mathematical operations on the
 \textit{Calculator's} input data. In the following, we refer to these
 executables and scripts as the \textit{Backengines}. One \textit{Calculator}
@@ -350,13 +343,13 @@ methods and specify the data interfaces.
 
 \end{enumerate}
 %
-\section{\textit{Backengines}, \textit{Calculators}, and interfaces}
+\section{Listing of SIMEX \textit{Backengines}, and interfaces}
 \subsection{Photon source }
 \subsubsection{FAST\label{sec:interface_source_fast}}
 \begin{description}
   \item[Method:] 3D time resolved explicit solver
   \item[Domain:] SASE FEL simulation
-  \item[Data format:]\ \\
+  \item[Data structure:]\ \\
 \end{description}
     {\scriptsize%
    \begin{tabular}{l|l}
@@ -402,7 +395,7 @@ methods and specify the data interfaces.
       \subsubsection{ESRF source code \label{sec:interface_esrf_source_code}}
 \begin{description}
   \item[Method:] ??
-  \item[Data format:] ??
+  \item[Data structure:] ??
 \end{description}
 %
 \subsection{Photon Propagation (Task 4.1.1)}
@@ -413,7 +406,7 @@ effects realized through lenses, mirrors, apertures, grids etc.
 \subsubsection{WPG/SRW\label{sec:interface_prop_wpg}}
 \begin{description}
   \item[Method:] Fourier optical wave propagation
-  \item[Data format]:
+  \item[Data structure]:
 \end{description}
 {\scriptsize%
 \begin{tabular}{l|l}
@@ -467,7 +460,7 @@ effects realized through lenses, mirrors, apertures, grids etc.
 \begin{description}
   \item[Method:] X-ray raytracing
   \item[Domain:] ??
-  \item[Data format:]
+  \item[Data structure:]
 \end{description}
 %
 \subsection{Photon Interactor (Task 4.1.2)}
@@ -480,7 +473,7 @@ during the interaction with the external light source.
 \begin{description}
   \item[Method:] Molecular Dynamics and Hartree-Fock electronic structure
   \item[Domain:] Atoms and Molecules in intense x-ray fields
-  \item[Data format:]
+  \item[Data structure:]
 \end{description}
 {\scriptsize%
 \begin{tabular}{l|l}
@@ -515,31 +508,36 @@ during the interaction with the external light source.
 \subsubsection{PIConGPU\label{sec:interface_pmi_picongpu}}
 \begin{description}
   \item[Method:] 3D3V Particle-In-Cell (PIC)
-  \item[Data format:] openPMD incl. domiain extension for PIC.
+  \item[Data structure:] openPMD incl. domain extension for PIC.
 \end{description}
 %
 \subsubsection{Esther\label{sec:interface_pmi_esther}}
 \begin{description}
-  \item[Data format descriptor]: openPMD
+  \item[Method:] 1-D radiation hydrodynamics
+  \item[Domain:] Dynamic compression
+  \item[Data structure:] openPMD
 \end{description}
 
 \subsection{Photon Scattering and Diffraction (Task 4.1.3)}
 \subsubsection{\textbf{Code for XAFS simulation}\label{sec:interface_xafs_code}}
 \begin{description}
   \item[Method:] ??
-  \item[Data format:] ??
+  \item[Domain:]
+  \item[Data structure:] ??
 \end{description}
 
 \subsubsection{paraTaxis\label{sec:interface_scat_parataxis}}
 \begin{description}
   \item[Method:] MonteCarlo tracking of individual photons
-  \item[Data format:] openPMD particles
+  \item[Domain:] Ex-situ and in-situ photon scattering from strongly excited
+    plasmas
+  \item[Data structure:] openPMD particles
 \end{description}
 
 \subsubsection{singFEL\label{sec:interface_diffr_singfel} }
 \begin{description}
   \item[Method:] 2nd order Born approximation scattering using electronic form factors.
-  \item[Data format:]
+  \item[Data structure:]
 \end{description}
 {\scriptsize%
   \begin{tabular}{l|l}
@@ -603,7 +601,7 @@ during the interaction with the external light source.
 \begin{description}
   \item[Method:] Combined particle, charge, and electronics simulation
   \item[Domain:] Pixel area detectors
-  \item[Data format:]
+  \item[Data structure:]
 \end{description}
 {\scriptsize%
   \begin{tabular}{l|l}
