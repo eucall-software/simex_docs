@@ -130,7 +130,7 @@ Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs,\\ Michael Bussmann,
 \section{Introduction}
 The computer program \texttt{simex\_platform} \cite{simex_github} is a modular
 software environment for the simulation of experiments at advanced laser light
-sources. Users can assemble a virtual experiment through combination
+sources. Users can assemble a virtual experiment through the combination
 of suitable simulation codes for the various instrumental parts of the
 experiment: the light source (e.g. a synchrotron, an x-ray free
 electron laser), propagation of radiation from the source to the
@@ -138,13 +138,12 @@ point of interaction with a sample or target, interaction of the light with the 
 propagation of the scattered and trasmitted light after the
 interaction, and detection. We have equipped \texttt{simex\_platform}
 with a number of such codes and user interfaces to ease setup and execution of
-simulation runs. A ligthweight abstraction mechanism and interface templates
+simulation runs. A lightweight abstraction mechanism and interface templates
 makes the integration of further simulation codes straightforward, so users can
 include their own or 3rd party simulation codes in the framework.
 In this way, they can embed their codes
-into a more realistic simulation environment compared to running the code in
-stand-alone fashion with more or less idealized parameters and initial
-conditions.
+into a more realistic simulation environment compared to running codes isolated
+with more or less idealized parameters and initial conditions.
 
 \subsection{The EUCALL Software repository}
 The central access point for all codes, scripts, and documentation in SIMEX is
@@ -213,7 +212,7 @@ specialities of each individual \textit{Calculator} are encapsulated in the
 derived classes (green boxes). By providing as much functionality as possible on
 the abstract level, the task of adding a new calculator to the set of existing
 calculators is facilitated to a large degree, making \texttt{simex\_platform}
-user friendly and opening collaborative opportunities also beyond EUCALL.
+user friendly and opening collaborative opportunities, also beyond EUCALL.
 
 
 \subsection{Interfaces}
@@ -248,7 +247,7 @@ wrapped by more than one \textit{Calculator}.
 
 \section{Baseline science applications and required simulation codes}
 An intermediate goal in SIMEX is to enable simulation of three distinct baseline
-experiments. The fowolling tables list the simulation codes
+experiments. The following tables list the simulation codes
 (\textit{backengines}) that
 will be employed for the simulation, as well as relevant references and links to
 further details. The linked sections give a brief description of the numerical and physical
