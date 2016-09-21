@@ -60,13 +60,6 @@
     urlcolor=blue                                                 % color of external links
 }
 
-
-% for fast reference
-\newcommand{\fig}[1]{{figure\,\ref{#1}}}
-\newcommand{\tab}[1]{{table\,\ref{#1}}}
-\newcommand{\eq}[1]{{equation~(\ref{#1})}}
-
-
 % Zeilenabstand
 \renewcommand{\baselinestretch}{1.2}
 
@@ -221,8 +214,10 @@ Table~\ref{tab:short_pulse_laser_parameters}.
 
 \begin{table}[h!]
 \centering
-\begin{tabular}{|l|l|}
-  \hline wavelength & 800 nm \\
+\begin{tabular}{l|l}
+  \hline
+  \hline
+  wavelength & 800 nm \\
   pulse duration (fwhm) & 15 fs - 80 fs \\
   focus size (fwhm)  & 3 $\mu\text{m}$ \\
   temporal profile &  Gaussian \\
@@ -230,6 +225,7 @@ Table~\ref{tab:short_pulse_laser_parameters}.
   pulse energy & 2 mJ \\
   prepulse contrast & $\approx 10^{-4}$ (energy)\\
   intensity  & $10^{17}$ W/cm$^2$ \\
+  \hline
   \hline
 \end{tabular}
 \caption{European XFEL HED pump-probe laser parameters for optical laser-matter interaction
@@ -271,13 +267,15 @@ parameters at the HED instrument at the European XFEL.
 
 \begin{table}[h]
   \centering
-  \begin{tabular}{|l|l|}
+  \begin{tabular}{l|l}
+    \hline
     \hline
     photon energy &  6 keV - 12 keV \\
     pulse duration & $\approx$ 10 fs \\
     focus size (fwhm) & 2 $\mu\text{m}$ - 200 $\mu\text{m}$\\
     rel. bandwidth & 10$^{-3}$ (SASE) - $10^{-5}$ (seeded)\\
     photons/pulse & 10$^{12}$\\
+    \hline
     \hline
   \end{tabular}
   \caption{X-ray pulse parameters for the HED instrument at the European XFEL}
