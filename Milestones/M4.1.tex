@@ -60,13 +60,6 @@
     urlcolor=blue                                                % color of external links
 }
 
-
-% for fast reference
-\newcommand{\fig}[1]{{figure\,\ref{#1}}}
-\newcommand{\tab}[1]{{table\,\ref{#1}}}
-\newcommand{\eq}[1]{{equation~(\ref{#1})}}
-
-
 % Zeilenabstand
 \renewcommand{\baselinestretch}{1.2}
 
@@ -327,13 +320,13 @@ methods and specify the data interfaces.
       Photon source & ?? &
       ?? & \ref{sec:interface_esrf_source_code} \\
       %
-      Propagation &  Shadow &
-      \cite{Rio2013} & \ref{sec:interface_prop_shadow}\\
+      Propagation &  Oasys/ShadowUI &
+      \cite{Rio2014} & \ref{sec:interface_prop_shadow}\\
       %
       Photon-Matter Interaction & Esther, Multi2D
       & \cite{Colombier2005, Ramis2009} & \ref{sec:interface_pmi_esther} \\
       %
-      Photon absorption &  ?? & \cite{XAFS} &
+      Photon absorption &  Demeter & \cite{demeter_github} &
       \ref{sec:interface_xafs_code} \\
       \hline
       \hline
@@ -455,10 +448,10 @@ effects realized through lenses, mirrors, apertures, grids etc.
 \end{tabular}
 }
 %
-\subsubsection{Shadow\label{sec:interface_prop_shadow}}
+\subsubsection{Oasys\label{sec:interface_prop_shadow}}
 \begin{description}
   \item[Method:] X-ray raytracing
-  \item[Domain:] ??
+  \item[Domain:] Synchrotron radiation propagation
   \item[Data structure:]
 \end{description}
 %
