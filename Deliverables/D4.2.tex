@@ -134,14 +134,13 @@ can generate a shockwave in the ablating material. This shock wave can travel th
 and compress the sample material to pressures reaching several hundred GPa. (For comparison, the Earth's core
 pressure is $\sim$ 330 GPa). By using a ramp temporal pulse, where the laser intensity is slowly increased, the temperatures generated remain much cooler than during rapid shock compression and the solid state of matter can be studied up to several TPa (1 TPa = 1000 GPa).
 
-High-power \marginpar{not "high energy" ?} laser facilities are now becoming increasingly in demand at new
-generation x-ray light sources (X-FELs, 3rd generation synchrotron sources). The potential of long pulse laser experiments are already yielding extreme conditions of matter well beyond the reach of static high-pressure techniques and combinations with X-ray techniques provide enticing experiments at new extreme states of matter.
+High-energy laser facilities are now becoming increasingly in demand at new generation x-ray light sources (X-FELs, 3rd generation synchrotron sources). The potential of long pulse laser experiments are already yielding extreme conditions of matter well beyond the reach of static high-pressure techniques and combinations with X-ray techniques provide enticing experiments at new extreme states of matter.
 
 We design here simulations for a prototypical experiment combining a high-energy laser system and x-ray radiation
 from a 3rd generation synchrotron. The laser shock-compresses a tailored solid density target and the compressed
 matter is subsequently probed by x-rays. X-ray absorption spectroscopy (XAS) allows to monitor the compression and
 to characterize the electronic and structural states in the target. Through variation of the delay between optical
-laser pulse and x-ray probe pulse, time resolved data is obtained.
+laser pulse and x-ray probe pulse, time resolved data can also obtained.
 
 \begin{table}
   \centering
@@ -159,7 +158,7 @@ laser pulse and x-ray probe pulse, time resolved data is obtained.
   \label{tab:esrf_parameters}
 \end{table}
 
-The optical laser source, used at the ESRF for shock compression experiments in May/June 2016,  is described through a set of parameters:
+The optical laser source, used at the ESRF for shock compression experiments in May/June 2016,  is described through a set of parameters found in table \ref{tab:esrf_long_pulse}. A call for tender will be issued in 2016 for a new high-energy laser system to be installed at the ESRF, with increased energy (200 J) and frequency doubling crystals.
 \begin{table}
   \centering
   \begin{tabular}{ll}
@@ -178,18 +177,12 @@ Spatial profile & Gaussian in x,y \\
   \label{tab:esrf_long_pulse}
 \end{table}
 
-A call for tender will be issued in 2016 for a new high-energy laser system to be installed at the ESRF, with increased energy (200 J) and
-frequency doubling crystals.
-
 \section{Photon-Matter interaction}
-\subsection{Optical Laser}
+\subsection{Optical Laser \& Hydrocodes}
 Nearly all of the physical processes of long pulse laser-matter interactions are described by partial differential
 equations that can be solved with careful construction of numerical simulation codes. Here, the laser-matter
 interactions are modelled with the 1D radiation-hydrodynamics computer code ``Esther'' \cite{Colombier2005}
 or the 2D code ``MULTI2D'' \cite{Ramis2009}.
-
-Table~\ref{tab:esrf_long_pulse} summarizes the main optical pump laser
-parameters for shock compression experiments at the ESRF.
 
 For the 1D hydrocodes, a moving mesh is applied in an arbitrary Lagrangian-Eulerian framework where the coordinates of
 the mesh contain the variables from which density can be calculated (mass of
@@ -198,16 +191,11 @@ considered in these codes are those associated with the extreme conditions gener
 temperature and velocity. Feedback of these hydrocode outputs are crucial in the design and implementation of laser shock/ramp
 experiments with X-ray interactions.
 
-The X-ray probe duration, during laser shock compression, can range from nanosecond down to femtosecond exposures.
-X-ray pulses for shock compression studies at the ESRF are $\approx$ 100 ps
-long. Table~\ref{tab:esrf_parameters} lists the most important optical laser
-parameters.
-
-It is crucial to have an understanding of shock transit times so that accurate timing of the X-ray probe,
+It is vital to have an understanding of shock transit times so that accurate timing of the X-ray probe,
 with respect to the laser initialisation, can be made. The final density state reached by a shock, as calculated
 from the hydrocode simulation packages, can define the shock velocity.
 
-\subsubsection{Esther}
+\subsection{Hydrocode software}
 The Esther hydrocode was written by Patrick Combis and Laurent Videau of the CEA, Paris, France.
 \footnote{The Esther hydrocode is currently presented in French only.}
 A license to use Esther can be obtained by requesting access (via email) from the authors (for academic use only).
@@ -215,19 +203,29 @@ As part of the \texttt{simex\_platform}, a calculator interface is being develop
 the hydrocode simulations. Esther output can be stored in a openPMD conform hdf5
 file using a conversion tool which is part of \texttt{simex\_platform}.
 
-\subsubsection{MULTI}
 In the MULTI2D hydrocode \cite{Ramis2009},
 the hydrodynamic equations solved by the code are combined with a multigroup method for radiation transport.
+
+\subsubsection{Obtaining sample conditions from raw data with iterative hydrocode analysis}
+In some cases the particle velocity at the interface between sample and window cannot be obtained directly as strong shocks can transform the transparent window to an opaque material. In those instances only the free surface velocity can be obtained by the velocity diagnostics and an iterative Lagrangian analysis (ILA) must be used to determine the sound speed; stress-density information can then be calculated. \textbf{(REFERENCE: S. D. Rothman and J. Maw, "Characteristics analysis of isentropic compression experiments (ice)", J. Phys. IV. France, 134, 745-750 (2006)).} Using the ILA, the velocity-time history during the compression can be obtained from the free surface measurements and from knowledge of the optical laser pulse to x-ray pulse delay, the exact state probed by the x-ray is obtained.  
+
+In the same way that the velocity-time history of the sample can be obtained from rear-surface velocity ILA, the particle velocity measured at the interface can be used to iterate hydrocode laser pulse shapes such that the same velocity-time trace is obtain in the hydrocode. With knowledge of the X-ray probe timing (with respect to the optical laser), the exact condition within the sample during the X-ray probe time can be obtained from the hydrocode, allowing a more robust understanding of the samples state.
 
 \subsection{X-ray matter interaction}
 In the proposed experimental setup, discussed in detail further below, the shock compressed matter is diagnosed by
 X-ray Absorption Fine Structure (XAFS) spectroscopy and radiography. Both techniques can be modeled with appropriate simulation tools as
 described in the following.
 
-In some cases the particle velocity of the interface between sample and window cannot be obtained directly as strong shocks can transform the transparent window to an opaque material. In those instances only the free surface velocity can be obtained by the velocity diagnostics and an iterative Lagrangian analysis (ILA) must be used to determine the sound speed; stress-density information can then be calculated. \textbf{(REFERENCE: S. D. Rothman and J. Maw, "Characteristics analysis of isentropic compression experiments (ice)", J. Phys. IV. France, 134, 745-750 (2006)).} Using the ILA, the velocity-time history during the compression can be obtained from the free surface measurements and from knowledge of the optical laser pulse to x-ray pulse delay, the exact state probed by the x-ray is obtained.  
+The X-ray probe duration, during laser shock compression, can range from nanosecond down to femtosecond exposures.
+X-ray pulses for shock compression studies at the ESRF are $\approx$ 100 ps long. Table~\ref{tab:esrf_parameters} lists the most important X-ray parameters.
+
 \subsection{XAFS}
 The XAFS signal reflects the near order of the shock compressed matter. The absorption edge is modulated by the ion-ion correlation function
 $\Xi(\vec q)$.
+
+
+ 
+
 
 \printbibliography
 \end{document}
