@@ -226,14 +226,18 @@ usage of openPMD as a standard format for rad-hydro codes.
 In the MULTI2D hydrocode \cite{Ramis2009},
 the hydrodynamic equations solved by the code are combined with a multigroup method for radiation transport.
 
-%\subsection{X-ray matter interaction}
-%In the proposed experimental setup, discussed in detail further below, the shock compressed matter is diagnosed by
-%X-ray Absorption Fine Structure (XAFS) spectroscopy and radiography. Both techniques can be modeled with appropriate simulation tools as
-%described in the following.
+\subsection{X-ray matter interaction}
+In the proposed experimental setup, discussed in detail further below, the shock compressed matter is diagnosed by
+X-ray Absorption Fine Structure (XAFS) spectroscopy and radiography. Both techniques can be modeled with appropriate simulation tools as
+described in the following.
 
-%\subsection{XAFS}
-%The XAFS signal reflects the near order of the shock compressed matter. The
-%absorption edge is modulated by the ion-ion correlation function $\chi(\vec q)$.
+In some cases the particle velocity of the interface between sample and window cannot be obtained directly as strong shocks can transform the transparent window to an opaque
+material. In those instances only the free surface velocity can be obtained by the velocity diagnostics and an iterative Lagrangian analysis (ILA) must be used to determine the sound
+speed; stress-density information can then be calculated \cite{Rothman2006}.  Using the ILA, the velocity-time history during the compression can be obtained from the free surface measurements and from knowledge of the optical laser pulse to x-ray pulse delay, the exact state probed by the x-ray is obtained.
+\subsection{XAFS}
+The XAFS signal reflects the near order of the shock compressed matter. The absorption edge is modulated by the ion-ion correlation function
+$\Xi(\vec q)$.
+
 
 \section{Application: Pulse optimization via feedback loop}
 Radiation-hydrodynamic simulations are an indispensable tool to estimate the
@@ -269,6 +273,7 @@ diagnostic signals}
 \end{figure}
 
 
+
 \section{Experimental scenario}
 \begin{figure}[ht]
   \begin{center}
@@ -300,7 +305,6 @@ incorporate the actual pulse generation mechanism, it's capabilities as well as
 it's limitations into the simulation workflow.  This opens an opportunity for
 a cross-workpackage collaboration with the EUCALL workpackage 7 (``Pulse Control and
 ChAracterization -- PUCCA'')).
-
 
 
 
