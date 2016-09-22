@@ -1,4 +1,4 @@
-\documentclass[12pt]{scrartcl}
+\documentclass[10pt]{scrartcl}
 \usepackage{graphicx}
 \usepackage[default]{opensans}
 \usepackage{sfmath} % sans font also for math
@@ -21,7 +21,7 @@
 % custom header and footpage
 \usepackage{scrpage2}
 \pagestyle{scrheadings} % you have to set the custom layout
-\ihead{D4.2: Long Pulse Laser -- Matter Interaction} % left head
+\ihead{} % left head
 \ohead{\includegraphics[height=25mm]{EUCALL.png}}
 \ifoot{\includegraphics[height=13.4mm]{EU.png}} % left foot
 \cfoot{
@@ -33,7 +33,7 @@
     \end{scriptsize}
   \end{minipage}
 } % center foot
-\ofoot{} % right foot
+\ofoot{\thepage} % right foot
 \chead{}
 
 \usepackage{booktabs} % more eye candy for tables
@@ -47,11 +47,12 @@
     pdfmenubar=true,                                              % show Acrobat’s menu?
     pdffitwindow=false,                                           % window fit to page when opened
     pdfstartview={FitH},                                          % fits the width of the page to the window
-    pdftitle={D4.1: Short pulse laser-matter interaction simulations},                                        % title
+    pdftitle={D4.2: Long pulse laser-matter interaction simulations},                                        % title
     pdfauthor={C. Fortmann-Grote},                                           % author
-    pdfsubject={EUCALL WP4 (SIMEX) deliverable 4.1},                             % subject of the document
+    pdfsubject={EUCALL WP4 (SIMEX) deliverable 4.2},                             % subject of the document
     pdfcreator={pdflatex},                                         % creator of the document
-    pdfkeywords={EUCALL, SIMEX, simulations, PIC, XFEL, scattering},                                         % list of keywords
+    pdfkeywords={EUCALL, SIMEX, simulations, Rad-Hydro, XFEL, ESRF, warm dense
+    matter, absorption, radiography},                                         % list of keywords
     pdfnewwindow=true,                                            % links in new PDF window
     colorlinks=true,                                              % false: boxed links; true: colored links
     linkcolor=blue,                                                % color of internal links (change box color with linkbordercolor)
@@ -59,7 +60,6 @@
     filecolor=blue,                                               % color of file links
     urlcolor=blue                                                 % color of external links
 }
-
 
 % Zeilenabstand
 \renewcommand{\baselinestretch}{1.2}
@@ -103,19 +103,55 @@ defernumbers=true, backend=biber]{biblatex}
 \thispagestyle{scrheadings}
 \begin{center}
 $~$\\
-\vspace{2cm}
-\Huge{\textbf{WP 4 -- SIMEX\\[1cm]
-Design Report and Advanced Simulation Software for Long Pulse Laser -- Matter Interaction}}\\[5mm]
-\vspace{2cm}
-\large{
-Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs,\\ Michael Bussmann,
-  Axel Huebl, Thomas Kluge,\\
- S. Pascarelli, Ashutosh Sharma, and Adrian P. Mancuso\\
- }
-\vspace{1cm}
-\@date
+\vspace{0cm}
+{\Large\textbf{EUCALL}\\[2ex]
+The European Cluster of Advanced Laser Light Sources}\\[4ex]
+%
+{\small\textbf{Grant Agreement number: 654220}}\\[8ex]
+%
+Work Package 4 -- SIMEX\\[4ex]
+%
+Deliverable D4.2\\
+%
+Design Report and Advanced Simulation Software -- Long Pulses
+Interaction\\[5ex]
+%
+Lead Beneficiary: European XFEL\\[5ex]
+%
+Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs, Michael Bussmann,
+  Axel Huebl,\\ Thomas Kluge,
+  S. Pascarelli, Ashutosh Sharma, and Adrian P. Mancuso\\[4ex]
+%
+Due data: 30 September 2016\\
+Date of delivery: \today \\[4ex]
+%
+Project webpage: \url{www.eucall.eu}\\[6ex]
+%
+{%
+\small
+\begin{tabular}{|l|l|}
+  \hline
+  \multicolumn{2}{|l|}{ \textit{Deliverable Type} } \\
+  \hline
+  R = Report\hfill & R \\
+  DEM = Demonstrator, pilot, prototype, plan designs & \\
+  DEC = Websites, patens filing, press \& media actions, videos, etc. & \\
+  OTHER = Software, technical diagram, etc. & \\
+  \hline
+  \multicolumn{2}{|l|}{\textit{Dissemination level}} \\
+  \hline
+  PU = Public, fully open, e.g. web & PU \\
+  CO = Confidential, restricted under conditions set out in Model Grant
+  Agreement\hspace*{17ex}\  & \\
+  CI = Classified, information as referred to in Commission Decision 2001/844/EC
+  & \\
+  \hline
+\end{tabular}
+}
+
 \end{center}
-\vfill%
+%
+\vfill
 \includegraphics[width=\textwidth]{./PartnerLogos.pdf}
 \normalfont
 \end{titlepage}
@@ -248,7 +284,9 @@ usage of openPMD as a standard format for rad-hydro codes.
 In the MULTI2D hydrocode \cite{Ramis2009}, the hydrodynamic equations solved by the code are combined with a multigroup method for radiation transport. Multi is installed for unix with the requirement of several back engines (gcc, tcl-tk, gnuplot, pdflib-lite) with the code itself written in Fortran90. A GUI has been developed by the Laboratoire D'Utilisation des Lasers Itenses (LULI) at the Ecole Polytechnique in Paris, France.
 
 \subsubsection{Obtaining sample conditions from raw data with iterative hydrocode analysis}
-In some cases the particle velocity at the interface between sample and window cannot be obtained directly as strong shocks can transform the transparent window to an opaque material. In those instances only the free surface velocity can be obtained by the velocity diagnostics and an iterative Lagrangian analysis (ILA) must be used to determine the sound speed; stress-density information can then be calculated. \textbf{(REFERENCE: S. D. Rothman and J. Maw, "Characteristics analysis of isentropic compression experiments (ice)", J. Phys. IV. France, 134, 745-750 (2006)).} Using the ILA, the velocity-time history during the compression can be obtained from the free surface measurements and from knowledge of the optical laser pulse to x-ray pulse delay, the exact state probed by the x-ray is obtained.
+In some cases the particle velocity of the interface between sample and window cannot be obtained directly as strong shocks can transform the transparent window to an opaque
+material. In those instances only the free surface velocity can be obtained by the velocity diagnostics and an iterative Lagrangian analysis (ILA) must be used to determine the sound
+speed; stress-density information can then be calculated \cite{Rothman2006}.  Using the ILA, the velocity-time history during the compression can be obtained from the free surface measurements and from knowledge of the optical laser pulse to x-ray pulse delay, the exact state probed by the x-ray is obtained.
 
 In the same way that the velocity-time history of the sample can be obtained from rear-surface velocity ILA, the particle velocity measured at the interface can be used to iterate hydrocode laser pulse shapes such that the same velocity-time trace is obtain in the hydrocode. With knowledge of the X-ray probe timing (with respect to the optical laser), the exact condition within the sample during the X-ray probe time can be obtained from the hydrocode, allowing a more robust understanding of the samples state.
 
@@ -260,9 +298,7 @@ described in the following.
 The X-ray probe duration, during laser shock compression, can range from nanosecond down to femtosecond exposures.
 X-ray pulses for shock compression studies at the ESRF are $\approx$ 100 ps long. Table~\ref{tab:esrf_parameters} lists the most important X-ray parameters.
 
-In some cases the particle velocity of the interface between sample and window cannot be obtained directly as strong shocks can transform the transparent window to an opaque
-material. In those instances only the free surface velocity can be obtained by the velocity diagnostics and an iterative Lagrangian analysis (ILA) must be used to determine the sound
-speed; stress-density information can then be calculated \cite{Rothman2006}.  Using the ILA, the velocity-time history during the compression can be obtained from the free surface measurements and from knowledge of the optical laser pulse to x-ray pulse delay, the exact state probed by the x-ray is obtained.
+
 \subsection{XAFS}
 The XAFS signal reflects the near order of the shock compressed matter. The absorption edge is modulated by the ion-ion correlation function
 $\chi(\vec q)$.

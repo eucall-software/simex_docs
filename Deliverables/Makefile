@@ -1,6 +1,10 @@
 SHORT=D4.1
 LONG=D4.2
 
+default: all
+
+all: shortpulse longpulse
+
 shortpulse:
 	pdflatex  ${SHORT}
 	#makeglossaries -s ${SHORT}.ist -t ${SHORT}.glg ${SHORT}.glo
