@@ -195,42 +195,8 @@ on the sample material and target package. Generally, focal spot sizes range
 between $\sim$ 100 $\mu$m up to 1 mm. With these specifications, the laser
 energies now required to reach the highest intensities are on the order of
 hundreds of joules.
-
-We design here simulations for a prototypical experiment combining a high-energy
-laser system and x-ray radiation from a 3rd generation synchrotron. The laser
-shock-compresses a tailored solid density target and the compressed matter is
-subsequently probed by x-rays. X-ray absorption spectroscopy (XAS) allows to
-monitor the compression and to characterize the electronic and structural states
-in the target. Through variation of the delay between optical laser pulse and
-x-ray probe pulse, time resolved data can also obtained.
-
-\begin{table}
-  \centering
-  \begin{tabular}{l|l}
-    \hline
-    \hline
-    Photon energy & 5 keV - 28 keV \\
-    Polarization & horizontal \\
-    Focus size (fwhm) & 3 $\mu$m (5 keV) - 50 $\mu$m (28 keV)\\
-    Pulse length & 100 ps\\
-    Flux  & $1\times 10^{14}$ photons/s (7 keV) - $4\times 10^{13}$ photons/s (28 keV) \\
-    \hline
-    \hline
-  \end{tabular}
-  \caption{Principal x-ray parameters for shock compression studies at ESRF
-  (beamline ID24)}
-  \label{tab:esrf_parameters}
-\end{table}
-\section{Photon-Matter interaction}
-\subsection{Optical Laser}
-Nearly all of the physical processes of long pulse laser-matter interactions are described by partial differential
-equations that can be solved with careful construction of numerical simulation codes. Here, the laser-matter
-interactions are modelled with the 1D radiation-hydrodynamics computer code ``Esther'' \cite{Colombier2005}
-or the 2D code ``MULTI2D'' \cite{Ramis2009}.
-
 Table~\ref{tab:esrf_long_pulse} summarizes the main optical pump laser
 parameters for shock compression experiments at the ESRF.
-
 \begin{table}[h]
   \centering
   \begin{tabular}{l|l}
@@ -250,10 +216,25 @@ Spatial profile & Gaussian in x,y \\
   simulations.}
   \label{tab:esrf_long_pulse}
 \end{table}
-
 A call for tender will be issued in 2016 for a new high-energy laser system to be installed at the ESRF, with increased energy (200 J) and
 frequency doubling crystals.
 
+We design here simulations for a prototypical experiment combining a high-energy
+laser system and x-ray radiation from a 3rd generation synchrotron. The laser
+shock-compresses a tailored solid density target and the compressed matter is
+subsequently probed by x-rays. X-ray absorption spectroscopy (XAS) allows to
+monitor the compression and to characterize the electronic and structural states
+in the target. Through variation of the delay between optical laser pulse and
+x-ray probe pulse, time resolved data can also obtained.
+
+%
+\section{Photon-Matter interaction}
+%
+\subsection{Optical laser and radiation-hydrodynamic codes}
+Nearly all of the physical processes of long pulse laser-matter interactions are described by partial differential
+equations that can be solved with careful construction of numerical simulation codes. Here, the laser-matter
+interactions are modelled with the 1D radiation-hydrodynamics computer code ``Esther'' \cite{Colombier2005}
+or the 2D code ``MULTI2D'' \cite{Ramis2009}.
 For the 1D hydrocodes, a moving mesh is applied in an arbitrary Lagrangian-Eulerian framework where the coordinates of
 the mesh contain the variables from which density can be calculated (mass of
 each zone is fixed). The most important variables
@@ -265,22 +246,23 @@ It is vital to have an understanding of shock transit times so that accurate tim
 with respect to the laser initialisation, can be made. The final density state reached by a shock, as calculated
 from the hydrocode simulation packages, can define the shock velocity.
 
-\subsection{Hydrocode software}
 \subsubsection{Esther}
-The Esther hydrocode was written by Patrick Combis and Laurent Videau of the CEA, Paris, France.
-\footnote{The Esther hydrocode is currently presented in French only.}
+The Esther hydrocode was written by Patrick Combis and Laurent Videau of the
+CEA, Paris, France\footnote{The Esther hydrocode is currently presented in
+French only.}.
 A license to use Esther can be obtained by requesting access (via email) from the authors (for academic use only).
 
 As a necessary step for integration of hydrocode modelling in SIMEX, we have
-developed interfaces Esther. An interactive input file generator sets up
+developed interfaces to Esther. An interactive input file generator sets up
 the configuration files for the hydrocode based on user provided information
 about the target and the laser pulse. After the simulation completed, a
 converter reformats the hydrocode data (pressure, density, temperature, and
 shock velocity as function of space and time) from the native format into an
-openPMD conform hdf5 file. In this context, it is worth mentioning, that a new
-openPMD standard extension is currently being developed to enable facilitate the
+openPMD \cite{openPMD} conform hdf5 file. In this context, it is worth mentioning, that a new
+openPMD standard extension is currently being developed to facilitate the
 usage of openPMD as a standard format for rad-hydro codes.
 
+\subsubsection{MULTI2D}
 In the MULTI2D hydrocode \cite{Ramis2009}, the hydrodynamic equations solved by the code are combined with a multigroup method for radiation transport. Multi is installed for unix with the requirement of several back engines (gcc, tcl-tk, gnuplot, pdflib-lite) with the code itself written in Fortran90. A GUI has been developed by the Laboratoire D'Utilisation des Lasers Itenses (LULI) at the Ecole Polytechnique in Paris, France.
 
 \subsubsection{Obtaining sample conditions from raw data with iterative hydrocode analysis}
@@ -298,10 +280,36 @@ described in the following.
 The X-ray probe duration, during laser shock compression, can range from nanosecond down to femtosecond exposures.
 X-ray pulses for shock compression studies at the ESRF are $\approx$ 100 ps long. Table~\ref{tab:esrf_parameters} lists the most important X-ray parameters.
 
+\begin{table}
+  \centering
+  \begin{tabular}{l|l}
+    \hline
+    \hline
+    Photon energy & 5 keV - 28 keV \\
+    Polarization & horizontal \\
+    Focus size (fwhm) & 3 $\mu$m (5 keV) - 50 $\mu$m (28 keV)\\
+    Pulse length & 100 ps\\
+    Flux  & $1\times 10^{14}$ photons/s (7 keV) - $4\times 10^{13}$ photons/s (28 keV) \\
+    \hline
+    \hline
+  \end{tabular}
+  \caption{Principal x-ray parameters for shock compression studies at ESRF
+  (beamline ID24)}
+  \label{tab:esrf_parameters}
+\end{table}
 
 \subsection{XAFS}
 The XAFS signal reflects the near order of the shock compressed matter. The absorption edge is modulated by the ion-ion correlation function
-$\chi(\vec q)$.
+$\chi(\vec q)$ making it possible to identify the crystalline
+structure in the absorption spectrum. XAFS can be simulated by combining first
+principle electronic structure methods with linear response theory. A well known
+implementation is the non-open source code FEFF \cite{Rehr2009}.
+
+\subsection{Radiography}
+Standard radiography can be used to image e.g. the shock front during dynamical
+compression. The software Oasys \cite{Rio2014}, being a front-end to the ShadowOui raytracing
+software has the capability to calculate radiographs from simulated density
+profiles.
 
 \section{Experimental scenario}
 \begin{figure}[ht]
@@ -327,8 +335,6 @@ the compressed target after a variable time delay. Transmitted x-ray photons are
 detected in a position sensitive Ge detector. The position of the detected
 photon can be converted into photon energy employing the dispersion curve of the
 focussing mirror.
-
-\marginpar{Should discuss novel aspects in a follow-up experiment}
 
 \section{Application: Pulse optimization via feedback loop}
 Radiation-hydrodynamic simulations are an indispensable tool to estimate the
@@ -378,16 +384,19 @@ also beyond EUCALL. It will facilitate integration of radiation-hydrodynamics co
 against experimental data.
 
 \section{Summary}
-We outlined the design for simulations of advanced laser matter-interaction in the context of warm dense matter research. WDM creation is
-simulated using radiation-hydrodynamics to predict the thermodynamic state of the target during the exposure. We use a feedback loop
-to optimize the optical laser pulse shape for low isentrope compression.
+We designed simulations of advanced laser matter-interaction in the context of warm dense matter research. WDM creation is
+simulated using radiation-hydrodynamics to predict the thermodynamic state of
+the target during the exposure. X-ray absorption and radiography diagnostics
+signal will be simulated within the \texttt{simex\_platform} environment. A
+novel aspect is an iterative optimization scheme for pulse shape optimization to
+achieve low isentrope compression required to produce solids at extreme
+conditions of pressure and density at moderate temperatures below melting.
 
-
-
-
-
-
+%
+\newpage
+%
 \printbibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
 
 
