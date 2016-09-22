@@ -136,27 +136,39 @@ Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs,\\ Michael Bussmann,
 \end{abstract}
 %
 \section{Introduction}
-Long pulse laser systems are capable of reaching intensities of up to $\sim 10^{12}$ -- 10$^{15} \text{ W}/\text{cm}^2$ with pulse lengths of
-greater than a few nanoseconds. The pulse length and focal spot of the laser can depend heavily on the sample material and target package.
-Generally, focal spot sizes range between $\sim$ 100 $\mu$m up to 1 mm. With these specifications, the laser energies now required to reach the
-highest intensities are on the order of hundreds of joules.
+High-energy laser facilities are now becoming increasingly in demand at new
+generation x-ray light sources (X-FELs, 3rd generation synchrotron sources). The
+potential of long pulse laser experiments are already yielding extreme
+conditions of matter well beyond the reach of static high-pressure techniques
+and combinations with X-ray techniques provide enticing experiments at new
+extreme states of matter.
 
-Temporally shaped laser pulses interacting with overdense target material create a rapidly expanding plasma that can generate a shockwave in
-the ablating material. This shock wave can travel through the target at several km/s and compress the sample material to pressures reaching
-several hundred GPa. (For comparison, the Earth's core pressure is $\sim$ 330 GPa). By using a ramp temporal pulse, where the laser intensity
-is slowly increased, the temperatures generated remain much cooler than during rapid shock compression and the solid state of matter can be
-studied up to several TPa (1 TPa = 1000 GPa). Such states of matter are often referred to as Warm Dense Matter (WDM).
+Temporally shaped laser pulses interacting with overdense target material create
+a rapidly expanding plasma that can generate a shockwave in the ablating
+material. This shock wave can travel through the target at several km/s and
+compress the sample material to pressures reaching several hundred GPa. (For
+comparison, the Earth's core pressure is $\sim$ 330 GPa). By using a ramp
+temporal pulse, where the laser intensity is slowly increased, the temperatures
+generated remain much cooler than during rapid shock compression and the solid
+state of matter can be studied up to several TPa (1 TPa = 1000 GPa).
 
-High-energy laser facilities are now becoming increasingly in demand at new generation x-ray light sources (X-FELs, 3rd generation synchrotron
-sources). The potential of long pulse laser experiments are already yielding extreme conditions of matter well beyond the reach of static
-high-pressure techniques and combinations with X-ray techniques provide enticing experiments at new extreme states of matter.
+Long pulse laser systems are capable of reaching intensities of up to $\sim
+10^{12}$ -- 10$^{15} \text{ W}/\text{cm}^2$ with pulse lengths of greater than a
+few nanoseconds. The pulse length and focal spot of the laser can depend heavily
+on the sample material and target package. Generally, focal spot sizes range
+between $\sim$ 100 $\mu$m up to 1 mm. With these specifications, the laser
+energies now required to reach the highest intensities are on the order of
+hundreds of joules.
 
-We design here simulations for a prototypical experiment combining a high-energy laser system and x-ray radiation from a 3rd generation
-synchrotron. The laser shock-compresses a tailored solid density target and the compressed matter is subsequently probed by x-rays. X-ray
-absorption spectroscopy (XAS) allows to monitor the compression and to characterize the electronic and structural states in the target. Through
-variation of the delay between optical laser pulse and x-ray probe pulse, time resolved data is obtained.
+We design here simulations for a prototypical experiment combining a high-energy
+laser system and x-ray radiation from a 3rd generation synchrotron. The laser
+shock-compresses a tailored solid density target and the compressed matter is
+subsequently probed by x-rays. X-ray absorption spectroscopy (XAS) allows to
+monitor the compression and to characterize the electronic and structural states
+in the target. Through variation of the delay between optical laser pulse and
+x-ray probe pulse, time resolved data can also obtained.
 
-\begin{table}[h]
+\begin{table}
   \centering
   \begin{tabular}{l|l}
     \hline
@@ -193,7 +205,7 @@ Pulse duration & 4 ns - 15 ns \\
 Intensity & $2\times 10^{13}$ W/cm$^2$ \\
 Pulse energy & 30 J \\
 Focus size (fhwm) & 100 $\mu\text{m}^{2}$ - 300 $\mu\text{m}^{2}$  \\
-Temporal profile  & flat top \\
+Temporal profile  & Quasi-flat top \\
 Spatial profile & Gaussian in x,y \\
     \hline
     \hline
@@ -213,14 +225,11 @@ considered in these codes are those associated with the extreme conditions gener
 temperature and velocity. Feedback of these hydrocode outputs are crucial in the design and implementation of laser shock/ramp
 experiments with X-ray interactions.
 
-The X-ray probe duration, during laser shock compression, can range from nanosecond down to femtosecond exposures.
-X-ray pulses for shock compression studies at the ESRF are $\approx$ 100 ps
-long. Table~\ref{tab:esrf_parameters} lists the most important optical laser
-parameters.
-
-It is crucial to have an understanding of shock transit times so that accurate timing of the X-ray probe,
+It is vital to have an understanding of shock transit times so that accurate timing of the X-ray probe,
 with respect to the laser initialisation, can be made. The final density state reached by a shock, as calculated
 from the hydrocode simulation packages, can define the shock velocity.
+
+\subsection{Hydrocode software}
 \subsubsection{Esther}
 The Esther hydrocode was written by Patrick Combis and Laurent Videau of the CEA, Paris, France.
 \footnote{The Esther hydrocode is currently presented in French only.}
@@ -236,14 +245,20 @@ openPMD conform hdf5 file. In this context, it is worth mentioning, that a new
 openPMD standard extension is currently being developed to enable facilitate the
 usage of openPMD as a standard format for rad-hydro codes.
 
-\subsubsection{MULTI}
-In the MULTI2D hydrocode \cite{Ramis2009},
-the hydrodynamic equations solved by the code are combined with a multigroup method for radiation transport.
+In the MULTI2D hydrocode \cite{Ramis2009}, the hydrodynamic equations solved by the code are combined with a multigroup method for radiation transport. Multi is installed for unix with the requirement of several back engines (gcc, tcl-tk, gnuplot, pdflib-lite) with the code itself written in Fortran90. A GUI has been developed by the Laboratoire D'Utilisation des Lasers Itenses (LULI) at the Ecole Polytechnique in Paris, France.
+
+\subsubsection{Obtaining sample conditions from raw data with iterative hydrocode analysis}
+In some cases the particle velocity at the interface between sample and window cannot be obtained directly as strong shocks can transform the transparent window to an opaque material. In those instances only the free surface velocity can be obtained by the velocity diagnostics and an iterative Lagrangian analysis (ILA) must be used to determine the sound speed; stress-density information can then be calculated. \textbf{(REFERENCE: S. D. Rothman and J. Maw, "Characteristics analysis of isentropic compression experiments (ice)", J. Phys. IV. France, 134, 745-750 (2006)).} Using the ILA, the velocity-time history during the compression can be obtained from the free surface measurements and from knowledge of the optical laser pulse to x-ray pulse delay, the exact state probed by the x-ray is obtained.
+
+In the same way that the velocity-time history of the sample can be obtained from rear-surface velocity ILA, the particle velocity measured at the interface can be used to iterate hydrocode laser pulse shapes such that the same velocity-time trace is obtain in the hydrocode. With knowledge of the X-ray probe timing (with respect to the optical laser), the exact condition within the sample during the X-ray probe time can be obtained from the hydrocode, allowing a more robust understanding of the samples state.
 
 \subsection{X-ray matter interaction}
 In the proposed experimental setup, discussed in detail further below, the shock compressed matter is diagnosed by
 X-ray Absorption Fine Structure (XAFS) spectroscopy and radiography. Both techniques can be modeled with appropriate simulation tools as
 described in the following.
+
+The X-ray probe duration, during laser shock compression, can range from nanosecond down to femtosecond exposures.
+X-ray pulses for shock compression studies at the ESRF are $\approx$ 100 ps long. Table~\ref{tab:esrf_parameters} lists the most important X-ray parameters.
 
 In some cases the particle velocity of the interface between sample and window cannot be obtained directly as strong shocks can transform the transparent window to an opaque
 material. In those instances only the free surface velocity can be obtained by the velocity diagnostics and an iterative Lagrangian analysis (ILA) must be used to determine the sound
@@ -330,6 +345,10 @@ against experimental data.
 We outlined the design for simulations of advanced laser matter-interaction in the context of warm dense matter research. WDM creation is
 simulated using radiation-hydrodynamics to predict the thermodynamic state of the target during the exposure. We use a feedback loop
 to optimize the optical laser pulse shape for low isentrope compression.
+
+
+
+
 
 
 \printbibliography
