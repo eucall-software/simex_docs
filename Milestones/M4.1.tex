@@ -21,8 +21,11 @@
 % custom header and footpage
 \usepackage{scrpage2}
 \pagestyle{scrheadings} % you have to set the custom layout
+% Head
 \ihead{M4.1: Simulation modules and interfaces } % left head
+%\chead{}
 \ohead{\includegraphics[height=25mm]{EUCALL.png}}
+% Foot
 \ifoot{\includegraphics[height=13.4mm]{EU.png}} % left foot
 \cfoot{%
   \begin{minipage}{100mm}%
@@ -33,8 +36,7 @@
     \end{scriptsize}%
   \end{minipage}%
 } % center foot
-\ofoot{} % right foot
-\chead{}
+\ofoot{\thepage} % right foot
 
 \usepackage{booktabs}
 
@@ -49,7 +51,7 @@
     pdfstartview={FitH},                                          % fits the width of the page to the window
     pdftitle={M4.1: Simulation modules and interfaces},           % title
     pdfauthor={C. Fortmann-Grote},                                % author
-    pdfsubject={EUCALL WP4 (SIMEX) Milestone 4.2},                % subject of the document
+    pdfsubject={EUCALL WP4 (SIMEX) Milestone 4.1},                % subject of the document
     pdfcreator={pdflatex},                                        % creator of the document
     pdfkeywords={EUCALL, SIMEX, simulations, PIC, XFEL, scattering},                                         % list of keywords
     pdfnewwindow=true,                                           % links in new PDF window
@@ -114,11 +116,14 @@ Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs,\\ Michael Bussmann,
 \@date
 \end{center}
 \vfill%
-\includegraphics[width=\textwidth]{./PartnerLogos.pdf}
+\includegraphics[width=\textwidth]{PartnerLogos.pdf}
 \normalfont
 \end{titlepage}
 \makeatother
-
+%
+\tableofcontents
+%
+\newpage
 %
 \section{Introduction}
 The computer program \texttt{simex\_platform} \cite{simex_github} is a modular
@@ -161,7 +166,7 @@ and presentations.
   \label{fig:simex_baseline_workflow}
 \end{figure}
 
-In it's current state, \texttt{simex\_platform} supports simulation of
+In its current state, \texttt{simex\_platform} supports simulation of
 photon experiments, that follow a linear base pattern: The radiation is produced
 in a photon source, propagated through a beamline, it interacts with a sample
 (target), and photons leaving the sample after scattering or emission are
@@ -174,7 +179,7 @@ an area detector behind the sample. Other baseline applications are e.g. small
 and wide angle scattering, inelastic x-ray scattering, or x-ray absorption
 spectroscopy. Simulation of experiments in \texttt{simex\_platform} that are not directly
 representable in this ordered linear pattern are possible but not supported in the same way and
-to the same extent as baseline applications. E.g.
+to the same extent as baseline applications. For example,
 experiments that involve more than one photon source, or applications where
 products from photon-matter interaction (e.g. accelerated electrons or ions) are
 utilized for further interactions, such as laser-plasma based x-ray sources or
@@ -308,7 +313,7 @@ methods and specify the data interfaces.
   }
 
   \item Warm dense matter production through high energy laser shock compression
-    and x-ray absorption diagnostics (ESRF, beamline ID24)\label{baseline_application_wdm}\\
+    and x-ray radiography diagnostics (ESRF, beamline ID24)\label{baseline_application_wdm}\\
     {\scriptsize%
     \begin{tabular}{l|l|l|l}
       \hline
@@ -317,17 +322,14 @@ methods and specify the data interfaces.
       & \textbf{References} & \textbf{Details} \\
       \hline
       %
-      Photon source & ?? &
-      ?? & \ref{sec:interface_esrf_source_code} \\
-      %
       Propagation &  Oasys/ShadowUI &
       \cite{Rio2014} & \ref{sec:interface_prop_shadow}\\
       %
       Photon-Matter Interaction & Esther, Multi2D
       & \cite{Colombier2005, Ramis2009} & \ref{sec:interface_pmi_esther} \\
       %
-      Photon absorption &  Demeter & \cite{demeter_github} &
-      \ref{sec:interface_xafs_code} \\
+      Radiography & Oasys/ShadowOui & \cite{Rio2014} &
+      \ref{sec:interface_prop_shadow} \\
       \hline
       \hline
     \end{tabular}
@@ -336,13 +338,15 @@ methods and specify the data interfaces.
 \end{enumerate}
 %
 \section{Listing of SIMEX \textit{Backengines}, and interfaces}
+This section gives more detailed information about the simulation codes used in
+SIMEX, their data interfaces as well as graphical representations of simulation data to demonstrate their
+functionality.
 \subsection{Photon source }
 \subsubsection{FAST\label{sec:interface_source_fast}}
 \begin{description}
   \item[Method:] 3D time resolved explicit solver
   \item[Domain:] SASE FEL simulation
   \item[Data structure:]\ \\
-\end{description}
     {\scriptsize%
    \begin{tabular}{l|l}
       \hline
@@ -383,12 +387,21 @@ methods and specify the data interfaces.
       \hline
     \end{tabular}
       }
+    \item[Example data:]\ \\[2ex]
+        \begin{center}
+          \includegraphics[width=0.5\textwidth,angle=0,clip]{figures/felsource_demo}
+        \end{center}
+        \scriptsize{FEL source calculation using the code FAST: Horizontal
+        component of electric field distribution near pulse center in a plane perpendicular to
+      propagation direction at undulator exit in SASE 1 beamline at the European
+      XFEL \cite{xpd_xfel}.}
+    \end{description}
 
-      \subsubsection{ESRF source code \label{sec:interface_esrf_source_code}}
-\begin{description}
-  \item[Method:] ??
-  \item[Data structure:] ??
-\end{description}
+%\subsubsection{ESRF source code \label{sec:interface_esrf_source_code}}
+%\begin{description}
+  %\item[Method:] ??
+  %\item[Data structure:] ??
+%\end{description}
 %
 \subsection{Photon Propagation (Task 4.1.1)}
 Propagates the radiation as described by the photon source calculator from the
@@ -398,8 +411,7 @@ effects realized through lenses, mirrors, apertures, grids etc.
 \subsubsection{WPG/SRW\label{sec:interface_prop_wpg}}
 \begin{description}
   \item[Method:] Fourier optical wave propagation
-  \item[Data structure]:
-\end{description}
+  \item[Data structure:]\ \\
 {\scriptsize%
 \begin{tabular}{l|l}
   \hline
@@ -447,12 +459,23 @@ effects realized through lenses, mirrors, apertures, grids etc.
   \hline
 \end{tabular}
 }
+\item[Example data:]\ \\
+      \begin{center}
+        \includegraphics[width=0.5\textwidth,angle=0,clip]{figures/wpg_demo}
+      \end{center}
+      \scriptsize{Propagation of source wavefront as calculated by WPG: Horizontal
+      component of electric field distribution near pulse center in plane perpendicular to
+    propagation direction at sample positon in the SPB-SFX instrument at
+    European XFEL.}
+\end{description}
+
 %
 \subsubsection{Oasys\label{sec:interface_prop_shadow}}
 \begin{description}
   \item[Method:] X-ray raytracing
   \item[Domain:] Synchrotron radiation propagation
-  \item[Data structure:]
+  \item[Data structure:] See Ref.~\cite{Rio2014}
+  \item[Example data:] See Ref.~\cite{Rio2014}
 \end{description}
 %
 \subsection{Photon Interactor (Task 4.1.2)}
@@ -465,8 +488,7 @@ during the interaction with the external light source.
 \begin{description}
   \item[Method:] Molecular Dynamics and Hartree-Fock electronic structure
   \item[Domain:] Atoms and Molecules in intense x-ray fields
-  \item[Data structure:]
-\end{description}
+  \item[Data structure:]\ \\
 {\scriptsize%
 \begin{tabular}{l|l}
   \hline
@@ -496,11 +518,26 @@ during the interaction with the external light source.
   \hline
 \end{tabular}
 }
+\item[Example data:]\ \\
+      \begin{center}
+        \includegraphics[width=0.5\textwidth,angle=0,clip]{pmi_3fs.pdf}
+      \end{center}
+      \scriptsize{Photon-matter calculation using XMDYNandXMATOM:
+        3 fs XFEL pulses (5 keV photon energy) (power vs time, top panel), average displacement, and average ionization
+        (bottom) for the irradiated 2NIP molecule \cite{Schlessman1998, Fortmann-Grote2016b}.}
+\end{description}
 %
 \subsubsection{PIConGPU\label{sec:interface_pmi_picongpu}}
 \begin{description}
   \item[Method:] 3D3V Particle-In-Cell (PIC)
   \item[Data structure:] openPMD incl. domain extension for PIC.
+  \item[Example data:]\ \\
+      \begin{center}
+        \includegraphics[width=0.5\textwidth,angle=0,clip]{bussmann_saxs_instabilities.pdf}
+      \end{center}
+      \scriptsize{PIConGPU calculations of electron densitiy (top) and
+        corresponding Small Angle X-ray Scattering signals (bottom) from high power laser -- matter
+    interaction.}
 \end{description}
 %
 \subsubsection{Esther\label{sec:interface_pmi_esther}}
@@ -508,15 +545,19 @@ during the interaction with the external light source.
   \item[Method:] 1-D radiation hydrodynamics
   \item[Domain:] Dynamic compression
   \item[Data structure:] openPMD
+  \item[Example data:] \ \\
+    \includegraphics[width=0.5\textwidth,angle=0,clip]{esther_demo}\\
+    \scriptsize{Shock front simulation using Esther: Pressure vs. distance after
+    high energy -- solid matter (iron) interaction.}
 \end{description}
 
-\subsection{Photon Scattering and Diffraction (Task 4.1.3)}
-\subsubsection{\textbf{Code for XAFS simulation}\label{sec:interface_xafs_code}}
-\begin{description}
-  \item[Method:] ??
-  \item[Domain:]
-  \item[Data structure:] ??
-\end{description}
+%\subsection{Photon Scattering and Diffraction (Task 4.1.3)}
+%\subsubsection{\textbf{Code for XAFS simulation}\label{sec:interface_xafs_code}}
+%\begin{description}
+  %\item[Method:] ??
+  %\item[Domain:]
+  %\item[Data structure:] ??
+%\end{description}
 
 \subsubsection{paraTaxis\label{sec:interface_scat_parataxis}}
 \begin{description}
@@ -524,13 +565,13 @@ during the interaction with the external light source.
   \item[Domain:] Ex-situ and in-situ photon scattering from strongly excited
     plasmas
   \item[Data structure:] openPMD particles
+  \item[Demonstraction data:] See \ref{sec:interface_pmi_picongpu}
 \end{description}
 
 \subsubsection{singFEL\label{sec:interface_diffr_singfel} }
 \begin{description}
   \item[Method:] 2nd order Born approximation scattering using electronic form factors.
-  \item[Data structure:]
-\end{description}
+  \item[Data structure:]\ \\
 {\scriptsize%
   \begin{tabular}{l|l}
     \hline
@@ -557,14 +598,19 @@ during the interaction with the external light source.
 \hline
 \end{tabular}
 }
+    \item[Example data:]\ \\
+      \begin{center}
+        \includegraphics[width=0.5\textwidth,angle=0,clip]{diffr_demo}
+      \end{center}
+      \scriptsize{Simulated diffraction intensity distribution using singFEL. }
+\end{description}
 %
 \subsubsection{XRTS code\label{sec:interface_scat_xrts}}
 \begin{description}
   \item[Method:] 2nd Born approximation for differential inelastic scattering cross section for scattering from warm and hot dense plasmas in various
     approximations \cite{Gregori2006a, Fortmann2009d, Fortmann2010a}
   \item[Domain:] X-ray Thomson Scattering in Dense Plasmas
-\end{description}
-%
+  \item[Data structure:]\ \\
 {\scriptsize%
   \begin{tabular}[ ]{l|l}
     \hline
@@ -588,13 +634,21 @@ during the interaction with the external light source.
     \hline
   \end{tabular}
 }
+\item[Example data:]\ \\
+      \begin{center}
+        \includegraphics[width=0.5\textwidth,angle=0,clip]{Skw_TCS-DH-RPA.pdf}
+      \end{center}
+      \scriptsize{Simulated X-ray Thomson Scattering spectra using various ion-ion
+      structure factor models for two electron densities. Scattered intensity as
+    function of energy shift, simulated with XRTS code.}
+\end{description}
+%
 \subsection{Photon Detector (Task 4.1.4)}
 \subsubsection{X-CSIT\label{sec:interface_det_xcsit}}
 \begin{description}
   \item[Method:] Combined particle, charge, and electronics simulation
   \item[Domain:] Pixel area detectors
-  \item[Data structure:]
-\end{description}
+  \item[Data structure:]\ \\
 {\scriptsize%
   \begin{tabular}{l|l}
     \hline
@@ -618,26 +672,15 @@ during the interaction with the external light source.
 \hline
 \hline
 \end{tabular}
-}%%
-%\subsection{Photon Analysis}
-%Following the detector readout, the recorded raw data has to be analyzed in
-%order to extract the desired information about the target/sample. The specific
-%algorithms depend largely on the details of the experiment and the underlying
-%questions. Here, we discuss the analysis steps to be taken in a single particle
-%diffractive imaging experiment.
-%\begin{description}
-  %\item[Abstract calculator:] AbstractPhotonAnalyzer
-  %\item[Physics:]  Analysis of raw detector data. In SPI, the electron density
-    %of the sample is reconstructed by assembling a 3D diffraction volume
-    %from measured 2D diffraction patterns and subsequent phasing of the data to
-    %solve the inverse scattering problem.
-  %\item[Input data:] Detector response (raw data)
-  %\item[Output data:] Reduced data to describe the investigated processes in the target/sample.
-  %\item[Backengine:] Expand-Maximize-Compress (EMC)  for orientation,
-    %Difference-Map for phasing \cite{Loh2009, s2e_recon_bitbucket}.
-%\end{description}
-
+}
+\item[Example data:] See Ref.~\cite{Joy2015}.
+\end{description}
+%
+\newpage
+%
 \printbibliography
+%
+%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
 
 
