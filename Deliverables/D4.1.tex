@@ -60,13 +60,6 @@
     urlcolor=blue                                                 % color of external links
 }
 
-
-% for fast reference
-\newcommand{\fig}[1]{{figure\,\ref{#1}}}
-\newcommand{\tab}[1]{{table\,\ref{#1}}}
-\newcommand{\eq}[1]{{equation~(\ref{#1})}}
-
-
 % Zeilenabstand
 \renewcommand{\baselinestretch}{1.2}
 
@@ -110,9 +103,11 @@ defernumbers=true, backend=biber]{biblatex}
 \begin{center}
 $~$\\
 \vspace{2cm}
-\Huge{\textbf{Design Report and Advanced Simulation Software for Short Pulse Laser -- Matter Interaction}}\\[5mm]
+\Huge{\textbf{WP 4 -- SIMEX\\[1cm]Design Report and Advanced Simulation Software for Short Pulse Laser -- Matter Interaction}}\\[5mm]
+%\vspace{2cm}
+%\large{Deliverable D4.1\\}
 \vspace{2cm}
-\large{
+\large{%
 Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs,\\ Michael Bussmann,
   Axel Huebl, Thomas Kluge,\\
  S. Pascarelli, Ashutosh Sharma, and Adrian P. Mancuso\\
@@ -120,7 +115,7 @@ Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs,\\ Michael Bussmann,
 \vspace{1cm}
 \@date
 \end{center}
-\vspace{5cm}
+\vfill
 \includegraphics[width=\textwidth]{./PartnerLogos.pdf}
 \normalfont
 \end{titlepage}
@@ -145,9 +140,9 @@ Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs,\\ Michael Bussmann,
 %
 \section{Introduction} Ultrashort pulsed high power lasers (HPLs) typically deliver laser
 pulses in the infrared (800~nm to 1000~nm) at pulse durations below one
-picosecond. Todays high power lasers \cite{Siebold2008} can reach intensities of
+picosecond. Today's high power lasers \cite{Siebold2008} can reach intensities of
 up to $10^{21}~\text{W}/\text{cm}^2$ on spot sizes of a few microns and pulse
-durations on the order of a few ten femtoseconds.
+durations on the order of a few tens of femtoseconds.
 
 Despite their intensity, these sources usually do not penetrate a solid density
 target but rather create a plasma at the target front side, accelerating
@@ -165,12 +160,12 @@ bulk~\cite{Huang2013}, generate strong magnetic fields or drive shocks inside
 the target.
 
 These phenomena can potentially be studied with high spatial resolution of a few
-nanometer and temporal resolution of a few femtoseconds using x-ray
+nanometers and temporal resolutions of a few femtoseconds using x-ray
 lasers~\cite{Kluge2014,Kluge2016} such as the European X-Ray Free Electron
 Laser (XFEL).
 
-The particle-in-cell (PIC) method~\cite{Birdsall2004} an advanced simulation
-method to study the interaction of an HPL with a solid density
+The particle-in-cell (PIC) method~\cite{Birdsall2004} is an advanced simulation
+method to study the interaction of a HPL with a solid density
 target. Realistic 3D PIC simulations of laser-irradiated solid
 density plasmas require Petascale computing capabilities and produce hundreds of
 Terabytes of data~\cite{ornl_picongpu}.
@@ -210,28 +205,33 @@ optical laser-plasma interaction is modeled with \texttt{PIConGPU}
 \cite{Bussmann2013}.
 
 \texttt{PIConGPU} is an Open Source~\cite{picongpu_github} explicit,
-relativistic 3D3V particle-in-cell (\texttt{PIC}) code which can simulate the
+relativistic 3D3V\footnote{3D3V denotes the 6 dimensional phase space spanned by 3 position
+vector components and three velocity vector components} particle-in-cell (\texttt{PIC}) code which can simulate the
 interaction of high power, ultra-short laser pulses with matter.  The
 simulations will assume realistic parameters for the optical laser system at the
 HED instrument at European XFEL. The most important parameters are summarized in
 Table~\ref{tab:short_pulse_laser_parameters}.
-\begin{table}[h]
+
+\begin{table}[h!]
 \centering
-\begin{tabular}{|l|l|}
-  \hline wavelength & 800 nm \\
-  pulse duration (fwhm) & 15 - 80 \\
+\begin{tabular}{l|l}
+  \hline
+  \hline
+  wavelength & 800 nm \\
+  pulse duration (fwhm) & 15 fs - 80 fs \\
   focus size (fwhm)  & 3 $\mu\text{m}$ \\
   temporal profile &  Gaussian \\
   spatial profile &  Gaussian \\
   pulse energy & 2 mJ \\
-  intensity  & $1\times 10^{17}$ W/cm$^2$ \\
+  prepulse contrast & $\approx 10^{-4}$ (energy)\\
+  intensity  & $10^{17}$ W/cm$^2$ \\
+  \hline
   \hline
 \end{tabular}
 \caption{European XFEL HED pump-probe laser parameters for optical laser-matter interaction
 simulations}
 \label{tab:short_pulse_laser_parameters}
 \end{table}
-
 
 HPL pulses are defined by their time dependent
 magnetic and electric field components. Their evolution is governed by the
@@ -262,9 +262,13 @@ distribution in a plane perpendicular to the laser axis is converted into a
 photon distribution using a conversion tool contained in
 \texttt{simex\_platform}. These photons are then tracked through the volume simulated by
 \texttt{PIConGPU} using the software \texttt{parataxis}.
+Table~\ref{tab:xfel_sase2} gives an overview over the expected x-ray pulse
+parameters at the HED instrument at the European XFEL.
+
 \begin{table}[h]
   \centering
-  \begin{tabular}{|l|l|}
+  \begin{tabular}{l|l}
+    \hline
     \hline
     photon energy &  6 keV - 12 keV \\
     pulse duration & $\approx$ 10 fs \\
@@ -272,12 +276,11 @@ photon distribution using a conversion tool contained in
     rel. bandwidth & 10$^{-3}$ (SASE) - $10^{-5}$ (seeded)\\
     photons/pulse & 10$^{12}$\\
     \hline
+    \hline
   \end{tabular}
   \caption{X-ray pulse parameters for the HED instrument at the European XFEL}
   \label{tab:xfel_sase2}
 \end{table}
-Table~\ref{tab:xfel_sase2} gives an overview over the expected x-ray pulse
-parameters at the HED instrument at the European XFEL.
 
 In describing the interaction of coherent x-rays with the laser excited plasma,
 we focus on scattering processes, predominantly Thomson scattering from free
@@ -319,7 +322,8 @@ library \cite{liblifft_github} and can be performed in a post processing step on
 \texttt{simex\_platform} is currently under discussion.
 
 Ex-situ scattering is performed by the \texttt{paraTAXIS} code.
-The code is still in closed source development and will be released as open source, soon.
+The code is still in closed source development and is planned to be released as open
+source within the EUCALL funding period.
 It uses the same libraries and
 techniques as \texttt{PIConGPU}. Specifically, it can read
 \texttt{openPMD}~\cite{openPMD} files via
@@ -376,7 +380,7 @@ pulse generation and propagation is modeled in \texttt{simex\_platform} with the
 corresponding simulation codes. The simulated wavefronts are evaluated at the
 target surface and converted into a photon distribution. The photons are then
 propagated through the target. At discrete timesteps, each photon's wavevector
-undergoes a change in magnitude and direction \marginpar{correct?} with a
+undergoes a change in magnitude and direction with a
 certain probability, given by the Thomson scattering cross section
 \cite{Jackson1975}. In this way, multiple scattering events that become
 important especially in compressed regions of the target, are naturally
@@ -388,7 +392,7 @@ and integrated over the exposure time to obtain the simulated scattering image.
 %
 \begin{figure}[ht]
   \begin{center}
-    \includegraphics[width=1.0\textwidth,angle=0,clip]{bussmann_saxs_setup}
+    \includegraphics[width=1.0\textwidth,angle=0,clip, viewport=0 30 700 480]{bussmann_saxs_setup}
   \end{center}
   \caption{Schematic rendering of the proposed experiment to be simulated.
   Ultrashort pulsed optical laser radiation (red beam) creates a plasma layer on
@@ -439,7 +443,8 @@ different types of plasma instabilities~\cite{Kluge2014}.
 It should be noted that these simulations make idealistic assumptions about the
 properties of the x-ray probe. An important aspect of this work is the question
 if the observed characteristics will remain so clearly distinct if realistic
-simulated pulses are employed in the scattering simulation.
+simulated pulses are employed in the scattering simulation. Comparison to experimental
+data will serve as a validation check of the simulation chain.
 
 \section{Synergy aspects}
 
@@ -450,7 +455,7 @@ and x-ray detectors.
 In bringing together knowledge and expertise from the high-power
 laser-matter interaction community, x-ray optics, and small angle x-ray
 scattering, we create unique opportunities for exploring the parameters
-at which to best perform the outlined experiment.
+at which to best perform the outlined experiment and others of similar character.
 
 As a synergetic byproduct of the simulations outlined above, a
 novel application for \texttt{simex\_platform} has emerged,
@@ -480,7 +485,7 @@ scientists to develop precise and realistic concepts for such a laser based FEL.
 %assess the reliability of the phasing algorithm under given realistic
 %experimental condition. \marginpar{What else would be of interest here?}
 \section{Summary and Outlook}
-In this report we have layed out concepts for the simulation of a small-angle
+In this report we have outlined concepts for the simulation of a small-angle
 x-ray scattering experiment probing the interaction of solid density matter
 (e.g. a metal foil) with ultrashort (femtosecond) high power optical laser
 radiation. The simulations describe all parts of the experiment by exploiting
@@ -496,7 +501,7 @@ is simulated with the particle-in-cell code PIConGPU. Photons
 escaping the target from the rear side are finally propagated to the detector
 plane, where a scattering image is synthesized. These simulations allow to
 assess the influence of realistic x-ray pulse properties on the quality of the
-scattering signal. We can test if the disambiguation of various plasma
+scattering signal. We can test if the identification of plasma
 instabilities through characteristics of the scattering signal works under real
 world scenarios.
 The experiment we propose is designed around the expected optical and x-ray
