@@ -1,4 +1,4 @@
-\documentclass[12pt]{scrartcl}
+\documentclass[10pt]{scrartcl}
 \usepackage{graphicx}
 \usepackage[default]{opensans}
 \usepackage{sfmath} % sans font also for math
@@ -21,7 +21,7 @@
 % custom header and footpage
 \usepackage{scrpage2}
 \pagestyle{scrheadings} % you have to set the custom layout
-\ihead{D4.1: Short Pulse Laser -- Matter Interaction} % left head
+\ihead{} % left head
 \ohead{\includegraphics[height=25mm]{EUCALL.png}}
 \ifoot{\includegraphics[height=13.4mm]{EU.png}} % left foot
 \cfoot{
@@ -33,7 +33,7 @@
     \end{scriptsize}
   \end{minipage}
 } % center foot
-\ofoot{} % right foot
+\ofoot{\thepage} % right foot
 \chead{}
 
 \usepackage{booktabs} % more eye candy for tables
@@ -102,19 +102,54 @@ defernumbers=true, backend=biber]{biblatex}
 \thispagestyle{scrheadings}
 \begin{center}
 $~$\\
-\vspace{2cm}
-\Huge{\textbf{WP 4 -- SIMEX\\[1cm]Design Report and Advanced Simulation Software for Short Pulse Laser -- Matter Interaction}}\\[5mm]
-%\vspace{2cm}
-%\large{Deliverable D4.1\\}
-\vspace{2cm}
-\large{%
-Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs,\\ Michael Bussmann,
-  Axel Huebl, Thomas Kluge,\\
- S. Pascarelli, Ashutosh Sharma, and Adrian P. Mancuso\\
- }
-\vspace{1cm}
-\@date
+\vspace{0cm}
+{\Large\textbf{EUCALL}\\[2ex]
+The European Cluster of Advanced Laser Light Sources}\\[4ex]
+%
+{\small\textbf{Grant Agreement number: 654220}}\\[8ex]
+%
+Work Package 4 -- SIMEX\\[4ex]
+%
+Deliverable D4.1\\
+%
+Design Report and Advanced Simulation Software -- Short Pulses
+Interaction\\[5ex]
+%
+Lead Beneficiary: European XFEL\\[5ex]
+%
+Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs, Michael Bussmann,
+  Axel Huebl,\\ Thomas Kluge,
+  S. Pascarelli, Ashutosh Sharma, and Adrian P. Mancuso\\[4ex]
+%
+Due data: 30 September 2016\\
+Date of delivery: \today \\[4ex]
+%
+Project webpage: \url{www.eucall.eu}\\[6ex]
+%
+{%
+\small
+\begin{tabular}{|l|l|}
+  \hline
+  \multicolumn{2}{|l|}{ \textit{Deliverable Type} } \\
+  \hline
+  R = Report\hfill & R \\
+  DEM = Demonstrator, pilot, prototype, plan designs & \\
+  DEC = Websites, patens filing, press \& media actions, videos, etc. & \\
+  OTHER = Software, technical diagram, etc. & \\
+  \hline
+  \multicolumn{2}{|l|}{\textit{Dissemination level}} \\
+  \hline
+  PU = Public, fully open, e.g. web & PU \\
+  CO = Confidential, restricted under conditions set out in Model Grant
+  Agreement\hspace*{17ex}\  & \\
+  CI = Classified, information as referred to in Commission Decision 2001/844/EC
+  & \\
+  \hline
+\end{tabular}
+}
+
 \end{center}
+%
 \vfill
 \includegraphics[width=\textwidth]{./PartnerLogos.pdf}
 \normalfont
