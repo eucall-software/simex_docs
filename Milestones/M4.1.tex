@@ -133,7 +133,7 @@ of suitable simulation codes for the various instrumental parts of the
 experiment: the light source (e.g. a synchrotron, an x-ray free
 electron laser), propagation of radiation from the source to the
 point of interaction with a sample or target, interaction of the light with the sample,
-propagation of the scattered and trasmitted light after the
+propagation of the scattered and transmitted light after the
 interaction, and detection. We have equipped \texttt{simex\_platform}
 with a number of such codes and user interfaces to ease setup and execution of
 simulation runs. A lightweight abstraction mechanism and interface templates
@@ -301,7 +301,7 @@ methods and specify the data interfaces.
       Photon-Matter Interaction & PIConGPU
       & \cite{Bussmann2013} & \ref{sec:interface_pmi_picongpu} \\
       %
-      Photon scattering &  paraTaxis & \cite{Kluge2016b} &
+      Photon scattering &  paraTAXIS & \cite{Kluge2016b} &
       \ref{sec:interface_scat_parataxis} \\
       %
       Photon detection &  X-CSIT & \cite{Joy2015} &
@@ -465,7 +465,7 @@ effects realized through lenses, mirrors, apertures, grids etc.
       \end{center}
       \scriptsize{Propagation of source wavefront as calculated by WPG: Horizontal
       component of electric field distribution near pulse center in plane perpendicular to
-    propagation direction at sample positon in the SPB-SFX instrument at
+    propagation direction at sample position in the SPB-SFX instrument at
     European XFEL.}
 \end{description}
 
@@ -524,7 +524,7 @@ during the interaction with the external light source.
       \end{center}
       \scriptsize{Photon-matter calculation using XMDYNandXMATOM:
         3 fs XFEL pulses (5 keV photon energy) (power vs time, top panel), average displacement, and average ionization
-        (bottom) for the irradiated 2NIP molecule \cite{Schlessman1998, Fortmann-Grote2016b}.}
+        (bottom) \cite{Fortmann-Grote2016b} for the irradiated 2NIP molecule \cite{Schlessman1998}.}
 \end{description}
 %
 \subsubsection{PIConGPU\label{sec:interface_pmi_picongpu}}
@@ -559,7 +559,7 @@ during the interaction with the external light source.
   %\item[Data structure:] ??
 %\end{description}
 
-\subsubsection{paraTaxis\label{sec:interface_scat_parataxis}}
+\subsubsection{paraTAXIS\label{sec:interface_scat_parataxis}}
 \begin{description}
   \item[Method:] MonteCarlo tracking of individual photons
   \item[Domain:] Ex-situ and in-situ photon scattering from strongly excited
