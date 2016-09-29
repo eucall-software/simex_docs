@@ -90,8 +90,8 @@ defernumbers=true, backend=biber]{biblatex}
   \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
   \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
 
-%\addbibresource{/home/grotec/Documents/LiteratureDB/bibtex/jabref.bib}
-\addbibresource{references.bib}
+\addbibresource{/home/grotec/Documents/LiteratureDB/bibtex/jabref.bib}
+%\addbibresource{references.bib}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END BIBLIOGRAPHY SETTINGS                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -134,7 +134,7 @@ Project webpage: \url{www.eucall.eu}\\[6ex]
   \hline
   R = Report\hfill & R \\
   DEM = Demonstrator, pilot, prototype, plan designs & \\
-  DEC = Websites, patens filing, press \& media actions, videos, etc. & \\
+  DEC = Websites, patents filing, press \& media actions, videos, etc. & \\
   OTHER = Software, technical diagram, etc. & \\
   \hline
   \multicolumn{2}{|l|}{\textit{Dissemination level}} \\
@@ -162,7 +162,7 @@ Project webpage: \url{www.eucall.eu}\\[6ex]
   \textbf{Abstract} -- We present a design for integrated simulations of an x-ray scattering
   experiment probing high power femtosecond laser pulses interacting with solid
   matter by small-angle x-ray scattering.
-  Coherent x-ray pulses as delivered by an X-ray Free Electron Laser
+  Coherent x-ray pulses as delivered by an x-ray free-electron laser
   and their propagation through beamline optics are simulated with the
   simulation framework \texttt{simex\_platform}. High power femtosecond optical
   laser pulses interacting with a solid density target are simulated with
@@ -173,7 +173,8 @@ Project webpage: \url{www.eucall.eu}\\[6ex]
   x-ray pulse properties available at the European X-Ray Free-Electron Laser.
 \end{abstract}
 %
-\section{Introduction} Ultrashort pulsed high power lasers (HPLs) typically deliver laser
+\section{Introduction}
+Ultra-short pulsed high power lasers (HPLs) typically deliver laser
 pulses in the infrared (800~nm to 1000~nm) at pulse durations below one
 picosecond. Today's high power lasers \cite{Siebold2008} can reach intensities of
 up to $10^{21}~\text{W}/\text{cm}^2$ on spot sizes of a few microns and pulse
@@ -187,7 +188,7 @@ $\vec{v}\times\vec{B}$ force once the velocity $v$ approaches the speed of
 light~\cite{Mulser2010,Gibbon1996}.
 
 The generation of relativistic electrons at the front side, the transport of
-electrons through the target and the subsequent formation of a sheeth of
+electrons through the target and the subsequent formation of a sheath of
 electrons at the target rear side all happen on time scales below a few hundred
 femtoseconds~\cite{Macchi2013}. They can create plasma
 instabilities~\cite{Metzkes2014}, ionize and heat the target
@@ -283,15 +284,15 @@ varying plasma conditions (in comparison to the ultra-short laser pulse duration
 and thus are not suitable to capture fast, transient processes. Moreover, atomic
 processes, multiple scattering, velocity-dependent scattering and
 non-equilibrium plasma conditions cannot always be taken into account with
-existing modeling techniques, especially if the X-ray laser pulse itself interacts
+existing modeling techniques, especially if the x-ray laser pulse itself interacts
 with the plasma.
 
-Thus, for ultra-short laser pulses X-ray interaction will in addition to existing
+Thus, for ultra-short laser pulses x-ray interaction will in addition to existing
 techniques be modeled via a Monte-Carlo photon interaction model. Each photon is
 described by its wave vector and a phase\footnote{In the future, the photon model
 will also include polarization.}.
 
-The X-ray pulse is described by temporally and spatially varying electric fields
+The x-ray pulse is described by temporally and spatially varying electric fields
 (amplitude, polarization, and phase). At discrete points in time, the field
 distribution in a plane perpendicular to the laser axis is converted into a
 photon distribution using a conversion tool contained in
@@ -430,7 +431,7 @@ and integrated over the exposure time to obtain the simulated scattering image.
     \includegraphics[width=1.0\textwidth,angle=0,clip, viewport=0 30 700 480]{bussmann_saxs_setup}
   \end{center}
   \caption{Schematic rendering of the proposed experiment to be simulated.
-  Ultrashort pulsed optical laser radiation (red beam) creates a plasma layer on
+  Ultra-short pulsed optical laser radiation (red beam) creates a plasma layer on
 a metal foil's surface and accelerates electrons and ions. The XFEL beam (blue)
 probes the plasma perpendicular to the optical laser axis. A pixel area detector
 captures photons scattered in forward direction.}
@@ -466,7 +467,7 @@ respect to the XFEL beam. Hence, we choose 10 micrometer for the focal spot size
 to irradiate the full plasma length. A relative bandwidth of
 $\approx 10^{-3}$ in SASE mode, corresponding to a few eV in absolute energy is
 suitable for a resonant SAXS experiment to ensure efficient excitation of all
-involved sublevel transitions. This bandwidth is also adequate for non-resonant SAXS.
+involved transitions. This bandwidth is also adequate for non-resonant SAXS.
 
 Through observation of distinct features in the
 scattering signal being signatures of resonant modes and instabilities in the
@@ -506,7 +507,7 @@ scientists to develop precise and realistic concepts for such a laser based FEL.
 %\section{Detection} At an early stage, the detector will be modeled as an ideal
 %x-ray detector, i.e. registering the exact number of incident photons in each
 %pixel as simulated by the scattering module. At a later stage, the realistic
-%detector response will be modeled within the X-ray Camera Simulation Toolkit
+%detector response will be modeled within the x-ray Camera Simulation Toolkit
 %\cite{Joy2015}.% as described in \cite{Rueter2016_submitted}.
 %%
 %\section{Data analysis} From the small-angle x-ray scattering data one can
@@ -520,9 +521,9 @@ scientists to develop precise and realistic concepts for such a laser based FEL.
 %assess the reliability of the phasing algorithm under given realistic
 %experimental condition. \marginpar{What else would be of interest here?}
 \section{Summary and Outlook}
-In this report we have outlined concepts for the simulation of a small-angle
+In this report we have outlined concepts for the simulation of a SAXS
 x-ray scattering experiment probing the interaction of solid density matter
-(e.g. a metal foil) with ultrashort (femtosecond) high power optical laser
+(e.g. a metal foil) with ultra-short (femtosecond) high power optical laser
 radiation. The simulations describe all parts of the experiment by exploiting
 various codes: The generation of coherent x-ray radiation as well as the
 propagation from the source to the experiment through collimating and focussing

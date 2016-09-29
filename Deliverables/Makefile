@@ -33,5 +33,4 @@ clean:
 	rm -vf *.blg
 	rm -vf *.log
 	rm -vf *.out
-	rm -vf *.pdf
 	rm -vf *.run.xml
