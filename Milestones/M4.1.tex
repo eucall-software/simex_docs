@@ -168,7 +168,7 @@ and presentations.
 
 In its current state, \texttt{simex\_platform} supports simulation of
 photon experiments, that follow a linear base pattern: The radiation is produced
-in a photon source, propagated through a beamline, it interacts with a sample
+from a photon source, propagated through a beamline, it interacts with a sample
 (target), and photons leaving the sample after scattering or emission are
 detected in a photon detector. This linear progression, depicted in
 Fig.~\ref{fig:simex_baseline_workflow}, will be referred to as
@@ -182,8 +182,8 @@ representable in this ordered linear pattern are possible but not supported in t
 to the same extent as baseline applications. For example,
 experiments that involve more than one photon source, or applications where
 products from photon-matter interaction (e.g. accelerated electrons or ions) are
-utilized for further interactions, such as laser-plasma based x-ray sources or
-proton radiography using laser accelerated protons.
+required for further interactions, such as laser-plasma based short pulse length x-ray and UV sources,
+proton radiography and cancer therapy using laser accelerated protons.
 
 A baseline application encapsulates five parts:
 The photon source, the photon transport from the source to the
@@ -535,7 +535,7 @@ during the interaction with the external light source.
       \begin{center}
         \includegraphics[width=0.5\textwidth,angle=0,clip]{bussmann_saxs_instabilities.pdf}
       \end{center}
-      \scriptsize{PIConGPU calculations of electron densitiy (top) and
+      \scriptsize{PIConGPU calculations of electron density (top) and
         corresponding Small Angle X-ray Scattering signals (bottom) from high power laser -- matter
     interaction.}
 \end{description}
