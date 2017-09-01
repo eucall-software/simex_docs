@@ -1,0 +1,203 @@
+\documentclass[12pt]{scrartcl}
+\usepackage{graphicx}
+\usepackage[default]{opensans}
+\usepackage{sfmath} % sans font also for math
+ \usepackage[binary-units = true]{siunitx}
+
+% defining the paper layout that no text overlaps with the header
+\usepackage[
+  top=35mm,
+  headheight=25mm,
+  headsep=3mm,
+  bottom=30mm,
+  left=25mm,
+  right=25mm
+]{geometry}
+
+\usepackage{latexsym}
+\usepackage[centertags]{amsmath}
+\usepackage{amssymb}
+
+% custom header and footpage
+\usepackage{scrpage2}
+\pagestyle{scrheadings} % you have to set the custom layout
+% Head
+\ihead{M4.1: Simulation modules and interfaces } % left head
+%\chead{}
+\ohead{\includegraphics[height=25mm]{EUCALL.png}}
+% Foot
+\ifoot{\includegraphics[height=13.4mm]{EU.png}} % left foot
+\cfoot{%
+  \begin{minipage}{100mm}%
+    \begin{scriptsize}%
+      \normalfont{This project has received funding from the}
+      \textit{European Union’s Horizon 2020 research and innovation programme}
+      \normalfont{under grant agreement No 654220.}
+    \end{scriptsize}%
+  \end{minipage}%
+} % center foot
+\ofoot{\thepage} % right foot
+
+\usepackage{booktabs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   BIBLIOGRAPHY SETTINGS                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[bibstyle=nature,sorting=none,=maxnames=1000,eprint=false,
+defernumbers=true, backend=biber]{biblatex}
+\usepackage{hyperref}
+
+\renewcommand*\finalnamedelim{, and\addspace}
+\DeclareNameAlias{sortname}{last-first}
+\renewcommand{\newunitpunct}{, }
+
+\AtEveryBibitem{%
+  \clearfield{day}%
+  \clearfield{month}%
+  \clearfield{endday}%
+  \clearfield{endmonth}%
+  \clearfield{issn}%
+  \clearfield{issue}%
+}
+%convert titles to hyperlinks using doi
+\ExecuteBibliographyOptions{doi=false} \newbibmacro{string+doi}[1]{%
+  \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+  \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
+
+%%Bib Categories
+%
+%\DeclareBibliographyCategory{submitted}
+%\addtocategory{submitted}{Plagemann2015}
+%
+%\DeclareBibliographyCategory{notreviewed}
+%\addtocategory{notreviewed}{Fortmann2014, Fortmann2007,Fortmann2007c,Fortmann2007b,Fortmann2005,Fortmann2006a}
+%
+%\DeclareBibliographyCategory{theses}
+%\addtocategory{theses}{Fortmann2008,Fortmann2004}
+%\DeclareBibliographyCategory{talks}
+%
+%\addbibresource{/home/grotec/Documents/LiteratureDB/bibtex/jabref.bib}
+\addbibresource{zenodo.bib}
+\addbibresource{references.bib}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% END BIBLIOGRAPHY SETTINGS                   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% sophisticated linking of references in the pdf and setting some options
+\usepackage{url}                                                  % for correct typesettings of URLs
+\usepackage{hyperref}                                             % for sophisticated linking of urls, dois, pictures, tables, etc.
+\hypersetup{
+    unicode=true,                                                 % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,                                              % show Acrobat’s toolbar?
+    pdfmenubar=true,                                              % show Acrobat’s menu?
+    pdffitwindow=false,                                           % window fit to page when opened
+    pdfstartview={FitH},                                          % fits the width of the page to the window
+    pdftitle={M4.2: First example simulation},                    % title
+    pdfauthor={C. Fortmann-Grote},                                % author
+    pdfsubject={EUCALL WP4 (SIMEX) Milestone 4.2},                % subject of the document
+    pdfcreator={pdflatex},                                        % creator of the document
+    pdfkeywords={EUCALL, SIMEX, simulations},                     % list of keywords
+    pdfnewwindow=true,                                           % links in new PDF window
+    colorlinks=true,                                             % false: boxed links; true: colored links
+    linkcolor=blue,                                              % color of internal links (change box color with linkbordercolor)
+    citecolor=blue,                                              % color of links to bibliography
+    filecolor=blue,                                              % color of file links
+    urlcolor=blue                                                % color of external links
+}
+
+% Zeilenabstand
+\renewcommand{\baselinestretch}{1.2}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% END BIBLIOGRAPHY SETTINGS                   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\makeatletter
+\begin{titlepage}
+\thispagestyle{scrheadings}
+\begin{center}
+  $~$\\
+  \vspace{2cm}
+  \Huge{\textbf{WP 4 -- SIMEX\\[1cm]
+    Milestone M4.2: Demonstration of a first example simulation%
+  }}\\
+  \vspace{2cm}
+  \large{ Carsten Fortmann-Grote}
+  \vspace{1cm}
+  \date{\today}
+\end{center}
+\vfill%
+\includegraphics[width=\textwidth]{PartnerLogos.pdf}
+\normalfont
+\end{titlepage}
+\makeatother
+%
+\tableofcontents
+%
+\section{Summary}
+Milestone 4.2 of the SIMEX workpackage in EUCALL requires the demonstration of a
+first example simulation. In this example, we simulate a single--particle
+imaging experiment at the European X--ray Free Electron Laser. FEL pulses of
+\SIlist{3;9;30}{\fs} pulse duration and \SI{4.96}{\keV} photon energy are propagated
+through the SASE 1 beamline and the focusing optics of the SPB-SFX scientific
+instrument. In the focus, the photons interact with the 2NIP molecule and
+scatter into a pixel area detector situated \SI{13}{cm} behind the sample. We
+save each simulated diffraction pattern and feed the patterns into the
+orientation reconstruction algorithm EMC. Statistical analysis of oriented 3D
+diffraction datasets allows to assess the data quality of our simulated data as
+a function of the pulse duration, which is is controlled through the machine
+parameters of the FEL, in particular the electron bunch charge.
+
+The results of this study analyis of the simulated diffraction patterns are published in
+Ref.~\cite{Fortmann-Grote2017}. In addition, we published the individual
+datasets resulting from the simulation modules on Zenodo.
+Video tutorials for the individual simulation steps can be found on the EUCALL
+\href{https://www.youtube.com/eucall/}{youtube}.
+Finally, the reference manual of the simulation environment simex\_platform
+\cite{} describes the data formats of all simulation datasets.
+
+%\section{Datasets}
+%\begin{tabular}[ht]{|l|l|l|}
+  %\hline
+  %\textbf{Simulation module}       & \textbf{DOI}       \\
+  %\hline
+  %FEL source              & \href{https://dx.doi.org/10.5281/zenodo.855301}{10.5281/zenodo.855301} \\
+  %Propagation             & \href{https://dx.doi.org/10.5281/zenodo.}{10.5281/zenodo.} \\
+  %Interaction             & \href{https://dx.doi.org/10.5281/zenodo.}{10.5281/zenodo.} \\
+  %Diffraction             & \href{https://dx.doi.org/10.5281/zenodo.}{10.5281/zenodo.} \\
+  %Orientation              & \href{https://dx.doi.org/10.5281/zenodo.}{10.5281/zenodo.} \\
+  %\hline
+%\end{tabular}
+%%
+%\newpage
+%%
+%\section{Usage instructions}
+%\begin{tabular}[ht]{|l|l|l|}
+  %\hline
+  %\textbf{Simulation module}       & \textbf{DOI}       \\
+  %\hline
+  %%FEL source              & \href{https://youtu.be/Ql1p5-CLHug}{Online video} \\
+  %Propagation             & \href{https://youtu.be/}{Online video} \\
+  %Interaction             & \href{https://youtu.be/}{Online video} \\
+  %Diffraction             & \href{https://youtu.be/}{Online video} \\
+  %Orientation             & \href{https://youtu.be/}{Online video} \\
+  %\hline
+%\end{tabular}
+%%
+%\newpage
+%
+\printbibliography[notkeyword=zenodo,notkeyword=tutorial, title={Articles}]
+%
+\nocite{Fortmann-Grote_Zenodo855301}
+\printbibliography[keyword=zenodo, title={Datasets}]
+%
+\nocite{Fortmann-Grote_Youtube_XPD}
+\printbibliography[keyword=tutorial, title={Tutorials}]
+
+
+\end{document}
+
+

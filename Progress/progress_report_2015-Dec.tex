@@ -1,0 +1,99 @@
+%        File: progress_report_2015-Dec.tex
+%     Created: Di Dez 08 09:00  2015 C
+% Last Change: Di Dez 08 09:00  2015 C
+%
+\documentclass[a4paper]{article}
+\begin{document}
+
+\title{SIMEX Progress report}
+\author{C. Fortmann-Grote}
+\date{\today}
+
+\maketitle
+\section{Summary of work completed}
+
+\begin{itemize}
+  \item Initialized central software repository at github
+    (www.github.com/eucall-software)
+  \item First version of simulation platform is ready, supports single
+    particle coherent diffractive imaging simulations as in simS2E.
+  \item Started work on defining interfaces between simulation
+    modules to allow coupling of codes from various partner
+    institutes.
+  \item HZDR have published 'openPMD', an open standard for particle
+    and fields data based on hdf5 and adios. Might be used in SIMEX
+    to define a common data format if needed.
+  \item First VTC took place on Nov. 27, minutes attached.
+\end{itemize}
+
+\section{Next steps and TODOs}
+\begin{itemize}
+  \item Identify required and sensible interfaces (not all modules
+    need to be be coupled). Due 12/2015.
+  \item Implement in-memory data passing as a requirement for
+    handling large PIC simulation data. Due 2/2016.
+  \item Implement interface for XFEL source/propagation to Particle-In-Cell
+    Photon-Matter-Interaction code (HZDR) as a
+    first cross institutional interface. Due 3/2016.
+  \item Prepare SIMEX workshop meeting in 3/2016.
+
+\end{itemize}
+    \newpage
+    \section{Attachments}
+
+\begin{verbatim}
+Minutes of VTC EUCALL-SIMEX
+Time: Nov. 27th, 12:30 - 13:35 CET
+Attendees:
+ Carsten Fortmann-Grote (XFEL, video)
+ Adrian Mancuso (XFEL, on phone)
+ Michael Bussmann (HZDR, on phone)
+ Frank Schluenzen (DESY, video)
+ Sohichiro Aogaki (ELI-NP, video)
+ Marc Glass (ESRF, skype, connected later.)
+
+1.) Presentation "simex_platform, a framework for simulation of photon
+experiments" (Carsten)
+Comments on the presentation:
+*Michael raises the issue of how to license the code, Carsten will look
+into lgpl as an option. Refer to HZDR codes for acknowledgements of
+contributors.
+* Michael: If using python, keep in mind scalability, e.g. for large
+data handling (of order 100 TB). Solutions exist.
+* Michael: How is the xfel pulse represented? Answer: Wavefront
+(intensity+phase) propagation (WPG/SRW) as function or time and place.
+Michael: This is ok for converting to representation needed by their PMI.
+
+2.) Overview over relevant software from HZDR:
+
+    * pyDive: Large file data analysis (100 TB)
+    * openPMD: open standard for particle and mesh data not a format but
+meta file description
+    * libSplash : Library for handling hdf/adios files, "speaks" openPMD
+
+3.) Interfaces:
+Carsten will prepare documents to collect what physics modules/codes are
+available at the various partner institutes. Based on this document, we will
+identify the software pieces that need to be coupled in simex_platform.
+Not all combinations make sense, Marc questioned if coupling XFEL-Source
+to ESRF propagation (ray-tracing)
+makes sense. As a guideline we should get a clear view on the kind of
+experiments that will be performed at our facilities.
+
+
+4. ) General discussion:
+*Michael suggests looking into existing solutions for coupling software
+to each other (workflows).
+*Carsten clarifies that the aim is to provide both the framework and the
+implementations of physics codes such that users can do simulations with
+the existing/provided codes and has the option to hook up their own code.
+*Frank comments on build process in simS2E (and partly adopted in
+simex_platform), leaves no control to user about what is installed and
+how it is configured, might result in conflicting
+version requirements.
+\end{verbatim}
+
+
+\end{document}
+
+
