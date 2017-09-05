@@ -22,11 +22,11 @@
 \usepackage{scrpage2}
 \pagestyle{scrheadings} % you have to set the custom layout
 % Head
-\ihead{M4.1: Simulation modules and interfaces } % left head
+\ihead{M4.1} % left head
 %\chead{}
-\ohead{\includegraphics[height=25mm]{EUCALL.png}}
+\ohead{\includegraphics[height=25mm]{figures/EUCALL.png}}
 % Foot
-\ifoot{\includegraphics[height=13.4mm]{EU.png}} % left foot
+\ifoot{\includegraphics[height=13.4mm]{figures/EU.png}} % left foot
 \cfoot{%
   \begin{minipage}{100mm}%
     \begin{scriptsize}%
@@ -64,20 +64,7 @@ defernumbers=true, backend=biber]{biblatex}
   \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
   \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
 
-%%Bib Categories
-%
-%\DeclareBibliographyCategory{submitted}
-%\addtocategory{submitted}{Plagemann2015}
-%
-%\DeclareBibliographyCategory{notreviewed}
-%\addtocategory{notreviewed}{Fortmann2014, Fortmann2007,Fortmann2007c,Fortmann2007b,Fortmann2005,Fortmann2006a}
-%
-%\DeclareBibliographyCategory{theses}
-%\addtocategory{theses}{Fortmann2008,Fortmann2004}
-%\DeclareBibliographyCategory{talks}
-%
-%\addbibresource{/home/grotec/Documents/LiteratureDB/bibtex/jabref.bib}
-\addbibresource{zenodo.bib}
+\addbibresource{aux.bib}
 \addbibresource{references.bib}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END BIBLIOGRAPHY SETTINGS                   %
