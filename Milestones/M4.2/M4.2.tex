@@ -22,7 +22,7 @@
 \usepackage{scrpage2}
 \pagestyle{scrheadings} % you have to set the custom layout
 % Head
-\ihead{M4.1} % left head
+\ihead{M4.2} % left head
 %\chead{}
 \ohead{\includegraphics[height=25mm]{figures/EUCALL.png}}
 % Foot
@@ -64,7 +64,7 @@ defernumbers=true, backend=biber]{biblatex}
   \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
   \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
 
-\addbibresource{aux.bib}
+%\addbibresource{aux.bib}
 \addbibresource{references.bib}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END BIBLIOGRAPHY SETTINGS                   %
@@ -79,7 +79,7 @@ defernumbers=true, backend=biber]{biblatex}
     pdftoolbar=true,                                              % show Acrobat’s toolbar?
     pdfmenubar=true,                                              % show Acrobat’s menu?
     pdffitwindow=false,                                           % window fit to page when opened
-    pdfstartview={FitH},                                          % fits the width of the page to the window
+    pdfstartview={FitW},                                          % fits the width of the page to the window
     pdftitle={M4.2: First example simulation},                    % title
     pdfauthor={C. Fortmann-Grote},                                % author
     pdfsubject={EUCALL WP4 (SIMEX) Milestone 4.2},                % subject of the document
@@ -125,7 +125,7 @@ defernumbers=true, backend=biber]{biblatex}
 \tableofcontents
 %
 \section{Summary}
-Milestone 4.2 of the SIMEX workpackage in EUCALL requires the demonstration of a
+\textbf{Milestone M4.2} (as detailed in \textbf{Task 4.2.1}) of the SIMEX workpackage in EUCALL is the demonstration of a
 first example simulation. In this example, we simulate a single--particle
 imaging experiment at the European X--ray Free Electron Laser. FEL pulses of
 \SIlist{3;9;30}{\fs} pulse duration and \SI{4.96}{\keV} photon energy are propagated
@@ -139,50 +139,57 @@ a function of the pulse duration, which is is controlled through the machine
 parameters of the FEL, in particular the electron bunch charge.
 
 The results of this study analyis of the simulated diffraction patterns are published in
-Ref.~\cite{Fortmann-Grote2017}. In addition, we published the individual
-datasets resulting from the simulation modules on Zenodo.
-Video tutorials for the individual simulation steps can be found on the EUCALL
-\href{https://www.youtube.com/eucall/}{youtube}.
-Finally, the reference manual of the simulation environment simex\_platform
-\cite{} describes the data formats of all simulation datasets.
+Ref.~\cite{Fortmann-Grote2017}, a copy is attached to this report. In addition, we published the individual
+datasets resulting from the simulation modules on the
+\href{https://zenodo.org/communities/eucall-data}{EUCALL Data Repository} hosted
+on href{https://www.zenodo.org/}{Zenodo}.
 
-%\section{Datasets}
-%\begin{tabular}[ht]{|l|l|l|}
-  %\hline
-  %\textbf{Simulation module}       & \textbf{DOI}       \\
-  %\hline
-  %FEL source              & \href{https://dx.doi.org/10.5281/zenodo.855301}{10.5281/zenodo.855301} \\
-  %Propagation             & \href{https://dx.doi.org/10.5281/zenodo.}{10.5281/zenodo.} \\
-  %Interaction             & \href{https://dx.doi.org/10.5281/zenodo.}{10.5281/zenodo.} \\
-  %Diffraction             & \href{https://dx.doi.org/10.5281/zenodo.}{10.5281/zenodo.} \\
-  %Orientation              & \href{https://dx.doi.org/10.5281/zenodo.}{10.5281/zenodo.} \\
-  %\hline
-%\end{tabular}
-%%
-%\newpage
-%%
-%\section{Usage instructions}
-%\begin{tabular}[ht]{|l|l|l|}
-  %\hline
-  %\textbf{Simulation module}       & \textbf{DOI}       \\
-  %\hline
-  %%FEL source              & \href{https://youtu.be/Ql1p5-CLHug}{Online video} \\
-  %Propagation             & \href{https://youtu.be/}{Online video} \\
-  %Interaction             & \href{https://youtu.be/}{Online video} \\
-  %Diffraction             & \href{https://youtu.be/}{Online video} \\
-  %Orientation             & \href{https://youtu.be/}{Online video} \\
-  %\hline
-%\end{tabular}
-%%
-%\newpage
+Tutorials for the individual simulation steps can be found on the
+\href{https://www.github.com/eucall-software/simex_platform/wiki/SimEx-Tutorial}{SIMEX wiki} and
+on the
+\href{https://www.youtube.com/eucall/}{EUCALL youtube channel}.
+Finally, the \href{https://eucall-software.github.io/simex_platform/}{reference manual} of the simulation environment simex\_platform
+contains a description of the data formats of all relevant simulation datasets, see also
+Milestone M4.1.
+
+\section{Supporting material}
+\begin{tabular}[ht]{|r|r|r|r|}
+  \hline
+  \textbf{Module}       & \textbf{Dataset}  &
+  \textbf{Usage instruction}   & \textbf{Data format}       \\
+  \hline
+    FEL source &
+    \href{https://dx.doi.org/10.5281/zenodo.855301}{10.5281/zenodo.855301} &
+    \href{https://github.com/eucall-software/simex_platform/wiki/SimEx-Tutorial#prepating-the-source-input}{Manual}
+    \href{https://youtu.be/Ql1p5-CLHug}{Video} &
+    \href{https://eucall-software.github.io/simex_platform/#fel-source-calculations-fast}{Manual}
+  \\
+    Propagation &
+    \href{https://dx.doi.org/10.5281/zenodo.884873}{10.5281/zenodo.884873} &
+    \href{https://github.com/eucall-software/simex_platform/wiki/SimEx-Tutorial#beamline-propagation}{Manual} &
+    \href{https://eucall-software.github.io/simex_platform/#coherent-wavefront-propagation-wpg-srw}{Manual}
+  \\
+    Interaction &
+    \href{https://dx.doi.org/10.5281/zenodo.886061}{10.5281/zenodo.886061} &
+    \href{https://github.com/eucall-software/simex_platform/wiki/SimEx-Tutorial#photon-matter-interaction}{Manual} &
+    \href{https://eucall-software.github.io/simex_platform/#photon-matter-interaction-xmdyn}{Manual}
+  \\
+    Diffraction &
+    \href{https://dx.doi.org/10.5281/zenodo.886087}{10.5281/zenodo.886087} &
+    \href{https://github.com/eucall-software/simex_platform/wiki/SimEx-Tutorial#diffraction}{Manual} &
+    \href{https://eucall-software.github.io/simex_platform/#diffraction-singfel}{Manual}
+  \\
+  \hline
+\end{tabular}
 %
+
 \printbibliography[notkeyword=zenodo,notkeyword=tutorial, title={Articles}]
 %
-\nocite{Fortmann-Grote_Zenodo855301}
-\printbibliography[keyword=zenodo, title={Datasets}]
+%\nocite{Fortmann-Grote_Zenodo855301}
+%\printbibliography[keyword=zenodo, title={Datasets}]
 %
-\nocite{Fortmann-Grote_Youtube_XPD}
-\printbibliography[keyword=tutorial, title={Tutorials}]
+%\nocite{Fortmann-Grote_Youtube_XPD}
+%\printbibliography[keyword=tutorial, title={Tutorials}]
 
 
 \end{document}
