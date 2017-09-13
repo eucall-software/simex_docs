@@ -66,8 +66,8 @@ defernumbers=true, backend=biber]{biblatex}
   \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
   \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
 
-\addbibresource{aux.bib}
 \addbibresource{references.bib}
+\addbibresource{aux.bib}
 \addbibresource{contributions/HPL/sample.bib}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END BIBLIOGRAPHY SETTINGS                   %
@@ -183,8 +183,10 @@ of this report and external references where example applications can be found.
       & Nano-particle scattering        & singFEL               & \cite{EUCALL_SIMEX_M4.1,EUCALL_SIMEX_M4.2,Fortmann-Grote2017}     \\
 
       & Plasma diffraction              & paraTAXIS             &
-      \ref{sec:plasma_diffraction},\cite{EUCALL_SIMEX_D4.1,Kluge2016, Garten2017}  \\
-      & XAFS                            & FEFF                  & \ref{sec:xafs} \cite{EUCALL_SIMEX_D4.2,Torchio2016}  \\
+      \ref{sec:plasma_diffraction},\cite{EUCALL_SIMEX_D4.1,Kluge2016,
+      Garten2017.zenodo.885033}  \\
+      & XAFS                            & FEFF                  & \ref{sec:xafs}
+      \cite{EUCALL_SIMEX_D4.2,Torchio2016,Harmand2015,Mazevet2014}  \\
       & Plasma XRTS                     & XRTScode              & \ref{sec:xrts} \cite{Fortmann2009d}               \\
       & Nano--crystallography           & CrystFEL              & \ref{sec:protein_sfx}         \\
     \hline
@@ -241,17 +243,34 @@ the coherent wavefront propagation code library WPG. Owing to the well defined
 data interfaces and file format adaptors in \textit{simex\_platform} passing the
 wavefront data to the crystal diffraction code is straightforward. We employ the
 code \textit{pattern\_sim} which is part of the crystallography software suite
-\textit{CrystFEL} \cite{White2012}, available from the
-\cite{https://www.desy.de/~twhite/crystfel}{CrystFEL website at DESY}.
-described
-In this case, the diffraction
+\textit{CrystFEL} \cite{White2012}, available as open source from the
+\href{https://www.desy.de/~twhite/crystfel}{CrystFEL website}. The
+corresponding \textit{Calculator} in \textit{simex\_platform} is the
+\href{https://eucall-software.github.io/simex_platform/#SimEx.Calculators.CrystFELPhotonDiffractor.CrystFELPhotonDiffractor}{\textit{CrystFELPhotonDiffractor}}.
+The \textit{CrystFELPhotonDiffractor} extracts the mean photon energy, the energy
+spectrum, the beam divergence, the beam diameter, and other beam characteristics
+from the wavefront data. The sample must be specified by giving a PDB code along
+with information about the size of the nano--crystal, e.g. the extension in x,y,
+and z directions. By default, the sample geometry is rotated in space via a
+randomly chosen rotation operator to mimic the unknown orientation of the sample
+in the experiment. Each simulated pattern is stored in a separate hdf5 file.
+After the calculation, one master hdf5 file is generated which links to the
+individual patterns and which has the same hierarchy as output generated e.g. by
+the
+\href{https://eucall-software.github.io/simex_platform/#SimEx.Calculators.SingFELPhotonDiffractor.SingFELPhotonDiffractor}{\textit{SingFELPhotonDiffractor}}
+for single particle coherent diffraction. This in turn ensures that the same
+analysis tools (e.g.
+\href{https://eucall-software.github.io/simex_platform/#SimEx.Analysis.DiffractionAnalysis.DiffractionAnalysis}{\textit{DiffractionAnalysis}}
+can be applied to crystal diffraction data and to single partice diffraction
+data.
+
 %
 \section{LWFA source}\label{sec:lwfa_source}
 Simulations of compact coherent x--ray sources based on the mechanism of
 electron laser wakefield acceleration (LWFA) couple particle--in--cell
 simulations to an FEL code. In our case, we use the PIC code \textit{PIConGPU}
 and the Genesis FEL code. \textit{PIConGPU} writes the particle and field data
-into a hdf5 file using the openPMD \cite{Huebl2015} metadata standard. A file format conversion utility, which is part of
+into a hdf5 file using the openPMD \cite{Huebl2017} metadata standard. A file format conversion utility, which is part of
 \textit{simex\_platform} converts the PIC output to an electron distribution
 file (extension .dist) readable by \textit{Genesis}.
 
