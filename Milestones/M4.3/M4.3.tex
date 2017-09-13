@@ -1,5 +1,6 @@
 \documentclass[12pt]{scrartcl}
 \usepackage{graphicx}
+\usepackage{multirow}
 \usepackage[default]{opensans}
 \usepackage{sfmath} % sans font also for math
  \usepackage[binary-units = true]{siunitx}
@@ -18,11 +19,12 @@
 \usepackage[centertags]{amsmath}
 \usepackage{amssymb}
 
+\graphicspath{{figures/}}
 % custom header and footpage
 \usepackage{scrpage2}
 \pagestyle{scrheadings} % you have to set the custom layout
 % Head
-\ihead{M4.2} % left head
+\ihead{M4.3} % left head
 %\chead{}
 \ohead{\includegraphics[height=25mm]{figures/EUCALL.png}}
 % Foot
@@ -64,8 +66,9 @@ defernumbers=true, backend=biber]{biblatex}
   \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
   \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
 
-%\addbibresource{aux.bib}
+\addbibresource{aux.bib}
 \addbibresource{references.bib}
+\addbibresource{contributions/HPL/sample.bib}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END BIBLIOGRAPHY SETTINGS                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -79,10 +82,9 @@ defernumbers=true, backend=biber]{biblatex}
     pdftoolbar=true,                                              % show Acrobat’s toolbar?
     pdfmenubar=true,                                              % show Acrobat’s menu?
     pdffitwindow=false,                                           % window fit to page when opened
-    pdfstartview={FitW},                                          % fits the width of the page to the window
-    pdftitle={M4.2: First example simulation},                    % title
+    pdftitle={M4.3: Simulations interoperable},                   % title
     pdfauthor={C. Fortmann-Grote},                                % author
-    pdfsubject={EUCALL WP4 (SIMEX) Milestone 4.2},                % subject of the document
+    pdfsubject={EUCALL WP4 (SIMEX) Milestone 4.3},                % subject of the document
     pdfcreator={pdflatex},                                        % creator of the document
     pdfkeywords={EUCALL, SIMEX, simulations},                     % list of keywords
     pdfnewwindow=true,                                           % links in new PDF window
@@ -109,88 +111,138 @@ defernumbers=true, backend=biber]{biblatex}
   $~$\\
   \vspace{2cm}
   \Huge{\textbf{WP 4 -- SIMEX\\[1cm]
-    Milestone M4.2: Demonstration of a first example simulation%
+    Milestone M4.3: Demonstration of interoperability of simulations%
   }}\\
   \vspace{2cm}
-  \large{ Carsten Fortmann-Grote}
+  \large{Carsten Fortmann-Grote, Alexander Andreev, Ashutosh Sharma, Richard
+    Briggs, Jan-Philipp Burchert, Marco Garten, Axel Huebl, Alexander Grund,
+  Thomas Kluge, Sergey Yakubov, Michael Bussmann, and Adrian P. Mancuso}
   \vspace{1cm}
   \date{\today}
 \end{center}
 \vfill%
-\includegraphics[width=\textwidth]{PartnerLogos.pdf}
+\includegraphics[width=\textwidth]{figures/PartnerLogos_2017}
 \normalfont
 \end{titlepage}
 \makeatother
 %
 \tableofcontents
 %
-\section{Summary}
-\textbf{Milestone M4.2} (as detailed in \textbf{Task 4.2.1}) of the SIMEX workpackage in EUCALL is the demonstration of a
-first example simulation. In this example, we simulate a single--particle
-imaging experiment at the European X--ray Free Electron Laser. FEL pulses of
-\SIlist{3;9;30}{\fs} pulse duration and \SI{4.96}{\keV} photon energy are propagated
-through the SASE 1 beamline and the focusing optics of the SPB-SFX scientific
-instrument. In the focus, the photons interact with the 2NIP molecule and
-scatter into a pixel area detector situated \SI{13}{cm} behind the sample. We
-save each simulated diffraction pattern and feed the patterns into the
-orientation reconstruction algorithm EMC. Statistical analysis of oriented 3D
-diffraction datasets allows to assess the data quality of our simulated data as
-a function of the pulse duration, which is is controlled through the machine
-parameters of the FEL, in particular the electron bunch charge.
+\section{Summary}\label{sec:summary}
+\textbf{Milestone M4.3} (as detailed in \textbf{Task 4.2.2}) of the SIMEX
+workpackage in EUCALL is delivery of interoperable simulations
+(\textbf{Deliverable D4.3}) with documented examples. We have chosen NN
+applications to demonstrate the interoperability of our simulation codes. These
+codes are interfaced through the simulation platform ``simex\_platform'', which,
+on the one side defines python APIs through which the simulations can be set up
+and executed in a canonical way, and, on the other side, defines data interfaces
+and formats to facilitate the passing of simulation data generated from a given
+code A (data source) to another simulation code B (data sink), which processes
+this input data and produces another set of output data for a simulation code C,
+and so on.
 
-The results of this study analyis of the simulated diffraction patterns are published in
-Ref.~\cite{Fortmann-Grote2017}, a copy is attached to this report. In addition, we published the individual
-datasets resulting from the simulation modules on the
-\href{https://zenodo.org/communities/eucall-data}{EUCALL Data Repository} hosted
-on href{https://www.zenodo.org/}{Zenodo}.
+The examples are
+\begin{enumerate}
+  \item Simulation of diffraction of coherent x--rays delivered by an X-ray
+    Free--Electron Laser from high energy density matter created by short--pulse
+    laser matter interaction (as detailed in Deliverable D4.1)
+  \item Simulation of x--ray fine structure absorption spectroscopy (XAFS) from long--pulse laser
+    shocked warm dense matter at the synchrotron light source ESRF (as detailed
+    in Deliverable D4.2).
+  \item Serial femtosecond crystallography from protein crystals
+  \item X--ray Thomson Scattering from warm dense plasmas
+  \item Small angle X--ray Scattering from proteins
+\end{enumerate}
 
-Tutorials for the individual simulation steps can be found on the
-\href{https://www.github.com/eucall-software/simex_platform/wiki/SimEx-Tutorial}{SIMEX wiki} and
-on the
-\href{https://www.youtube.com/eucall/}{EUCALL youtube channel}.
-Finally, the \href{https://eucall-software.github.io/simex_platform/}{reference manual} of the simulation environment simex\_platform
-contains a description of the data formats of all relevant simulation datasets, see also
-Milestone M4.1.
+These examples demonstrate the functionality and interoperability of all
+simulation tools as demanded in Task 4.2.2. To ease the structuring and
+sharing of work among participating institutes and collaborators, we introduced the following subtask enumeration
 
-\section{Supporting material}
-\begin{tabular}[ht]{|r|r|r|r|}
-  \hline
-  \textbf{Module}       & \textbf{Dataset}  &
-  \textbf{Usage instruction}   & \textbf{Data format}       \\
-  \hline
-    FEL source &
-    \href{https://dx.doi.org/10.5281/zenodo.855301}{10.5281/zenodo.855301} &
-    \href{https://github.com/eucall-software/simex_platform/wiki/SimEx-Tutorial#prepating-the-source-input}{Manual}
-    \href{https://youtu.be/Ql1p5-CLHug}{Video} &
-    \href{https://eucall-software.github.io/simex_platform/#fel-source-calculations-fast}{Manual}
-  \\
-    Propagation &
-    \href{https://dx.doi.org/10.5281/zenodo.884873}{10.5281/zenodo.884873} &
-    \href{https://github.com/eucall-software/simex_platform/wiki/SimEx-Tutorial#beamline-propagation}{Manual} &
-    \href{https://eucall-software.github.io/simex_platform/#coherent-wavefront-propagation-wpg-srw}{Manual}
-  \\
-    Interaction &
-    \href{https://dx.doi.org/10.5281/zenodo.886061}{10.5281/zenodo.886061} &
-    \href{https://github.com/eucall-software/simex_platform/wiki/SimEx-Tutorial#photon-matter-interaction}{Manual} &
-    \href{https://eucall-software.github.io/simex_platform/#photon-matter-interaction-xmdyn}{Manual}
-  \\
-    Diffraction &
-    \href{https://dx.doi.org/10.5281/zenodo.886087}{10.5281/zenodo.886087} &
-    \href{https://github.com/eucall-software/simex_platform/wiki/SimEx-Tutorial#diffraction}{Manual} &
-    \href{https://eucall-software.github.io/simex_platform/#diffraction-singfel}{Manual}
-  \\
-  \hline
-\end{tabular}
+\begin{table}
+  \begin{center}
+    \scriptsize
+    \caption{Demonstrated simulation capabilities}
+    \label{tab:simulation_capabilities}
+  \begin{tabular}[ht]{|l|l|l|l|}
+    \hline
+      \textbf{Task} &
+      \textbf{Simulation capability} &
+      \textbf{Simulation code}     &
+      \textbf{Example reference}    \\
+    \hline
+    \hline
+      \multirow{3}{*}{X--ray sources}
+      & XFEL source                     & FAST/XPD              & \cite{EUCALL_SIMEX_M4.1,EUCALL_SIMEX_M4.2,Fortmann-Grote2017}     \\
+      & XFEL source                     & Genesis/Ocelot        & \ref{sec:lwfa_source} \\
+      & Synchrotron source              & ShadowOUI             & \ref{sec:xafs}       \\
+    \hline
+    \multirow{2}{*}{Beam propagation}
+      & Coherent wave propagaton        & WPG/SRW               & \cite{EUCALL_SIMEX_M4.1,EUCALL_SIMEX_M4.2,Fortmann-Grote2017}     \\
+      & X--ray tracing                  & ShadowOUI             & \ref{sec:xafs}       \\
+    \hline
+    \multirow{3}{*}{Photon--matter interaction}
+      & Radiation damage to molecules   & XMDYN/XATOM           & \cite{EUCALL_SIMEX_M4.1,EUCALL_SIMEX_M4.2,Fortmann-Grote2017}     \\
+      & Short--pulse optical laser      & PIConGPU              & \ref{sec:lwfa_source},\ref{sec:plasma_diffraction},\cite{EUCALL_SIMEX_D4.1}  \\
+      & Long--pulse optical laser       & Esther Rad--hydro     & \ref{sec:xafs} \cite{Torchio2016}  \\
+    \hline
+    \multirow{5}{*}{Signal generation}
+      & Nano-particle scattering        & singFEL               & \cite{EUCALL_SIMEX_M4.1,EUCALL_SIMEX_M4.2,Fortmann-Grote2017}     \\
+
+      & Plasma diffraction              & paraTAXIS             &
+      \ref{sec:plasma_diffraction},\cite{EUCALL_SIMEX_D4.1,Kluge2016, Garten2017}  \\
+      & XAFS                            & FEFF                  & \ref{sec:xafs} \cite{EUCALL_SIMEX_D4.2,Torchio2016}  \\
+      & Plasma XRTS                     & XRTScode              & \ref{sec:xrts} \cite{Fortmann2009d}               \\
+      & Nano--crystallography           & CrystFEL              & \ref{sec:protein_sfx}         \\
+    \hline
+  \end{tabular}
+  \end{center}
+\end{table}
+
+\section{Coherent diffraction from high energy density matter}\label{sec:plasma_diffraction}
+\input{contributions/HPL/hpl}
+
+\section{X--ray fine structure absorption spectroscopy\label{sec:xafs}}
 %
+We have executed the simulations outlined in Deliverable
+4.2\cite{EUCALL_SIMEX_D4.2}, describing an XAFS experiment on shock compressed
+solid matter.
+The synchrotron X-ray source and propagation from the source to the target is
+realized with the \href{http://ftp.esrf.eu/pub/scisoft/Oasys/readme.html}{Oasys}
+software package developed by Luca Rebuffi and Manuel Sanchez del Rio
+ using the x--ray tracing
+capability via the code \textit{Shadow3}. Installation scripts and the wiki page for Oasys 1.0 can be
+found at
+\href{https://github.com/srio/oasys-installation-scripts/wiki}{https://github.com/srio/oasys-installation-scripts/wiki}.
+\href{https://github.com/srio/ShadowOui-Tutorial}{Tutorials for
+Oasys and ShadowOUI} cover the various steps in preparing, executing, and
+analysing the raytracing simulation.
 
-\printbibliography[notkeyword=zenodo,notkeyword=tutorial, title={Articles}]
+As part of preparation for the new High Power
+Laser Facility (HPLF), that will be installed on the ID24 beamline at the ESRF,
+the current energy dispersive X-ray absorption beamline has been simulated using
+Oasys.
+The ID24 beamline workflow for Oasys can be obtained from the EUCALL Data
+Repository at Zenodo \cite{Briggs2017.zenodo.886451}.
+\section{Plasma X--ray Thomson Scattering\label{sec:xrts}}
+TODO CFG
 %
-%\nocite{Fortmann-Grote_Zenodo855301}
-%\printbibliography[keyword=zenodo, title={Datasets}]
+\section{Coherent diffraction from protein nano--crystals\label{sec:protein_sfx}}
+TODO CFG
 %
-%\nocite{Fortmann-Grote_Youtube_XPD}
-%\printbibliography[keyword=tutorial, title={Tutorials}]
+\section{LWFA source}\label{sec:lwfa_source}
+Simulations of compact coherent x--ray sources based on the mechanism of
+electron laser wakefield acceleration (LWFA) couple particle--in--cell
+simulations to an FEL code. In our case, we use the PIC code \textit{PIConGPU}
+and the Genesis FEL code. \textit{PIConGPU} writes the particle and field data
+into a hdf5 file using the openPMD \cite{Huebl2015} metadata standard. A file format conversion utility, which is part of
+\textit{simex\_platform} converts the PIC output to an electron distribution
+file (extension .dist) readable by \textit{Genesis}.
 
+\printbibliography[notkeyword=report, notkeyword=zenodo, title={Journal articles}]
+%
+\printbibliography[keyword=eucall, keyword=report, title={EUCALL Reports}]
+%
+\printbibliography[keyword=zenodo, title={EUCALL Data Repository Depositions}]
 
 \end{document}
 
