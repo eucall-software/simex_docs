@@ -131,17 +131,8 @@ defernumbers=true, backend=biber]{biblatex}
 \section{Summary}\label{sec:summary}
 \textbf{Milestone M4.3} (as detailed in \textbf{Task 4.2.2}) of the SIMEX
 workpackage in EUCALL is delivery of interoperable simulations
-(\textbf{Deliverable D4.3}) with documented examples. We have chosen NN
-applications to demonstrate the interoperability of our simulation codes. These
-codes are interfaced through the simulation platform ``simex\_platform'', which,
-on the one side defines python APIs through which the simulations can be set up
-and executed in a canonical way, and, on the other side, defines data interfaces
-and formats to facilitate the passing of simulation data generated from a given
-code A (data source) to another simulation code B (data sink), which processes
-this input data and produces another set of output data for a simulation code C,
-and so on.
-
-The examples are
+(\textbf{Deliverable D4.3}) with documented examples. We have chosen five
+applications to demonstrate the interoperability of our simulation codesThe examples are
 \begin{enumerate}
   \item Simulation of diffraction of coherent x--rays delivered by an X-ray
     Free--Electron Laser from high energy density matter created by short--pulse
@@ -154,9 +145,12 @@ The examples are
   \item Small angle X--ray Scattering from proteins
 \end{enumerate}
 
+
 These examples demonstrate the functionality and interoperability of all
-simulation tools as demanded in Task 4.2.2. To ease the structuring and
-sharing of work among participating institutes and collaborators, we introduced the following subtask enumeration
+simulation tools as demanded in Task 4.2.2.
+Table~\ref{tab:simulation_capabilities} summarizes the available simulation
+modules, the interfaced backengine simulation codes, and the relevant sections
+of this report and external references where example applications can be found.
 
 \begin{table}
   \begin{center}
@@ -168,7 +162,7 @@ sharing of work among participating institutes and collaborators, we introduced 
       \textbf{Task} &
       \textbf{Simulation capability} &
       \textbf{Simulation code}     &
-      \textbf{Example reference}    \\
+      \textbf{Example references}    \\
     \hline
     \hline
       \multirow{3}{*}{X--ray sources}
@@ -197,6 +191,12 @@ sharing of work among participating institutes and collaborators, we introduced 
   \end{tabular}
   \end{center}
 \end{table}
+
+These codes are interfaced through the simulation platform ``simex\_platform'', which,
+on the one side defines a python library to facilitate setup
+and execution in a canonical way, and, on the other side, defines data interfaces
+and formats to facilitate the passing of simulation data generated from one
+module to the next.
 
 \section{Coherent diffraction from high energy density matter}\label{sec:plasma_diffraction}
 \input{contributions/HPL/hpl}
@@ -238,7 +238,23 @@ data analysis and visualisation tools.
 TODO CFG
 %
 \section{Coherent diffraction from protein nano--crystals\label{sec:protein_sfx}}
-TODO CFG
+In an
+\href{https://github.com/eucall-software/simex_platform/wiki/Tutorial-on-nano-crystal-diffraction}{online
+tutorial}, we demonstrate the usage of \textit{simex\_platform} to simulate
+coherent diffraction of XFEL photons from nano--metre scale crystalline samples.
+As in the other XFEL applications (see Sec.~\ref{sec:plasma_diffraction} and
+Sec.~\ref{sec:xrts} as well as the first demonstration example in Milestone
+M4.2 \cite{EUCALL_SIMEX_M4.2}), the source wavefront is queried from the
+\href{https://in.xfel.eu/xpd}{XFEL Pulses Database XPD} and propagated to the
+sample interaction point in the focus of the SPB--SFX instrument by means of
+the coherent wavefront propagation code library WPG. Owing to the well defined
+data interfaces and file format adaptors in \textit{simex\_platform} passing the
+wavefront data to the crystal diffraction code is straightforward. We employ the
+code \textit{pattern\_sim} which is part of the crystallography software suite
+\textit{CrystFEL} \cite{White2012}, available from the
+\cite{https://www.desy.de/~twhite/crystfel}{CrystFEL website at DESY}.
+described
+In this case, the diffraction
 %
 \section{LWFA source}\label{sec:lwfa_source}
 Simulations of compact coherent x--ray sources based on the mechanism of
