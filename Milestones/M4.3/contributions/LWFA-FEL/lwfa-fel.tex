@@ -1,85 +1,31 @@
-% This file was converted to LaTeX by Writer2LaTeX ver. 1.4
-% see http://writer2latex.sourceforge.net for more info
-\documentclass{article}
-\usepackage[latin1]{inputenc}
-\usepackage[T3,T1]{fontenc}
-\usepackage[english]{babel}
-\usepackage[noenc]{tipa}
-\usepackage{tipx}
-\usepackage[geometry,weather,misc,clock]{ifsym}
-\usepackage{pifont}
-\usepackage{eurosym}
-\usepackage{amsmath}
-\usepackage{wasysym}
-\usepackage{amssymb,amsfonts,textcomp}
-\usepackage{array}
-\usepackage{supertabular}
-\usepackage{hhline}
-\usepackage[pdftex]{graphicx}
-\makeatletter
-\newcommand\arraybslash{\let\\\@arraycr}
-\makeatother
-\setlength\tabcolsep{1mm}
-\renewcommand\arraystretch{1.3}
-\title{Conference title, upper and lower case, bolded, 18 point type, centered}
-\author{Carsten Fortmann-Grote}
-\date{2017-09-16}
-\begin{document}
-EUCALL-SIMEX: Development for Laser Plasma Accelerator driven Free Electron
-Laser source 
-
-A.Sharma1 Axel Huebl2, Carsten Fortmann-Grote3, and Michael Bussmann2
-
-1ELI-LAPS, Szeged, Hungary.
-
-2HZDR, Dresden, Germany.
-
-3XFEL, Hamburg, Germany.
-
-
-\bigskip
-
-
-\bigskip
-
-
-\bigskip
-
 In proposed SIMEX development project, we focus to investigate the possible
 route for experimental realization of laser plasma accelerator based coherent
-light source (FELs)1. Since the conventional accelerator has the limit of the
+light source (FELs)\cite{Emma2004}. Since the conventional accelerator has the limit of the
 gradient due to the structure surface field limit, the best gradient achieved
-now is less than 100MeV/m. Laser plasma accelerator (LPA)2-4 will be the next
+now is less than 100MeV/m. Laser plasma accelerator
+(LPA)\cite{Leemans2006,Esarey2009,Tajima1979} will be the next
 generation accelerator facilities with the ultrahigh gradient which will reach
 100GeV/m. Due to the ultrahigh gradient of LPA, the accelerator facility will
-be miniaturized greatly. 
+be miniaturized greatly.
 
 Here we are employing an extension of SIMEX platform to enable simulation of
 LWFA based coherent light sources (FELs) by coupling a particle-in-cell (PIC)
-code (PIConGPU)5 that describes the LWFA to a FEL simulation code (GENESIS)6.
-
-
-\bigskip
+code (PIConGPU)\cite{Bussmann2013} that describes the LWFA to a FEL simulation
+code (GENESIS)\cite{genesis_online}.
 
 Proposed Setup for SIMEX:
 
 Our proposed setup is shown in Fig.~1; starting from electron beam generation
 from a laser plasma source to the generation of femtosecond and/or attosecond
 EUV/XUV pulse from the radiation undulator at endpoint. In this scheme an
-intense. 
-
-
-\bigskip
-
-
-\includegraphics[width=5.4165in,height=2.7374in]{lwfafel-img/lwfafel-img001.png}
-
-
-Fig. 1. Scheme of the proposed setup
-
-
-\bigskip
-
+intense.
+%
+\begin{figure}[ht]
+  \includegraphics[width=5.4165in,height=2.7374in]{figures/lwfafel-img001.png}
+  \caption{Scheme of the proposed setup}
+  \label{lwfa-fig1}
+\end{figure}
+%
 (TW/PW power) laser is focused on gas jet/ gas filled capillary for producing a
 relativistic electron beam. Initial energy spread of the electron beam of a
 LPAs (1-5\%) is typically much larger than that of a LINAC (about 0.05 \%), so
@@ -93,135 +39,60 @@ a radiator undulator (RU) consisting of a single or a few periods and creates
 EUV/XUV pulses.
 
 
-\bigskip
-
-We proceed in this SIMEX development for LPA-FEL following two parallel path:
-
-
-\bigskip
-
+We proceed in this SIMEX development for LPA-FEL following two parallel paths:
 \begin{enumerate}
-\item Development of SIMEX setup for LPA-FEL by combining PIConGPU and GENESIS,
-\item Utilisation of experimentally achieved high quality electron beam as an
-input to FEL simulation code GPT/GENESIS, for investigation of coherent
-radiation generation.
+  \item Development of SIMEX setup for LPA-FEL by combining PIConGPU and GENESIS,
+  \item Utilisation of experimentally achieved high quality electron beam as an
+    input to FEL simulation codes GPT \cite{gpt_online} or
+    GENESIS\cite{genesis_online}, for investigation of coherent
+    radiation generation.
 \end{enumerate}
 
-\bigskip
 
-Since February, we investigated both case as listed below:
-
-
-\bigskip
-
-\begin{enumerate}
-\item Development of SIMEX setup for LPA-FEL (with Carsten and HZDR team)
-\end{enumerate}
-
-\bigskip
-
-
-\includegraphics[width=5.9425in,height=4.1882in]{lwfafel-img/lwfafel-img002.png}
-
-
-Figure 2: Layout for Simulation Setup
-
-
-\bigskip
+\begin{figure}
+  \includegraphics[width=5.9425in,height=4.1882in]{figures/lwfafel-img002.png}
+  \caption{Layout for Simulation Setup}
+  \label{lwfa-fig2}
+\end{figure}
 
 \begin{enumerate}
 \item Laser-plasma accelerator based single-cycle attosecond undulator source
 (in collaboration with T. Zoltan and Prof. Hebling, Pecs University Hungary)
 \end{enumerate}
 
-\bigskip
 
-Example Results: Complete details on the following results can be accessed at
-\ \ https://arxiv.org/pdf/1708.09384.pdf
+The following figure shows example results which are discussed in detail in
+Ref.~\cite{Tibai2017}
 
-\begin{flushleft}
-\tablefirsthead{}
-\tablehead{}
-\tabletail{}
-\tablelasttail{}
-\begin{supertabular}{m{3.2177598in}m{3.2747598in}}
-\centering{\selectlanguage{english} 
-\includegraphics[width=2.7016in,height=2.1583in]{lwfafel-img/lwfafel-img003.jpg}
-(a)} &
-\centering\arraybslash{\selectlanguage{english} 
-\includegraphics[width=3.0083in,height=2.352in]{lwfafel-img/lwfafel-img004.jpg}
-(b)}\\
-\multicolumn{2}{m{6.5712595in}}{{\selectlanguage{english} Fig. 3 - GPT
-Simulation Results: (a) CEP-controlled EUV waveforms (b) and its spatial beam
-profile. }}\\
-\end{supertabular}
-\end{flushleft}
+\begin{figure}
+  \centering{%
+    \includegraphics[width=2.7016in,height=2.1583in]{figures/lwfafel-img003.jpg}
+    \includegraphics[width=3.0083in,height=2.352in]{figures/lwfafel-img004.jpg}
+  }
+  \caption{GPT Simulation Results: CEP-controlled EUV waveforms (left) and its spatial beam
+  profile (right).}
+\end{figure}
+
 Figure shown here, \ displays the simulated waveform of the generated attosecond
 pulse and the beam profile at 60 nm radiation wavelength. The location of the
 waveform in fig (a) is shown in figure (b) marked with a symbol x. In other
 wavelengths the shape of the attosecond pulses are nearly identical with the
 shape shown in fig (a) so these pulses are CEP controlled too.
 
+%References
 
-\bigskip
+%[1] P. Emma, K. Bane, M. Cornacchia, Z. Huang, H. Schlarb, G. Stupakov, and D.
+%Walz, Phys. Rev. Lett. 92, 074801 (2004)
 
+%[2] W. P. Leemans et al, Nat. Phys. 2, 696 (2006)
 
-\bigskip
+%[3] E. Esarey et al, Rev. Mod. Phys. 81, 1229 (2009)
 
-Acknowledgements
+%[4] T. Tajima and J. M. Dawson, Phys. Rev. Lett. 43, 267 (1979).
 
-This project has received funding from the European Union Horizon 2020 research
-and innovation programme under grant agreement No 654220.\ \ 
+%[5] ~M. Bussmann et al,~Proceedings SC13: International Conference for High
+%Performance Computing, Networking, Storage and Analysis~\textbf{5-1}, 2013.
 
-\begin{figure}
-\centering
-\begin{minipage}{0.3827in}
-a)
-\end{minipage}
-\end{figure}
-\begin{figure}
-\centering
-\begin{minipage}{0.3827in}
-b)
-\end{minipage}
-\end{figure}
-\begin{flushleft}
-\tablefirsthead{}
-\tablehead{}
-\tabletail{}
-\tablelasttail{}
-\begin{supertabular}{ll}
-~
- & ~
-\\
-\multicolumn{2}{l}{~
-}\\
-\end{supertabular}
-\end{flushleft}
+%[6] GPT: online at http://www.pulsar.nl/gpt
 
-\bigskip
-
-
-\bigskip
-
-
-\bigskip
-
-References 
-
-[1] P. Emma, K. Bane, M. Cornacchia, Z. Huang, H. Schlarb, G. Stupakov, and D.
-Walz, Phys. Rev. Lett. 92, 074801 (2004)
-
-[2] W. P. Leemans et al, Nat. Phys. 2, 696 (2006)
-
-[3] E. Esarey et al, Rev. Mod. Phys. 81, 1229 (2009)
-
-[4] T. Tajima and J. M. Dawson, Phys. Rev. Lett. 43, 267 (1979).
-
-[5] ~M. Bussmann et al,~Proceedings SC13: International Conference for High
-Performance Computing, Networking, Storage and Analysis~\textbf{5-1}, 2013.
-
-[6] GPT: online at http://www.pulsar.nl/gpt
-
-[7] GENESIS: online at http://genesis.web.psi.ch/
-\end{document}
+%[7] GENESIS: online at http://genesis.web.psi.ch/

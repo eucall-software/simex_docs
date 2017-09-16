@@ -1,9 +1,12 @@
 \documentclass[12pt]{scrartcl}
 \usepackage{graphicx}
 \usepackage{multirow}
-\usepackage[default]{opensans}
 \usepackage{sfmath} % sans font also for math
- \usepackage[binary-units = true]{siunitx}
+\usepackage[binary-units = true]{siunitx}
+\usepackage[english]{babel}
+\usepackage{array}
+\usepackage{supertabular}
+\usepackage{hhline}
 
 % defining the paper layout that no text overlaps with the header
 \usepackage[
@@ -67,6 +70,7 @@ defernumbers=true, backend=biber]{biblatex}
   \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
 
 \addbibresource{references.bib}
+\addbibresource{urls.bib}
 \addbibresource{aux.bib}
 \addbibresource{contributions/HPL/sample.bib}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -266,6 +270,7 @@ data.
 
 %
 \section{Laser--wakefield driven FEL source}\label{sec:lwfa_source}
+%
 \input{contributions/LWFA-FEL/lwfa-fel}
 
 %Simulations of compact coherent x--ray sources based on the mechanism of
@@ -283,5 +288,4 @@ data.
 \printbibliography[keyword=zenodo, title={EUCALL Data Repository Depositions}]
 
 \end{document}
-
 
