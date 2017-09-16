@@ -207,13 +207,13 @@ module to the next.
 %
 We have executed the simulations outlined in Deliverable
 4.2\cite{EUCALL_SIMEX_D4.2}, describing an XAFS experiment on shock compressed
-solid matter. There are three areas of simulation that are considered to describe the 
-whole source-to-end experiment: X-ray source \& ray tracing, long pulse photon-matter 
-interaction, and X-ray absorption modelling. Currently, the simulations of X-ray 
-source/X-ray tracing and XAS modelling are standalone simulations that provide 
-important information for the long pulse hydrocode simulations. Information 
-such as X-ray beam size on sample, will influence the laser conditions that can 
-be accepted for hydrocode simulation (the laser spot must be larger than the 
+solid matter. There are three areas of simulation that are considered to describe the
+whole source-to-end experiment: X-ray source \& ray tracing, long pulse photon-matter
+interaction, and X-ray absorption modelling. Currently, the simulations of X-ray
+source/X-ray tracing and XAS modelling are standalone simulations that provide
+important information for the long pulse hydrocode simulations. Information
+such as X-ray beam size on sample, will influence the laser conditions that can
+be accepted for hydrocode simulation (the laser spot must be larger than the
 X-ray spot size).
 
 \input{contributions/WDM/xafs}
@@ -260,19 +260,21 @@ the
 \href{https://eucall-software.github.io/simex_platform/#SimEx.Calculators.SingFELPhotonDiffractor.SingFELPhotonDiffractor}{\textit{SingFELPhotonDiffractor}}
 for single particle coherent diffraction. This in turn ensures that the same
 analysis tools (e.g.
-\href{https://eucall-software.github.io/simex_platform/#SimEx.Analysis.DiffractionAnalysis.DiffractionAnalysis}{\textit{DiffractionAnalysis}}
+\href{https://eucall-software.github.io/simex_platform/#SimEx.Analysis.DiffractionAnalysis.DiffractionAnalysis}{\textit{DiffractionAnalysis}})
 can be applied to crystal diffraction data and to single partice diffraction
 data.
 
 %
-\section{LWFA source}\label{sec:lwfa_source}
-Simulations of compact coherent x--ray sources based on the mechanism of
-electron laser wakefield acceleration (LWFA) couple particle--in--cell
-simulations to an FEL code. In our case, we use the PIC code \textit{PIConGPU}
-and the Genesis FEL code. \textit{PIConGPU} writes the particle and field data
-into a hdf5 file using the openPMD \cite{Huebl2017} metadata standard. A file format conversion utility, which is part of
-\textit{simex\_platform} converts the PIC output to an electron distribution
-file (extension .dist) readable by \textit{Genesis}.
+\section{Laser--wakefield driven FEL source}\label{sec:lwfa_source}
+\input{contributions/LWFA-FEL/lwfa-fel}
+
+%Simulations of compact coherent x--ray sources based on the mechanism of
+%electron laser wakefield acceleration (LWFA) couple particle--in--cell
+%simulations to an FEL code. In our case, we use the PIC code \textit{PIConGPU}
+%and the Genesis FEL code. \textit{PIConGPU} writes the particle and field data
+%into a hdf5 file using the openPMD \cite{Huebl2017} metadata standard. A file format conversion utility, which is part of
+%\textit{simex\_platform} converts the PIC output to an electron distribution
+%file (extension .dist) readable by \textit{Genesis}.
 
 \printbibliography[notkeyword=report, notkeyword=zenodo, title={Journal articles}]
 %

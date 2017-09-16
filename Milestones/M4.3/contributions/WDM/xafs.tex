@@ -16,23 +16,24 @@ The ID24 beamline workflow for Oasys can be obtained from the EUCALL Data
 Repository at Zenodo \cite{Briggs2017.zenodo.886451}.
 
 \subsection{Particle matter interaction: long pulse laser}
-The long pulse laser interaction with sample is performed using the Esther hydrocode. 
-Here we have demonstrated a `simple' experiment, that could be performed on the 
-ID24 XAS beamline, where a 6 ns flat top laser pulse (1064 nm) sends an ablative 
-driven shockwave through a 45 um CH-plastic ablator and into a 5 um Fe layer. A 
-tutorial that describes how the input files are generated (and how output data is 
-obtained) is provided on the Simex wiki page \textbf{(NOTE: LATEX DOESN'T LIKE 
-THE UNDERSCORE CHARACTER IN THE LINK TO WIKKI PAGE)}; all example input 
-and output files are available from the EUCALL Data Repository at Zenodo
- [https://doi.org/10.5281/zenodo.883106]. The pressure in the Fe sample at t = 8.9 ns 
- (laser pulse begins at t = 0 ns) is shown in figure \ref{fig:hydro}. 
- 
- The pressure, temperature, density and velocity can all be obtained at a given 
- time step from the output files that Simex converts to opmd format. Upon 
- completion of the code, it is then possible to adjust laser parameters to reach 
- different pressure-temperature conditions in the Fe sample. The P-T condition 
- where the pressure is uniform through the whole of the sample is then stored and 
- XAS modelling can be performed to simulate the expected EXAFS signal at 
+The long pulse laser interaction with sample is performed using the Esther hydrocode.
+Here we have demonstrated a `simple' experiment, that could be performed on the
+ID24 XAS beamline, where a 6 ns flat top laser pulse (1064 nm) sends an ablative
+driven shockwave through a 45 um CH-plastic ablator and into a 5 um Fe layer. A
+tutorial that describes how the input files are generated (and how output data is
+obtained) is provided on the
+\href{https://www.github.com/eucall-software/simex_platform/wiki/Esther-Hydrocode-Tutorial}{Simex
+wiki page}; all example input
+and output files are available from the Ref.~\cite{Briggs2017.zenodo.883106}.
+The pressure in the Fe sample at $t = \SI{8.9}{\nano\second}$
+(laser pulse begins at $t = \SI{0}{ns}$) is shown in figure \ref{fig:hydro}.
+
+ The pressure, temperature, density and velocity can all be obtained at a given
+ time step from the output files that Simex converts to opmd format. Upon
+ completion of the code, it is then possible to adjust laser parameters to reach
+ different pressure-temperature conditions in the Fe sample. The P-T condition
+ where the pressure is uniform through the whole of the sample is then stored and
+ XAS modelling can be performed to simulate the expected EXAFS signal at
  the compressed state.
 
 \begin{figure}
