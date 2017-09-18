@@ -1,13 +1,10 @@
 \documentclass[12pt]{scrartcl}
-\usepackage{graphicx}
+\usepackage[english]{babel}
 \usepackage{multirow}
+\usepackage[default]{opensans}
 \usepackage{sfmath} % sans font also for math
 \usepackage[binary-units = true]{siunitx}
-\usepackage[english]{babel}
-\usepackage{array}
-\usepackage{supertabular}
-\usepackage{hhline}
-
+\usepackage{graphicx}
 % defining the paper layout that no text overlaps with the header
 \usepackage[
   top=35mm,
@@ -18,9 +15,12 @@
   right=25mm
 ]{geometry}
 
+\usepackage[verbose]{placeins}
+\usepackage{subfig}
 \usepackage{latexsym}
 \usepackage[centertags]{amsmath}
 \usepackage{amssymb}
+\usepackage[]{glossaries}
 
 \graphicspath{{figures/}}
 % custom header and footpage
@@ -46,9 +46,8 @@
 \usepackage{booktabs}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   BIBLIOGRAPHY SETTINGS                     %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[bibstyle=nature,sorting=none,=maxnames=1000,eprint=false,
+%   BIBLIOGRAPHY SETTINGS
+\usepackage[bibstyle=nature,sorting=none,maxnames=1000,eprint=false,
 defernumbers=true, backend=biber]{biblatex}
 \usepackage{hyperref}
 
@@ -72,21 +71,22 @@ defernumbers=true, backend=biber]{biblatex}
 \addbibresource{references.bib}
 \addbibresource{urls.bib}
 \addbibresource{aux.bib}
+\addbibresource{drafts.bib}
 \addbibresource{contributions/HPL/sample.bib}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% END BIBLIOGRAPHY SETTINGS                   %
+% GLOSSARY SETTINGS
+\setacronymstyle{long-short}
+\input{glossary}
+\makeglossaries
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-% sophisticated linking of references in the pdf and setting some options
-\usepackage{url}                                                  % for correct typesettings of URLs
+% PDF SETTINGS
 \usepackage{hyperref}                                             % for sophisticated linking of urls, dois, pictures, tables, etc.
 \hypersetup{
     unicode=true,                                                 % non-Latin characters in Acrobat’s bookmarks
     pdftoolbar=true,                                              % show Acrobat’s toolbar?
     pdfmenubar=true,                                              % show Acrobat’s menu?
     pdffitwindow=false,                                           % window fit to page when opened
-    pdftitle={M4.3: Simulations interoperable},                   % title
+    pdftitle={M4.3: Interoperable simulations},                   % title
     pdfauthor={C. Fortmann-Grote},                                % author
     pdfsubject={EUCALL WP4 (SIMEX) Milestone 4.3},                % subject of the document
     pdfcreator={pdflatex},                                        % creator of the document
@@ -104,9 +104,7 @@ defernumbers=true, backend=biber]{biblatex}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% END BIBLIOGRAPHY SETTINGS                   %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+% DOCUMENT BODY
 \begin{document}
 \makeatletter
 \begin{titlepage}
@@ -115,7 +113,7 @@ defernumbers=true, backend=biber]{biblatex}
   $~$\\
   \vspace{2cm}
   \Huge{\textbf{WP 4 -- SIMEX\\[1cm]
-    Milestone M4.3: Demonstration of interoperability of simulations%
+    Milestone M4.3: Demonstration of interoperable simulations%
   }}\\
   \vspace{2cm}
   \large{Carsten Fortmann-Grote, Alexander Andreev, Ashutosh Sharma, Richard
@@ -126,37 +124,41 @@ defernumbers=true, backend=biber]{biblatex}
 \end{center}
 \vfill%
 \includegraphics[width=\textwidth]{figures/PartnerLogos_2017}
-\normalfont
 \end{titlepage}
 \makeatother
 %
 \tableofcontents
 %
+\newpage
+%
 \section{Summary}\label{sec:summary}
-\textbf{Milestone M4.3} (as detailed in \textbf{Task 4.2.2}) of the SIMEX
-workpackage in EUCALL is delivery of interoperable simulations
-(\textbf{Deliverable D4.3}) with documented examples. We have chosen five
-applications to demonstrate the interoperability of our simulation codesThe examples are
+Milestone M4.3 (as detailed in Task 4.2.2) of the SIMEX
+workpackage in EUCALL is the delivery of interoperable simulations
+(Deliverable D4.3) with documented examples. We have chosen five
+applications to demonstrate the interoperability of our simulation codes beyond
+the first usage example, which is described in Milestone
+M4.2~\cite{EUCALL_SIMEX_M4.2}.
+%
 \begin{enumerate}
-  \item Simulation of diffraction of coherent x--rays delivered by an X-ray
-    Free--Electron Laser from high energy density matter created by short--pulse
+  \item Simulation of diffraction of coherent x--rays delivered by an
+    \gls{xfel}
+    from high energy density matter created by short--pulse
     laser matter interaction (as detailed in Deliverable D4.1)
-  \item Simulation of x--ray fine structure absorption spectroscopy (XAFS) from long--pulse laser
+  \item Simulation of \gls{xafs} from long--pulse laser
     shocked warm dense matter at the synchrotron light source ESRF (as detailed
     in Deliverable D4.2).
   \item Serial femtosecond crystallography from protein crystals
   \item X--ray Thomson Scattering from warm dense plasmas
-  \item Small angle X--ray Scattering from proteins
+  \item Laser--wakefield acceleration based coherent light sources
 \end{enumerate}
-
-
+%
 These examples demonstrate the functionality and interoperability of all
 simulation tools as demanded in Task 4.2.2.
 Table~\ref{tab:simulation_capabilities} summarizes the available simulation
 modules, the interfaced backengine simulation codes, and the relevant sections
 of this report and external references where example applications can be found.
 
-\begin{table}
+\begin{table}[!h]
   \begin{center}
     \scriptsize
     \caption{Demonstrated simulation capabilities}
@@ -170,29 +172,27 @@ of this report and external references where example applications can be found.
     \hline
     \hline
       \multirow{3}{*}{X--ray sources}
-      & XFEL source                     & FAST/XPD              & \cite{EUCALL_SIMEX_M4.1,EUCALL_SIMEX_M4.2,Fortmann-Grote2017}     \\
-      & XFEL source                     & Genesis/Ocelot        & \ref{sec:lwfa_source} \\
-      & Synchrotron source              & ShadowOUI             & \ref{sec:xafs}       \\
+      & XFEL source                     & FAST/XPD              & Refs~\cite{EUCALL_SIMEX_M4.1,EUCALL_SIMEX_M4.2,Fortmann-Grote2017}     \\
+      & XFEL source                     & Genesis/Ocelot        & Sec.~\ref{sec:lwfa_source} \\
+      & Synchrotron source              & ShadowOUI             & Sec.~\ref{sec:xafs}       \\
     \hline
     \multirow{2}{*}{Beam propagation}
-      & Coherent wave propagaton        & WPG/SRW               & \cite{EUCALL_SIMEX_M4.1,EUCALL_SIMEX_M4.2,Fortmann-Grote2017}     \\
-      & X--ray tracing                  & ShadowOUI             & \ref{sec:xafs}       \\
+      & Coherent wave propagaton        & WPG/SRW               & Refs~\cite{EUCALL_SIMEX_M4.1,EUCALL_SIMEX_M4.2,Fortmann-Grote2017}     \\
+      & X--ray tracing                  & ShadowOUI             & Sec.~\ref{sec:xafs}       \\
     \hline
     \multirow{3}{*}{Photon--matter interaction}
-      & Radiation damage to molecules   & XMDYN/XATOM           & \cite{EUCALL_SIMEX_M4.1,EUCALL_SIMEX_M4.2,Fortmann-Grote2017}     \\
-      & Short--pulse optical laser      & PIConGPU              & \ref{sec:lwfa_source},\ref{sec:plasma_diffraction},\cite{EUCALL_SIMEX_D4.1}  \\
-      & Long--pulse optical laser       & Esther Rad--hydro     & \ref{sec:xafs} \cite{Torchio2016}  \\
+      & Radiation damage to molecules   & XMDYN/XATOM           & Refs~\cite{EUCALL_SIMEX_M4.1,EUCALL_SIMEX_M4.2,Fortmann-Grote2017}     \\
+      & Short--pulse optical laser      & PIConGPU              & Secs~\ref{sec:lwfa_source},\ref{sec:plasma_diffraction}, Ref.~\cite{EUCALL_SIMEX_D4.1}  \\
+      & Long--pulse optical laser       & Esther Rad--hydro     & Sec.~\ref{sec:xafs} Ref.~\cite{Torchio2016}  \\
     \hline
     \multirow{5}{*}{Signal generation}
-      & Nano-particle scattering        & singFEL               & \cite{EUCALL_SIMEX_M4.1,EUCALL_SIMEX_M4.2,Fortmann-Grote2017}     \\
+      & Nano-particle scattering        & singFEL               & Ref.~\cite{EUCALL_SIMEX_M4.1,EUCALL_SIMEX_M4.2,Fortmann-Grote2017}     \\
 
-      & Plasma diffraction              & paraTAXIS             &
-      \ref{sec:plasma_diffraction},\cite{EUCALL_SIMEX_D4.1,Kluge2016,
+      & Plasma diffraction              & paraTAXIS             & Sec.~\ref{sec:plasma_diffraction},Ref.~\cite{EUCALL_SIMEX_D4.1,Kluge2016,
       Garten2017.zenodo.885033}  \\
-      & XAFS                            & FEFF                  & \ref{sec:xafs}
-      \cite{EUCALL_SIMEX_D4.2,Torchio2016,Harmand2015,Mazevet2014}  \\
-      & Plasma XRTS                     & XRTScode              & \ref{sec:xrts} \cite{Fortmann2009d}               \\
-      & Nano--crystallography           & CrystFEL              & \ref{sec:protein_sfx}         \\
+      & XAFS                            & FEFF                  & Sec.~\ref{sec:xafs}, Refs~\cite{EUCALL_SIMEX_D4.2,Torchio2016,Harmand2015,Mazevet2014}  \\
+      & Plasma XRTS                     & XRTScode              & Sec.~\ref{sec:xrts}, Ref.~\cite{Fortmann2009d}               \\
+      & Nano--crystallography           & CrystFEL              & Sec.~\ref{sec:protein_sfx}         \\
     \hline
   \end{tabular}
   \end{center}
@@ -227,11 +227,8 @@ documented example workflow} is provided to demonstrate the usability of the
 radiation--hydrodynamics simulation capabilities in \textit{simex\_platform}. It
 shows how to optimize the target geometry (i.e. the thickness of the ablator
 material) to maximize the data output, making use of the openPMD metadata
-standard to facilitate transferrability among involved simulation codes and
+standard to facilitate transferability among involved simulation codes and
 data analysis and visualisation tools.
-
-\section{Plasma X--ray Thomson Scattering\label{sec:xrts}}
-TODO CFG
 %
 \section{Coherent diffraction from protein nano--crystals\label{sec:protein_sfx}}
 In an
@@ -265,27 +262,98 @@ the
 for single particle coherent diffraction. This in turn ensures that the same
 analysis tools (e.g.
 \href{https://eucall-software.github.io/simex_platform/#SimEx.Analysis.DiffractionAnalysis.DiffractionAnalysis}{\textit{DiffractionAnalysis}})
-can be applied to crystal diffraction data and to single partice diffraction
+can be applied to crystal diffraction data and to single particle diffraction
 data.
+%
+\section{Plasma X--ray Thomson Scattering\label{sec:xrts}}
+%
+X--Ray Thomson Scattering (XRTS)~\cite{Glenzer2009,Fortmann2009d} has
+become an important method for the diagnosis of matter at extreme conditions of
+temperature and density. These quantities can be inferred from the spectrally
+resolved scattering intensity if the spectrum was measured with high resolution.
+The resolution primarily depends on the detector's point spread function, the
+energy resolution of the dispersive element, and on the spectral width of
+the probe radiation. Complex structured source spectra, e.g. K--shell multiplets
+\cite{Lee2009} or saturated SASE (self--amplified spontaneous emission) spectra
+limit the accuracy to which plasma properties can be measured.
+
+XRTS can now be simulated within \textit{simex\_platform}. The corresponding
+\textit{Calculator} is the
+\href{https://eucall-software.github.io/simex_platform/#SimEx.Calculators.PlasmaXRTSCalculator.PlasmaXRTSCalculator}{\textit{PlasmaXRTSCalculator}},
+the backengine simulation code is called \textit{xrs} and can be obtained by
+request from the maintainers of \textit{simex\_platform}. The
+\href{https://eucall-software.github.io/simex_platform/#SimEx.Calculators.PlasmaXRTSCalculator.PlasmaXRTSCalculator}{\textit{PlasmaXRTSCalculator}}
+accepts wavefront data from the
+\href{https://eucall-software.github.io/simex_platform/#SimEx.Calculators.XFELPhotonPropagator.XFELPhotonPropagator}{\textit{XFELPhotonPropagator}}
+from which it will extract the power spectrum of the scattering photons and
+convolute it with the dynamic structure factor coming from the \textit{xrs}
+code.
+
+A tutorial and example demonstration has been added to the
+\href{https://github.com/eucall-software/simex_platform/wiki/XRTS-Tutoria}{simex\_platform
+wiki}. It explains how to setup the source, propagation and XRTS calculation
+to generate scattering spectra with explicit account for the source spectrum.
+
+Fig.~\ref{fig:xrts_spectrum_and_source} demonstrates the impact of a broad SASE
+spectrum on the simulated \gls{xrts} spectrum. Here, we used a propagated
+wavefront from the SASE1 beamline at European XFEL of \SI{3}{\femto\second}
+duration and \SI{5}{\kilo\electronvolt} photon energy. The simulation of the FEL
+source was performed at high saturation leading to the numerous SASE spikes and
+rather broad spectral width of the x--ray probe.
+
+\begin{figure}[ht]
+  \begin{center}
+    \subfloat[]{%
+    \includegraphics[width=0.8\textwidth,angle=0,clip]{figures/Be_30deg_5keV_RPA.png}
+    \label{fig:xrts_spectrum}
+  }\\
+  \subfloat[SASE spectrum]{%
+    \includegraphics[width=0.8\textwidth,angle=0,clip]{figures/SASE1_5keV_3fs_spectrum.png}
+    \label{fig:xrts_source}
+  }
+  \end{center}
+  \caption{(a) \gls{xrts} spectrum showing free--free, bound--free, and elastic
+  scattering. The source spectrum (b) determines the spectral shape of the elastic
+feature and smears our the inelastic features.}
+  \label{fig:xrts_spectrum_and_source}
+\end{figure}
+
+In Ref.~\cite{Rozmus2017_submitted}, the theoretical models to describe
+scattering from weakly collisional plasmas implemented in \textit{xrs} are
+benchmarked against a plasma kinetic model. A second publication, analysing the
+range of applicability of the so--called impulse approximation for Compton
+scattering from bound states is currently in preparation \cite{Bell2017_prep}.
+%
 
 %
 \section{Laser--wakefield driven FEL source}\label{sec:lwfa_source}
 %
+Simulations of compact coherent x--ray sources based on the mechanism of
+electron laser wakefield acceleration (LWFA) couple particle--in--cell
+simulations to an FEL code. In our case, we use the PIC code \textit{PIConGPU}
+and the \textit{Genesis} FEL code, both are publicly available under open source licenses.
+\textit{PIConGPU} writes the particle and field data
+into a hdf5 file using the openPMD \cite{Huebl2017} metadata standard. A file format conversion utility, which is part of
+\textit{simex\_platform} converts the PIC output to an electron distribution
+file (extension .dist) readable by \textit{Genesis}.
+
+
 \input{contributions/LWFA-FEL/lwfa-fel}
 
-%Simulations of compact coherent x--ray sources based on the mechanism of
-%electron laser wakefield acceleration (LWFA) couple particle--in--cell
-%simulations to an FEL code. In our case, we use the PIC code \textit{PIConGPU}
-%and the Genesis FEL code. \textit{PIConGPU} writes the particle and field data
-%into a hdf5 file using the openPMD \cite{Huebl2017} metadata standard. A file format conversion utility, which is part of
-%\textit{simex\_platform} converts the PIC output to an electron distribution
-%file (extension .dist) readable by \textit{Genesis}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% No floating objects beyond this point. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\FloatBarrier
 
-\printbibliography[notkeyword=report, notkeyword=zenodo, title={Journal articles}]
+\printbibliography[notkeyword=submitted, notkeyword=inpreparation, notkeyword=report, notkeyword=zenodo, title={Journal articles}]
 %
-\printbibliography[keyword=eucall, keyword=report, title={EUCALL Reports}]
+\printbibliography[keyword=submitted, title={Submitted articles}]
 %
-\printbibliography[keyword=zenodo, title={EUCALL Data Repository Depositions}]
+\printbibliography[keyword=inpreparation, title={Articles in preparation}]
+%
+\printbibliography[keyword=eucall, keyword=report, title={EUCALL reports}]
+%
+\printbibliography[keyword=zenodo, title={Zenodo depositions}]
 
 \end{document}
 

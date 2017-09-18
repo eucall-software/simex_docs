@@ -1,34 +1,28 @@
-In proposed SIMEX development project, we focus to investigate the possible
+This interface was used to investigate the possible
 route for experimental realization of laser plasma accelerator based coherent
-light source (FELs)\cite{Emma2004}. Since the conventional accelerator has the limit of the
-gradient due to the structure surface field limit, the best gradient achieved
-now is less than 100MeV/m. Laser plasma accelerator
-(LPA)\cite{Leemans2006,Esarey2009,Tajima1979} will be the next
-generation accelerator facilities with the ultrahigh gradient which will reach
-100GeV/m. Due to the ultrahigh gradient of LPA, the accelerator facility will
-be miniaturized greatly.
+light source (FELs)\cite{Emma2004}. Laser plasma accelerators
+(LPA)\cite{Leemans2006,Esarey2009,Tajima1979} have the potential to become the next
+generation of accelerator facilities reaching field gradients of the order of
+\SI{100}{\giga\electronvolt\per\metre}, i.e. up to three orders of magnitude
+higher than in conventional linear accelerators. This would reduce construction
+and operation costs by comparable orders of magnitude.
 
-Here we are employing an extension of SIMEX platform to enable simulation of
-LWFA based coherent light sources (FELs) by coupling a particle-in-cell (PIC)
-code (PIConGPU)\cite{Bussmann2013} that describes the LWFA to a FEL simulation
-code (GENESIS)\cite{genesis_online}.
-
-Proposed Setup for SIMEX:
-
-Our proposed setup is shown in Fig.~1; starting from electron beam generation
-from a laser plasma source to the generation of femtosecond and/or attosecond
-EUV/XUV pulse from the radiation undulator at endpoint. In this scheme an
-intense.
+\subsection{Start--to--end simulation of LWFA based FELs\label{sec:lwfa_s2e}}
+Our simulation setup is shown in Fig.~\ref{fig:lwfa-setup}; starting from electron
+beam generation from a laser plasma source to the generation of femtosecond
+and/or attosecond EUV/XUV pulse from the radiation undulator.
 %
 \begin{figure}[ht]
   \includegraphics[width=5.4165in,height=2.7374in]{figures/lwfafel-img001.png}
-  \caption{Scheme of the proposed setup}
-  \label{lwfa-fig1}
+  \caption{Scheme of LWFA-FEL simulation}
+  \label{fig:lwfa-setup}
 \end{figure}
 %
-(TW/PW power) laser is focused on gas jet/ gas filled capillary for producing a
+In this scheme an intense
+(\si{\tera\watt}/\si{\peta\watt} power \textbf{give a range here})
+laser is focused onto a gas jet or a gas filled capillary for producing a
 relativistic electron beam. Initial energy spread of the electron beam of a
-LPAs (1-5\%) is typically much larger than that of a LINAC (about 0.05 \%), so
+LPA (1-5\%) is typically much larger than that of a LINAC (about 0.05 \%), so
 reduction of the slice energy spread is necessary. The electron beam is sent
 through a modulator undulator (MU) together with a TW-power laser beam, where
 the interaction between the electrons, the magnetic field of the undulator and
@@ -37,62 +31,42 @@ of the electrons. This energy modulation leads to the formation of nanobunches
 (ultrashort electron layers). The nanobunched electron beam then passes through
 a radiator undulator (RU) consisting of a single or a few periods and creates
 EUV/XUV pulses.
-
-
-We proceed in this SIMEX development for LPA-FEL following two parallel paths:
-\begin{enumerate}
-  \item Development of SIMEX setup for LPA-FEL by combining PIConGPU and GENESIS,
-  \item Utilisation of experimentally achieved high quality electron beam as an
-    input to FEL simulation codes GPT \cite{gpt_online} or
-    GENESIS\cite{genesis_online}, for investigation of coherent
-    radiation generation.
-\end{enumerate}
-
-
-\begin{figure}
+%
+\begin{figure}[ht]
   \includegraphics[width=5.9425in,height=4.1882in]{figures/lwfafel-img002.png}
   \caption{Layout for Simulation Setup}
-  \label{lwfa-fig2}
+  \label{fig:lwfa-simulation_loop}
+\textbf{Need to mention and describe this figure in the text}
 \end{figure}
-
-\begin{enumerate}
-\item Laser-plasma accelerator based single-cycle attosecond undulator source
-(in collaboration with T. Zoltan and Prof. Hebling, Pecs University Hungary)
-\end{enumerate}
-
-
-The following figure shows example results which are discussed in detail in
-Ref.~\cite{Tibai2017}
-
-\begin{figure}
+%
+\subsection{Laser-plasma accelerator based single-cycle attosecond undulator source}
+In parallel, we have studied\footnote{This study was performed in collaboration
+with T. Zoltan and Prof. Hebling, both at Pecs University, Hungary.} the feasability of a LWFA based coherent light
+source using experimental data for electron wakefield acceleration as input to
+the FEL simulation. The FEL simulation used the code \textit{GPT} in this case.
+Details are discussed in Ref.~\cite{Tibai2017}.
+%
+\begin{figure}[ht]
   \centering{%
-    \includegraphics[width=2.7016in,height=2.1583in]{figures/lwfafel-img003.jpg}
-    \includegraphics[width=3.0083in,height=2.352in]{figures/lwfafel-img004.jpg}
+    \subfloat[]{
+      \includegraphics[width=2.7016in,height=2.1583in]{figures/lwfafel-img003.jpg}
+      \label{fig:Tibai2017_E_vs_t}
+    }
+    \subfloat[]{
+      \includegraphics[width=3.0083in,height=2.352in]{figures/lwfafel-img004.jpg}
+      \label{fig:Tibai2017_profile}
+    }
   }
   \caption{GPT Simulation Results: CEP-controlled EUV waveforms (left) and its spatial beam
-  profile (right).}
+    profile (right).\textbf{What is CEP? explain in text}}
+    \label{fig:Tibai2017}
 \end{figure}
-
-Figure shown here, \ displays the simulated waveform of the generated attosecond
-pulse and the beam profile at 60 nm radiation wavelength. The location of the
-waveform in fig (a) is shown in figure (b) marked with a symbol x. In other
+%
+Fig.~\ref{fig:Tibai2017} displays the simulated waveform (electric field as
+a function of time)  of the generated attosecond
+pulse and the beam profile at \SI{60}{\nano\metre} radiation wavelength. The
+temporal evolution was measured on the axis of highest intensity, marked by  a
+cross in Fig.~\ref{fig:Tibai2017_profile}. In other
 wavelengths the shape of the attosecond pulses are nearly identical with the
-shape shown in fig (a) so these pulses are CEP controlled too.
+shape shown in Fig.~\ref{fig:Tibai2017_E_vs_t} so these pulses are CEP controlled, too.
 
-%References
-
-%[1] P. Emma, K. Bane, M. Cornacchia, Z. Huang, H. Schlarb, G. Stupakov, and D.
-%Walz, Phys. Rev. Lett. 92, 074801 (2004)
-
-%[2] W. P. Leemans et al, Nat. Phys. 2, 696 (2006)
-
-%[3] E. Esarey et al, Rev. Mod. Phys. 81, 1229 (2009)
-
-%[4] T. Tajima and J. M. Dawson, Phys. Rev. Lett. 43, 267 (1979).
-
-%[5] ~M. Bussmann et al,~Proceedings SC13: International Conference for High
-%Performance Computing, Networking, Storage and Analysis~\textbf{5-1}, 2013.
-
-%[6] GPT: online at http://www.pulsar.nl/gpt
-
-%[7] GENESIS: online at http://genesis.web.psi.ch/
