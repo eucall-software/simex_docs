@@ -1,7 +1,6 @@
-This interfaces was used to investigate the possible 
-route for experimental realization of laser plasma accelerator based coherent light source (FELs)\cite{Emma2004}. Since the conventional accelerator has the limit of the
-gradient due to the structure surface field limit, the best gradient achieved
-now is less than 100MeV/m. Laser plasma accelerators
+This interface was used to investigate the possible
+route for experimental realization of laser plasma accelerator based coherent
+light source (FELs)\cite{Emma2004}. Laser plasma accelerators
 (LPA)\cite{Leemans2006,Esarey2009,Tajima1979} have the potential to become the next
 generation of accelerator facilities reaching field gradients of the order of
 \SI{100}{\giga\electronvolt\per\metre}, i.e. up to three orders of magnitude
@@ -20,7 +19,7 @@ and/or attosecond EUV/XUV pulse from the radiation undulator.
 \end{figure}
 %
 In this scheme an intense
-(\si{\tera\watt}/\si{\peta\watt} power \textbf{10 TW – 100 TW})
+\SIrange{10}{100}{\tera\watt}
 laser is focused onto a gas jet or a gas filled capillary for producing a
 relativistic electron beam. Initial energy spread of the electron beam of a
 LPA (1-5\%) is typically much larger than that of a LINAC (about 0.05 \%), so
@@ -33,8 +32,6 @@ of the electrons. This energy modulation leads to the formation of nanobunches
 a radiator undulator (RU) consisting of a single or a few periods and creates
 EUV/XUV pulses.
 %
-The SIMEX setup (as shown in Figure 9) for LPA driven FEL utilizes the PIConGPU simulation code for electron beam generation using the LPA mechanism and further transportation of electron beam to FEL simulation code GENESIS. We show schematically SIMEX tools in Figure 10, in order to calculate the radiation field from LPA generated electron beam. We start by defining the initial laser-plasma parameters and initial conditions in PIConGPU code using LWFA scheme. PIConGPU which runs on GPU cluster; computes the 6D electron beam distributions at rear side of  plasma in vacuum. The obtained electron beam distribution is transformed via python script to a readable data format (an input data file for GENESIS); which is required to study the electron beam dynamics through the magnetic field distributions in FEL simulation code. The output data file from GENESIS can be further post-processed to calculate and visulaize the radiation field.   
-
 \begin{figure}[ht]
   \includegraphics[width=5.9425in,height=4.1882in]{figures/lwfafel-img002.png}
   \caption{Layout for Simulation Setup}
@@ -65,11 +62,12 @@ Details are discussed in Ref.~\cite{Tibai2017}.
     \label{fig:Tibai2017}
 \end{figure}
 %
-Fig.~\ref{fig:Tibai2017} displays the simulated waveform (electrical field as
+Fig.~\ref{fig:Tibai2017} displays the simulated waveform (electric field as
 a function of time)  of the generated attosecond
 pulse and the beam profile at \SI{60}{\nano\metre} radiation wavelength. The
 temporal evolution was measured on the axis of highest intensity, marked by  a
 cross in Fig.~\ref{fig:Tibai2017_profile}. In other
 wavelengths the shape of the attosecond pulses are nearly identical with the
-shape shown in fig (a) so these pulses are carrier-envelope-phase (CEP) controlled, too.
+shape shown in Fig.~\ref{fig:Tibai2017_E_vs_t}, showing that these pulses are
+carrier--envelope--phase (CEP) controlled \cite{Tibai2017}.
 
