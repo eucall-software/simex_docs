@@ -38,16 +38,14 @@ The pressure in the Fe sample at $t = \SI{8.9}{\nano\second}$
  \gls{xas} modelling can be performed to simulate the expected E\gls{xafs} signal at
  the compressed state.
 %
-\begin{figure}
-  \centering{%
-  \includegraphics[width=4.822in]{figures/SIMEX-Fe-Shock.png}
-  \caption{%
-    Pressure wave in the iron target and plastic ablator layer. The red--dashed
-    box is the range probed by \gls{exafs}.
-  }
-}
-  \label{fig:hydro}
-\end{figure}
+ \begin{figure}
+   \centering{%
+     \includegraphics[width=4.822in]{figures/SIMEX-Fe-Shock.png}
+     \caption{%
+       Pressure wave in the iron target and plastic ablator layer. The red--dashed
+       box is the range probed by \gls{exafs}.  \label{fig:hydro}}
+   }
+ \end{figure}
 %
 \subsection{Modelling of E\gls{xafs}}
 In this simple example, to show the interoperability with the hydrocode,
@@ -65,13 +63,13 @@ Fig.~\ref{fig:hydro}.
 %
 \begin{figure}
   \centering{%
-  \includegraphics[width=4.822in,height=2.528in]{figures/Task42210-img001.png}
-  \caption{%
-    X--ray absorption spectra collected at BM23 (\gls{exafs} beamline, ESRF) of
-    a \SI{5}{\micro\metre} thick iron foil.%
+    \includegraphics[width=4.822in,height=2.528in]{figures/Task42210-img001.png}
+    \caption{%
+      X--ray absorption spectra collected at BM23 (\gls{exafs} beamline, ESRF) of
+      a \SI{5}{\micro\metre} thick iron foil.
+      \label{fig:xafs_spectra}
+    }
   }
-}
-  \label{fig:xafs_spectra}
 \end{figure}
 %
 Calculations of \gls{xafs} spectra are performed using the \textit{FEFF} package. \textit{FEFF} uses a
@@ -91,24 +89,25 @@ A comprehensive user guide for running ARTEMIS
 %
 \begin{figure}
   \centering{%
-  \includegraphics[width=4.3063in,height=4.6465in]{figures/Task42210-img002.png}
-  \caption{%
-    Screenshot of the output data collected in the ATOMS software after
-    running \textit{FEFF} simulation of iron at ambient conditions.
+    \includegraphics[width=4.3063in,height=4.6465in]{figures/Task42210-img002.png}
+    \caption{%
+      Screenshot of the output data collected in the ATOMS software after
+      running \textit{FEFF} simulation of iron at ambient conditions.
+      \label{fig:xafs_fig2}
+    }
   }
-}
-  \label{fig:xafs_fig2}
 \end{figure}
 %
 \begin{figure}
   \centering{%
-  \includegraphics[width=4.852in,height=2.9173in]{figures/Task42210-img003.png}
-  \caption{%
-    Fitting of the first Fe shell from \textit{FEFF} calculations (red) to Fe
-    \gls{exafs}
-    data collected on BM23 beamline, ESRF (blue).
-  }}
-  \label{fig:xafs_fig3}
+    \includegraphics[width=4.852in,height=2.9173in]{figures/Task42210-img003.png}
+    \caption{%
+      Fitting of the first Fe shell from \textit{FEFF} calculations (red) to Fe
+      \gls{exafs}
+      data collected on BM23 beamline, ESRF (blue).
+      \label{fig:xafs_fig3}
+    }
+  }
 \end{figure}
 %
 \subsubsection{Simulating \gls{xanes} at shock conditions}
@@ -119,13 +118,13 @@ simulations of the \gls{xanes} at shock conditions were carried out using the
 %
 \begin{figure}
   \centering{%
-  \includegraphics[width=4.3063in,height=3.5945in]{figures/Task42210-img004.png}
-  \caption{%
-    Comparisons of the absorption edge of Fe between experiments (left
-    panels) and ab-initio calculations (right panels) at
-    \SIlist{120;150}{\giga\pascal}. Figure
-  taken from Ref.~\cite{Torchio2016}.
-}
-}
-  \label{fig:xafs_fig4}
+    \includegraphics[width=4.3063in,height=3.5945in]{figures/Task42210-img004.png}
+    \caption{%
+      Comparisons of the absorption edge of Fe between experiments (left
+      panels) and ab-initio calculations (right panels) at
+      \SIlist{120;150}{\giga\pascal}. Figure
+      taken from Ref.~\cite{Torchio2016}.
+      \label{fig:xafs_fig4}
+    }
+  }
 \end{figure}

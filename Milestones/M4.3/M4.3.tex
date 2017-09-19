@@ -274,7 +274,7 @@ resolved scattering intensity if the spectrum was measured with high resolution.
 The resolution primarily depends on the detector's point spread function, the
 energy resolution of the dispersive element, and on the spectral width of
 the probe radiation. Complex structured source spectra, e.g. K--shell multiplets
-\cite{Lee2009} or saturated SASE (self--amplified spontaneous emission) spectra
+\cite{Lee2009a} or saturated SASE (self--amplified spontaneous emission) spectra
 limit the accuracy to which plasma properties can be measured.
 
 XRTS can now be simulated within \textit{simex\_platform}. The corresponding
@@ -326,15 +326,15 @@ scattering from bound states is currently in preparation \cite{Bell2017_prep}.
 %
 
 %
-\section{Laser--wakefield driven FEL source}\label{sec:lwfa_source}
+\section{Laser--plasma accelerator driven FEL source}\label{sec:lwfa_source}
 %
 Simulations of compact coherent x--ray sources based on the mechanism of
-electron laser wakefield acceleration (LWFA) couple particle--in--cell
-simulations to an FEL code. In our case, we use the PIC code \textit{PIConGPU}
-and the \textit{Genesis} FEL code, both are publicly available under open source licenses.
+electron laser wakefield acceleration  couple particle--in--cell
+simulations to an \gls{fel} code. In our case, we use the \gls{pic} code \textit{PIConGPU}
+and the \textit{Genesis} \gls{fel} code, both are publicly available under open source licenses.
 \textit{PIConGPU} writes the particle and field data
 into a hdf5 file using the openPMD \cite{Huebl2017} metadata standard. A file format conversion utility, which is part of
-\textit{simex\_platform} converts the PIC output to an electron distribution
+\textit{simex\_platform} converts the \gls{pic} output to an electron distribution
 file (extension .dist) readable by \textit{Genesis}.
 
 
