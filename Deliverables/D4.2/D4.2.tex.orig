@@ -1,0 +1,385 @@
+\documentclass[12pt]{scrartcl}
+\usepackage{graphicx}
+\usepackage[default]{opensans}
+\usepackage{sfmath} % sans font also for math
+ \usepackage[binary-units = true]{siunitx}
+
+% defining the paper layout that no text overlaps with the header
+\usepackage[
+  top=35mm,
+  headheight=25mm,
+  headsep=3mm,
+  bottom=30mm,
+  left=25mm,
+  right=25mm
+]{geometry}
+
+\usepackage{latexsym}
+\usepackage[centertags]{amsmath}
+\usepackage{amssymb}
+
+% custom header and footpage
+\usepackage{scrpage2}
+\pagestyle{scrheadings} % you have to set the custom layout
+\ihead{D4.2: Long Pulse Laser -- Matter Interaction} % left head
+\ohead{\includegraphics[height=25mm]{EUCALL.png}}
+\ifoot{\includegraphics[height=13.4mm]{EU.png}} % left foot
+\cfoot{
+  \begin{minipage}{100mm}
+    \begin{scriptsize}
+      \normalfont{This project has received funding from the}
+      \textit{European Union’s Horizon 2020 research and innovation programme}
+      \normalfont{under grant agreement No 654220.}
+    \end{scriptsize}
+  \end{minipage}
+} % center foot
+\ofoot{} % right foot
+\chead{}
+
+\usepackage{booktabs} % more eye candy for tables
+
+% sophisticated linking of references in the pdf and setting some options
+\usepackage{url}                                                  % for correct typesettings of URLs
+\usepackage{hyperref}                                             % for sophisticated linking of urls, dois, pictures, tables, etc.
+\hypersetup{
+    unicode=true,                                                 % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,                                              % show Acrobat’s toolbar?
+    pdfmenubar=true,                                              % show Acrobat’s menu?
+    pdffitwindow=false,                                           % window fit to page when opened
+    pdfstartview={FitH},                                          % fits the width of the page to the window
+    pdftitle={D4.1: Short pulse laser-matter interaction simulations},                                        % title
+    pdfauthor={C. Fortmann-Grote},                                           % author
+    pdfsubject={EUCALL WP4 (SIMEX) deliverable 4.1},                             % subject of the document
+    pdfcreator={pdflatex},                                         % creator of the document
+    pdfkeywords={EUCALL, SIMEX, simulations, PIC, XFEL, scattering},                                         % list of keywords
+    pdfnewwindow=true,                                            % links in new PDF window
+    colorlinks=true,                                              % false: boxed links; true: colored links
+    linkcolor=blue,                                                % color of internal links (change box color with linkbordercolor)
+    citecolor=blue,                                                % color of links to bibliography
+    filecolor=blue,                                               % color of file links
+    urlcolor=blue                                                 % color of external links
+}
+
+
+% Zeilenabstand
+\renewcommand{\baselinestretch}{1.2}
+
+
+%\renewcommand*\chapterpagestyle{scrheadings} % otherwise chapter start is plain ;-); works only for KOMA script; plain LaTeX works different
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   BIBLIOGRAPHY SETTINGS                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[bibstyle=nature,sorting=none,=maxnames=1000,eprint=false,
+defernumbers=true, backend=biber]{biblatex}
+\usepackage{hyperref}
+
+\renewcommand*\finalnamedelim{, and\addspace}
+\DeclareNameAlias{sortname}{last-first}
+\renewcommand{\newunitpunct}{, }
+
+\AtEveryBibitem{%
+  \clearfield{day}%
+  \clearfield{month}%
+  \clearfield{endday}%
+  \clearfield{endmonth}%
+  \clearfield{issn}%
+  \clearfield{issue}%
+}
+%convert titles to hyperlinks using doi
+\ExecuteBibliographyOptions{doi=false} \newbibmacro{string+doi}[1]{%
+  \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
+  \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
+
+%\addbibresource{/home/grotec/Documents/LiteratureDB/bibtex/jabref.bib}
+\addbibresource{references.bib}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% END BIBLIOGRAPHY SETTINGS                   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\makeatletter
+\begin{titlepage}
+\thispagestyle{scrheadings}
+\begin{center}
+$~$\\
+\vspace{2cm}
+\Huge{\textbf{WP 4 -- SIMEX\\[1cm]
+Design Report and Advanced Simulation Software for Long Pulse Laser -- Matter Interaction}}\\[5mm]
+\vspace{2cm}
+\large{
+Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs,\\ Michael Bussmann,
+  Axel Huebl, Thomas Kluge,\\
+ S. Pascarelli, Ashutosh Sharma, and Adrian P. Mancuso\\
+ }
+\vspace{1cm}
+\@date
+\end{center}
+\vfill%
+\includegraphics[width=\textwidth]{./PartnerLogos.pdf}
+\normalfont
+\end{titlepage}
+\makeatother
+
+\tableofcontents
+
+\begin{abstract}
+  \noindent%
+  \textbf{Abstract} -- We present a design for integrated simulations of an x-ray absorption
+  experiment probing dynamically compressed states of matter at tens of GPa pressure generated by
+  high energy ($\approx 30\,\text{J}$) laser pulses interacting with solid matter.
+  We model the laser-matter interaction using 1-D and 2-D radiation-hydrodynamic simulations to predict
+  the thermodynamical state of the compressed matter over the course of the x-ray pulse. These simulations
+  are embedded in the software framework \texttt{simex\_platform} to allow seamless integration into
+  start-to-end simulations of an entire beamline experiment including x-ray pulse propagation in the beamline and
+  detector response. The involved simulation codes are briefly presented.
+\end{abstract}
+%
+\section{Introduction}
+<<<<<<< HEAD
+High-energy laser facilities are now becoming increasingly in demand at new generation x-ray light sources (X-FELs, 3rd generation synchrotron sources). The potential of long pulse laser experiments are already yielding extreme conditions of matter well beyond the reach of static high-pressure techniques and combinations with X-ray techniques provide enticing experiments at new extreme states of matter.
+
+Temporally shaped laser pulses interacting with overdense target material create a rapidly expanding plasma that
+can generate a shockwave in the ablating material. This shock wave can travel through the target at several km/s
+and compress the sample material to pressures reaching several hundred GPa. (For comparison, the Earth's core
+pressure is $\sim$ 330 GPa). By using a ramp temporal pulse, where the laser intensity is slowly increased, the temperatures generated remain much cooler than during rapid shock compression and the solid state of matter can be studied up to several TPa (1 TPa = 1000 GPa).
+
+Long pulse laser systems are capable of reaching intensities of up to $\sim 10^{12}$ -- 10$^{15} \text{ W}/\text{cm}^2$ with pulse lengths of greater than a few nanoseconds. The pulse length and focal spot of the laser can depend heavily on the sample material and target package. Generally, focal spot sizes range between $\sim$ 100 $\mu$m up to 1 mm. With these specifications, the laser energies now required to reach the highest intensities are on the order of hundreds of joules.
+
+We design here simulations for a prototypical experiment combining a high-energy laser system and x-ray radiation
+from a 3rd generation synchrotron. The laser shock-compresses a tailored solid density target and the compressed
+matter is subsequently probed by x-rays. X-ray absorption spectroscopy (XAS) allows to monitor the compression and
+to characterize the electronic and structural states in the target. Through variation of the delay between optical
+laser pulse and x-ray probe pulse, time resolved data can also obtained.
+
+\begin{table}
+=======
+Long pulse laser systems are capable of reaching intensities of up to $\sim 10^{12}$ -- 10$^{15} \text{ W}/\text{cm}^2$ with pulse lengths of
+greater than a few nanoseconds. The pulse length and focal spot of the laser can depend heavily on the sample material and target package.
+Generally, focal spot sizes range between $\sim$ 100 $\mu$m up to 1 mm. With these specifications, the laser energies now required to reach the
+highest intensities are on the order of hundreds of joules.
+
+Temporally shaped laser pulses interacting with overdense target material create a rapidly expanding plasma that can generate a shockwave in
+the ablating material. This shock wave can travel through the target at several km/s and compress the sample material to pressures reaching
+several hundred GPa. (For comparison, the Earth's core pressure is $\sim$ 330 GPa). By using a ramp temporal pulse, where the laser intensity
+is slowly increased, the temperatures generated remain much cooler than during rapid shock compression and the solid state of matter can be
+studied up to several TPa (1 TPa = 1000 GPa). Such states of matter are often referred to as Warm Dense Matter (WDM).
+
+High-energy laser facilities are now becoming increasingly in demand at new generation x-ray light sources (X-FELs, 3rd generation synchrotron
+sources). The potential of long pulse laser experiments are already yielding extreme conditions of matter well beyond the reach of static
+high-pressure techniques and combinations with X-ray techniques provide enticing experiments at new extreme states of matter.
+
+We design here simulations for a prototypical experiment combining a high-energy laser system and x-ray radiation from a 3rd generation
+synchrotron. The laser shock-compresses a tailored solid density target and the compressed matter is subsequently probed by x-rays. X-ray
+absorption spectroscopy (XAS) allows to monitor the compression and to characterize the electronic and structural states in the target. Through
+variation of the delay between optical laser pulse and x-ray probe pulse, time resolved data is obtained.
+
+\begin{table}[h]
+>>>>>>> master
+  \centering
+  \begin{tabular}{l|l}
+    \hline
+    \hline
+    Photon energy & 5 keV - 28 keV \\
+    Polarization & horizontal \\
+    Focus size (fwhm) & 3 $\mu$m (5 keV) - 50 $\mu$m (28 keV)\\
+    Pulse length & 100 ps\\
+    Flux  & $1\times 10^{14}$ photons/s (7 keV) - $4\times 10^{13}$ photons/s (28 keV) \\
+    \hline
+    \hline
+  \end{tabular}
+  \caption{Principal x-ray parameters for shock compression studies at ESRF
+  (beamline ID24)}
+  \label{tab:esrf_parameters}
+\end{table}
+\section{Photon-Matter interaction}
+\subsection{Optical Laser}
+Nearly all of the physical processes of long pulse laser-matter interactions are described by partial differential
+equations that can be solved with careful construction of numerical simulation codes. Here, the laser-matter
+interactions are modelled with the 1D radiation-hydrodynamics computer code ``Esther'' \cite{Colombier2005}
+or the 2D code ``MULTI2D'' \cite{Ramis2009}.
+
+Table~\ref{tab:esrf_long_pulse} summarizes the main optical pump laser
+parameters for shock compression experiments at the ESRF.
+
+<<<<<<< HEAD
+The optical laser source, used at the ESRF for shock compression experiments in May/June 2016,  is described through a set of parameters found in table \ref{tab:esrf_long_pulse}. A call for tender will be issued in 2016 for a new high-energy laser system to be installed at the ESRF, with increased energy (200 J) and frequency doubling crystals.
+\begin{table}
+=======
+\begin{table}[h]
+>>>>>>> master
+  \centering
+  \begin{tabular}{l|l}
+    \hline
+    \hline
+Wavelength & 1053 nm \\
+Pulse duration & 4 ns - 15 ns \\
+Intensity & $2\times 10^{13}$ W/cm$^2$ \\
+Pulse energy & 30 J \\
+Focus size (fhwm) & 100 $\mu\text{m}^{2}$ - 300 $\mu\text{m}^{2}$  \\
+Temporal profile  & Quasi-flat top \\
+Spatial profile & Gaussian in x,y \\
+    \hline
+    \hline
+  \end{tabular}
+  \caption{ESRF optical laser parameters for long pulse laser-matter
+  simulations.}
+  \label{tab:esrf_long_pulse}
+\end{table}
+
+<<<<<<< HEAD
+\section{Photon-Matter interaction}
+\subsection{Optical laser \& hydrocodes}
+Nearly all of the physical processes of long pulse laser-matter interactions are described by partial differential
+equations that can be solved with careful construction of numerical simulation codes. Here, the laser-matter
+interactions are modelled with the 1D radiation-hydrodynamics computer code ``Esther'' \cite{Colombier2005}
+or the 2D code ``MULTI2D'' \cite{Ramis2009}.
+=======
+A call for tender will be issued in 2016 for a new high-energy laser system to be installed at the ESRF, with increased energy (200 J) and
+frequency doubling crystals.
+>>>>>>> master
+
+For the 1D hydrocodes, a moving mesh is applied in an arbitrary Lagrangian-Eulerian framework where the coordinates of
+the mesh contain the variables from which density can be calculated (mass of
+each zone is fixed). The most important variables
+considered in these codes are those associated with the extreme conditions generated by the high-power lasers: pressure (density),
+temperature and velocity. Feedback of these hydrocode outputs are crucial in the design and implementation of laser shock/ramp
+experiments with X-ray interactions.
+
+It is vital to have an understanding of shock transit times so that accurate timing of the X-ray probe,
+with respect to the laser initialisation, can be made. The final density state reached by a shock, as calculated
+from the hydrocode simulation packages, can define the shock velocity.
+<<<<<<< HEAD
+
+\subsection{Hydrocode software}
+The Esther hydrocode was written by Patrick Combis and Laurent Videau of the CEA, Paris, France.\footnote{The Esther hydrocode is currently presented in French only.}
+=======
+\subsubsection{Esther}
+The Esther hydrocode was written by Patrick Combis and Laurent Videau of the CEA, Paris, France.
+\footnote{The Esther hydrocode is currently presented in French only.}
+>>>>>>> master
+A license to use Esther can be obtained by requesting access (via email) from the authors (for academic use only).
+
+As a necessary step for integration of hydrocode modelling in SIMEX, we have
+developed interfaces Esther. An interactive input file generator sets up
+the configuration files for the hydrocode based on user provided information
+about the target and the laser pulse. After the simulation completed, a
+converter reformats the hydrocode data (pressure, density, temperature, and
+shock velocity as function of space and time) from the native format into an
+openPMD conform hdf5 file. In this context, it is worth mentioning, that a new
+openPMD standard extension is currently being developed to enable facilitate the
+usage of openPMD as a standard format for rad-hydro codes.
+
+In the MULTI2D hydrocode \cite{Ramis2009}, the hydrodynamic equations solved by the code are combined with a multigroup method for radiation transport. Multi is installed for unix with the requirement of several back engines (gcc, tcl-tk, gnuplot, pdflib-lite) with the code itself written in Fortran90. A GUI has been developed by the Laboratoire D'Utilisation des Lasers Itenses (LULI) at the Ecole Polytechnique in Paris, France. 
+
+\subsubsection{Obtaining sample conditions from raw data with iterative hydrocode analysis}
+In some cases the particle velocity at the interface between sample and window cannot be obtained directly as strong shocks can transform the transparent window to an opaque material. In those instances only the free surface velocity can be obtained by the velocity diagnostics and an iterative Lagrangian analysis (ILA) must be used to determine the sound speed; stress-density information can then be calculated. \textbf{(REFERENCE: S. D. Rothman and J. Maw, "Characteristics analysis of isentropic compression experiments (ice)", J. Phys. IV. France, 134, 745-750 (2006)).} Using the ILA, the velocity-time history during the compression can be obtained from the free surface measurements and from knowledge of the optical laser pulse to x-ray pulse delay, the exact state probed by the x-ray is obtained.  
+
+In the same way that the velocity-time history of the sample can be obtained from rear-surface velocity ILA, the particle velocity measured at the interface can be used to iterate hydrocode laser pulse shapes such that the same velocity-time trace is obtain in the hydrocode. With knowledge of the X-ray probe timing (with respect to the optical laser), the exact condition within the sample during the X-ray probe time can be obtained from the hydrocode, allowing a more robust understanding of the samples state.
+
+\subsection{X-ray matter interaction}
+In the proposed experimental setup, discussed in detail further below, the shock compressed matter is diagnosed by
+X-ray Absorption Fine Structure (XAFS) spectroscopy and radiography. Both techniques can be modeled with appropriate simulation tools as
+described in the following.
+
+<<<<<<< HEAD
+The X-ray probe duration, during laser shock compression, can range from nanosecond down to femtosecond exposures.
+X-ray pulses for shock compression studies at the ESRF are $\approx$ 100 ps long. Table~\ref{tab:esrf_parameters} lists the most important X-ray parameters.
+
+=======
+In some cases the particle velocity of the interface between sample and window cannot be obtained directly as strong shocks can transform the transparent window to an opaque
+material. In those instances only the free surface velocity can be obtained by the velocity diagnostics and an iterative Lagrangian analysis (ILA) must be used to determine the sound
+speed; stress-density information can then be calculated \cite{Rothman2006}.  Using the ILA, the velocity-time history during the compression can be obtained from the free surface measurements and from knowledge of the optical laser pulse to x-ray pulse delay, the exact state probed by the x-ray is obtained.
+>>>>>>> master
+\subsection{XAFS}
+The XAFS signal reflects the near order of the shock compressed matter. The absorption edge is modulated by the ion-ion correlation function
+$\chi(\vec q)$.
+
+\section{Experimental scenario}
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=1.0\textwidth,angle=0,clip]{torchio2016_setup-crop.pdf}
+  \end{center}
+  \caption{Schematic rendering of a laser driven shock compression experiment
+  and x-ray absorption spectroscopy (a). XANES signal as function of time
+indicating structural phase transition from bcc to hcp phase (b). 1-D
+Radiation-hydrodynamics simulation of the shock
+propagation and pressure dynamics during laser-matter interaction (c).
+Figure taken from Ref.~\cite{Torchio2016}.}
+  \label{fig:exp_setup}
+\end{figure}
+%
+Fig.~\ref{fig:exp_setup} shows the experimental setup, optical laser and x-ray
+probe pulse timings (a), measured XANES spectra (b) and 1-D radiation-hydrodynamic
+simulations of shock propagation through the a sandwiched iron target.
+The figure is taken from Ref.~\cite{Torchio2016}. The drive pulse compresses the
+target as modeled by radiation hydrodynamics simulations reaching pressures in
+the range of 40 -- 60 GPa. The x-ray pulse of $\approx 100\,\text{ps}$ probes
+the compressed target after a variable time delay. Transmitted x-ray photons are
+detected in a position sensitive Ge detector. The position of the detected
+photon can be converted into photon energy employing the dispersion curve of the
+focussing mirror.
+
+\marginpar{Should discuss novel aspects in a follow-up experiment}
+
+\section{Application: Pulse optimization via feedback loop}
+Radiation-hydrodynamic simulations are an indispensable tool to estimate the
+achievable level of compression and pressures in a dynamic compression
+experiment. Tailored (ramp) pulses can be employed to generate low-isentrope
+compressions, i.e. reaching high densities at low temperatures, below the
+principal Hugoniot and below the melting temparature. This technique makes
+accessible the range of strongly compressed solid matter and study pressure
+induced structural and electronic phase transitions.
+
+To facilitate pre-shot simulations and pulse optimization, we will utilize the
+simulation capabilities of \textit{simex\_platform} inside an optimization loop (Fig.~\ref{fig:lp_optimization_schem}).
+Using an initial guess for the (temporal) pulse shape, we run the
+radiation-hydrodynamics simulations and monitor the evolution of density,
+pressure, and temperature over the pulse duration. This information is then fed
+to an algorithm that sets up a new, improved pulse shape based on given criteria
+like maximum allowable temperature or minimal compression ratio, to run the next
+iteration of the process.
+The pulse shaping tool can be implemented in various
+ways including nonlinear multidimensional optimization of pulse parameters or genetic algorithms.
+
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=1.0\textwidth,angle=0,clip]{lp_optimization_scheme-crop}
+  \end{center}
+  \caption{Optimization of pulse shapes for low isentrope compression. The
+  output of radiation-hydrodynamics simulations is fed into a pulse shape
+generator to optimise the laser-matter interaction for maximum compression at
+low temperature increase. Once an optimized pulse is generated, the simulation
+continues with calculating the x-ray -- matter interaction and synthesizing the
+diagnostic signals}
+  \label{fig:lp_optimization_schem}
+\end{figure}
+
+\section{Synergy}
+
+Although our pulse optimization scheme is  independent of the technological and
+physical realization of pulse generation and control, it is desirable to
+incorporate the actual pulse generation mechanism, it's capabilities as well as
+it's limitations into the simulation workflow.  This opens an opportunity for
+a cross-workpackage collaboration with the EUCALL workpackage 7 (``Pulse Control and
+ChAracterization -- PUCCA'')).
+
+The development of an open data standard for radiation-hydrodynamics simulation is of high value for the scientific community
+also beyond EUCALL. It will facilitate integration of radiation-hydrodynamics codes into simulation frameworks such as
+\texttt{simex\_platform}, benchmarking of various codes against each other, against other methods (e.g. particle-in-cell simulations), and
+against experimental data.
+
+\section{Summary}
+We outlined the design for simulations of advanced laser matter-interaction in the context of warm dense matter research. WDM creation is
+simulated using radiation-hydrodynamics to predict the thermodynamic state of the target during the exposure. We use a feedback loop
+to optimize the optical laser pulse shape for low isentrope compression.
+
+
+
+ 
+
+
+\printbibliography
+\end{document}
+
+
