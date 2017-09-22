@@ -114,13 +114,13 @@ Work Package 4 -- SIMEX\\[4ex]
 %
 Deliverable D4.4\\
 %
-Simulations interoperable\\[5ex]
+Simulated coherent scattering data from plasma and non--plasma samples\\[5ex]
 %
-Lead Beneficiary: European XFEL\\[5ex]
+Lead Beneficiary: European XFEL, HZDR\\[5ex]
 %
-Carsten Fortmann-Grote, Alexander Andreev, Richard Briggs, Michael Bussmann,
+Carsten Fortmann-Grote, Michael Bussmann,
   Marco Garten, Axel Huebl, Thomas Kluge,
-  Sakura Pascarelli, Ashutosh Sharma, Sergey Yakubov, and Adrian P. Mancuso\\[4ex]
+  and Adrian P. Mancuso\\[4ex]
 %
 Due data: September 30, 2017\\
 Date of delivery: \today \\[4ex]
@@ -163,36 +163,34 @@ Project webpage: \url{www.eucall.eu}\\[6ex]
 
 \section{Summary}
 %
-Simulations in SIMEX are now interoperable. The simulation platform
-\textit{simex\_platform}, publicly available under the conditions of the open source
-license GPL-v3 \cite{gplv3} from
-\href{https://www.github.com/eucall-software/simex_platform}{https://www.github.com/eucall-software/simex\_platform},
-allows start--to--end simulations of various types of photon experiments using
-different sources (X--ray free electron lasers, synchrotrons, optical lasers),
-different means of photon propagation from the source to the sample (coherent
-wavefront propagation, x--ray tracing), various types of photon matter
-interaction (particle--in--cell, radiation--hydrodynamics, molecular dynamics,
-continuum plasma theory), signal generation (coherent diffraction from plasma
-and non--plasma samples, inelastic scattering, x--ray absorption spectroscopy)
-and detector simulations.
+As first applications, we have employed the simulation capabilities of
+\textit{simex\_platform} \cite{simex_github} to simulate two photon experiments:
+\begin{enumerate}
+  \item Coherent diffraction from high--power laser excited optically thin and
+    thick plasmas (plasma sample)
+  \item Single particle imaging at the European XFEL (non--plasma sample)
+\end{enumerate}
 
-Details and use cases, demonstrating how the various
-simulation modules can be used in an interoperable and interchangeable way are
-given in the Milestone documents M4.2 \cite{EUCALL_SIMEX_M4.2} and
-M4.4~\cite{EUCALL_SIMEX_M4.4}. In particular, use of custom as well as generic
-metadata standards and data formats facilitate the transfer of simulation data
-between modules, which fulfills the requirement of ``interoperability''.
+\section{Plasma sample}
+The virtual experiment is described in detail in section 4 of the EUCALL
+Milestone M4.3~\cite{EUCALL_SIMEX_M4.3}. The resulting datasets for scattering
+from optically thin and thick plasmas are published on the
+\href{https://www.zenodo.org/communities/eucall-data}{EUCALL Data Repository}
+\cite{Garten2017.zenodo.885033}.
 
-Modules are interchangeable, e.g. a coherent diffraction
-imaging experiment for a molecular sample can be altered into a diffraction
-experiment for a crystalline sample by switching just one
-simulation module, the signal generator.
-These and other applications are also demonstrated in online tutorials, located
-on the wiki pages of \textit{simex\_platform} at
-\href{https://www.github.com/eucall-software/simex_platform/wiki}{https://www.github.com/eucall-software/simex\_platform/wiki}.
+\section{Molecular (non--plasma) sample}
+Application of \textit{simex\_platform} to single--particle imaging experiments
+at the European X--ray Free Electron Laser (SPB--SFX scientific instrument) has
+been published as Ref.~\cite{Fortmann-Grote2017}. It is also the basis for an
+online tutorial on the
+\href{https://www.github.com/eucall-software/simex_platform/wiki/SimEx-Tutorial}{wiki
+pages} of \textit{simex\_platform} and it is
+discussed in the EUCALL Milestone M4.2~\cite{EUCALL_SIMEX_M4.2} (First example
+simulation).
+The datasets for coherent diffraction from the protein 2NIP is deposited on
+the \href{https://www.zenodo.org/communities/eucall-data}{EUCALL Data
+Repository} \cite{Fortmann-Grote2017.zenodo.886087}.
 
-In fulfillment of Deliverable D4.4, we released version 0.3.3 of
-\textit{simex\_platform} \cite{simex0.3.3}.
 
 \printbibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
