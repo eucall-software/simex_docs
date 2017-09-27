@@ -16,22 +16,22 @@ The ID24 beamline workflow for \textit{Oasys} can be obtained from the EUCALL Da
 Repository at Zenodo \cite{Briggs2017.zenodo.886451}.
 
 \subsection{Particle matter interaction: long pulse laser}
-The long pulse laser interaction with sample is performed using the \textit{Esther} hydrocode.
+The long pulse laser interaction with the sample is performed using the
+radiation--hydrodynamics simulation code \textit{Esther} \cite{Colombier2005}.
 Here we have demonstrated an experiment that could be performed on the
 ID24 \gls{xas} beamline, where a \SI{6}{\nano\second} flat top laser pulse (wavelength
 \SI{1064}{\nano\metre}) sends an ablative
 driven shockwave through a \SI{45}{\micro\metre} CH-plastic ablator and into a
-\SI{5}{\micro\metre|} Fe layer. A
+\SI{5}{\micro\metre} Fe layer. A
 tutorial that describes how the input files are generated (and how output data is
 obtained) is provided on the
-\href{https://www.github.com/eucall-software/simex_platform/wiki/Esther-Hydrocode-Tutorial}{Simex
-wiki page}; all example input
+\href{https://www.github.com/eucall-software/simex_platform/wiki/Esther-Hydrocode-Tutorial}{\textit{simex\_platform} wiki page}; all example input
 and output files are available from the Ref.~\cite{Briggs2017.zenodo.883106}.
 The pressure in the Fe sample at $t = \SI{8.9}{\nano\second}$
 (laser pulse begins at $t = \SI{0}{ns}$) is shown in Fig.~\ref{fig:hydro}.
 
  The pressure, temperature, density and velocity can all be obtained at a given
- time step from the output files that Simex converts to opmd format. Upon
+ time step from the output files that Simex converts to OpenPMD \cite{Huebl2017} format. Upon
  completion of the code, it is then possible to adjust laser parameters to reach
  different pressure-temperature conditions in the Fe sample. The P-T condition
  where the pressure is uniform through the whole of the sample is then stored and
@@ -48,9 +48,9 @@ The pressure in the Fe sample at $t = \SI{8.9}{\nano\second}$
  \end{figure}
 %
  \subsection{Modelling of \gls{exafs}}
-In this simple example, to show the interoperability with the hydrocode,
+In this example, to show the interoperability with the hydrocode,
 we run through the requirements that are necessary for
-simulation (fitting) of \gls{exafs} data relevant to a sample experiment obtain signal
+simulation (fitting) of \gls{exafs} data relevant to obtain signal
 from a \SI{5}{\micro\metre} thick Fe foil. The simulation will be carried out for
 ambient conditions Fe foil; a future enhancement of SIMEX will take P-T
 conditions from hydrocode simulations before performing high-pressure
@@ -72,7 +72,8 @@ Fig.~\ref{fig:hydro}.
   }
 \end{figure}
 %
-Calculations of \gls{xafs} spectra are performed using the \textit{FEFF} package. \textit{FEFF} uses a
+Calculations of \gls{xafs} spectra are performed using the \textit{FEFF} package
+\cite{Rehr2009}. \textit{FEFF} uses a
 single input file to select which modules should be run inside the program and
 what parameters should be used. The material of interest is contained within
 this input file based on its crystallographic parameters and atomic positions.

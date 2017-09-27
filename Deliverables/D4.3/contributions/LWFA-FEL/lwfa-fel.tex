@@ -1,6 +1,6 @@
 This interface was used to investigate the possible
-route for experimental realization of laser plasma accelerator based coherent
-light source (\glspl{fel})\cite{Emma2004}. \Glspl{lpa}~\cite{Leemans2006,Esarey2009,Tajima1979} have the potential to become the next
+route for the experimental realization of a laser plasma accelerator based coherent
+light source \cite{Emma2004}. \Glspl{lpa}~\cite{Leemans2006,Esarey2009,Tajima1979} have the potential to become the next
 generation of accelerator facilities reaching field gradients of the order of
 \SI{100}{\giga\electronvolt\per\metre}, i.e. up to three orders of magnitude
 higher than in conventional linear accelerators. This would reduce construction
@@ -32,19 +32,18 @@ of the electrons. This energy modulation leads to the formation of nano--bunches
 a radiator undulator (RU) consisting of a single or a few periods and creates
 EUV/XUV pulses.
 %
-The SIMEX setup (as shown in Fig.~\ref{fig:lwfa-setup}) for \gls{lpa} driven \gls{fel}
+The SIMEX setup (as shown in Fig.~\ref{fig:lwfa-setup}) for a \gls{lpa} driven \gls{fel}
 utilizes the \textit{PIConGPU} simulation code for electron beam generation using the \gls{lpa}
-mechanism and further transportation of electron beam to \gls{fel} simulation code
-\textit{GENESIS}. We show schematically SIMEX tools in
-Fig.~\ref{fig:lwfa-simulation_loop}, in order to calculate the radiation field
-from \gls{lpa} generated electron beam. We start by defining the initial laser--plasma
-parameters and initial conditions in \textit{PIConGPU} code using \gls{lpa} scheme.
-\textit{PIConGPU} computes the 6D electron beam distributions at rear
-side of  plasma in vacuum. The obtained electron beam distribution is
-transformed via python script to a readable data format (an input data file for
-\textit{GENESIS}); which is required to study the electron beam dynamics through the
-magnetic field distributions in \gls{fel} simulation code. The output data file from
-\textit{GENESIS} can be further post--processed to calculate and visulaize the radiation
+mechanism and further transportation of electron beam to the \gls{fel} simulation.
+We show a schema of the iterative SIMEX workflow in
+Fig.~\ref{fig:lwfa-simulation_loop}. We start by defining the initial laser--plasma
+parameters and initial conditions for \textit{PIConGPU}.
+\textit{PIConGPU} computes the 6D electron beam distributions at the rear
+side of the plasma in vacuum. The obtained electron beam distribution is
+transformed via a python script to a distribution file (.dist) for
+\textit{GENESIS}). \textit{GENESIS} calculates the electron beam dynamics
+induced by the magnetic field distribution. The output data file from
+\textit{GENESIS} can be further post--processed to calculate and visualize the radiation
 field.
 
 An online tutorial, demonstrating how to use the simulation capabilities and
@@ -73,8 +72,7 @@ Fig.~\ref{fig:Tibai2017} displays the simulated waveform (electric field as
 a function of time)  of the generated attosecond
 pulse and the beam profile at \SI{60}{\nano\metre} radiation wavelength. The
 temporal evolution was measured on the axis of highest intensity, marked by  a
-cross in Fig.~\ref{fig:Tibai2017_profile}. In other
-wavelengths the shape of the attosecond pulses are nearly identical with the
+cross in Fig.~\ref{fig:Tibai2017_profile}. At other wavelengths, the shape of the attosecond pulses are nearly identical with the
 shape shown in Fig.~\ref{fig:Tibai2017_E_vs_t}, showing that these pulses are
 \gls{cep} controlled \cite{Tibai2017}.
 %

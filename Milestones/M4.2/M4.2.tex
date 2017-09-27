@@ -1,74 +1,5 @@
-\documentclass[12pt]{scrartcl}
-\usepackage{graphicx}
-\usepackage[default]{opensans}
-\usepackage{sfmath} % sans font also for math
- \usepackage[binary-units = true]{siunitx}
-
-% defining the paper layout that no text overlaps with the header
-\usepackage[
-  top=35mm,
-  headheight=25mm,
-  headsep=3mm,
-  bottom=30mm,
-  left=25mm,
-  right=25mm
-]{geometry}
-
-\usepackage{latexsym}
-\usepackage[centertags]{amsmath}
-\usepackage{amssymb}
-
-% custom header and footpage
-\usepackage{scrpage2}
-\pagestyle{scrheadings} % you have to set the custom layout
-% Head
-\ihead{M4.2} % left head
-%\chead{}
-\ohead{\includegraphics[height=25mm]{figures/EUCALL.png}}
-% Foot
-\ifoot{\includegraphics[height=13.4mm]{figures/EU.png}} % left foot
-\cfoot{%
-  \begin{minipage}{100mm}%
-    \begin{scriptsize}%
-      \normalfont{This project has received funding from the}
-      \textit{European Union’s Horizon 2020 research and innovation programme}
-      \normalfont{under grant agreement No 654220.}
-    \end{scriptsize}%
-  \end{minipage}%
-} % center foot
-\ofoot{\thepage} % right foot
-
-\usepackage{booktabs}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   BIBLIOGRAPHY SETTINGS                     %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[bibstyle=nature,sorting=none,=maxnames=1000,eprint=false,
-defernumbers=true, backend=biber]{biblatex}
-\usepackage{hyperref}
-
-\renewcommand*\finalnamedelim{, and\addspace}
-\DeclareNameAlias{sortname}{last-first}
-\renewcommand{\newunitpunct}{, }
-
-\AtEveryBibitem{%
-  \clearfield{day}%
-  \clearfield{month}%
-  \clearfield{endday}%
-  \clearfield{endmonth}%
-  \clearfield{issn}%
-  \clearfield{issue}%
-}
-%convert titles to hyperlinks using doi
-\ExecuteBibliographyOptions{doi=false} \newbibmacro{string+doi}[1]{%
-  \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
-  \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
-
-\addbibresource{aux.bib}
-\addbibresource{references.bib}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% END BIBLIOGRAPHY SETTINGS                   %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[10pt]{scrartcl}
+\input{eucall_header}
 
 
 % sophisticated linking of references in the pdf and setting some options
@@ -92,13 +23,6 @@ defernumbers=true, backend=biber]{biblatex}
     urlcolor=blue                                                % color of external links
 }
 
-% Zeilenabstand
-\renewcommand{\baselinestretch}{1.2}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% END BIBLIOGRAPHY SETTINGS                   %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 \makeatletter
@@ -111,9 +35,10 @@ defernumbers=true, backend=biber]{biblatex}
     Milestone M4.2: Demonstration of a first example simulation%
   }}\\
   \vspace{2cm}
-  \large{ Carsten Fortmann-Grote}
-  \vspace{1cm}
-  \date{\today}
+  \large{%
+    Carsten Fortmann-Grote
+  }\\[1cm]
+  \today
 \end{center}
 \vfill%
 \includegraphics[width=\textwidth]{figures/PartnerLogos_2017}
@@ -133,11 +58,11 @@ instrument. In the focus, the photons interact with the 2NIP molecule and
 scatter into a pixel area detector situated \SI{13}{cm} behind the sample. We
 save each simulated diffraction pattern and feed the patterns into the
 orientation reconstruction algorithm EMC. Statistical analysis of oriented 3D
-diffraction datasets allows to assess the data quality of our simulated data as
+diffraction datasets allows us to assess the data quality of our simulated data as
 a function of the pulse duration, which is is controlled through the machine
 parameters of the FEL, in particular the electron bunch charge.
 
-The results of this study analyis of the simulated diffraction patterns are published in
+The results of this study are published in
 Ref.~\cite{Fortmann-Grote2017}. In addition, we published the individual
 datasets resulting from the simulations on the
 \href{https://zenodo.org/communities/eucall-data}{EUCALL Data Repository} hosted
@@ -151,7 +76,8 @@ Tutorials for the individual simulation steps can be found on the
 \href{https://www.github.com/eucall-software/simex_platform/wiki/SimEx-Tutorial}{SIMEX wiki} and
 on the
 \href{https://www.youtube.com/channel/UC5H8cATZiUPNfF7P_xEhBpQ/videos}{EUCALL youtube channel}.
-Finally, the \href{https://eucall-software.github.io/simex_platform/}{reference manual} of the simulation environment simex\_platform
+Finally, the \href{https://eucall-software.github.io/simex_platform/}{reference
+manual} of the simulation environment \textit{simex\_platform}
 contains a description of the data formats of all relevant simulation datasets, see also
 Milestone M4.1~\cite{EUCALL_SIMEX_M4.1}.
 
@@ -191,7 +117,8 @@ a solvent (water) were recently presented at the Optics and Photonics Conference
 %
 
 \printbibliography[notkeyword=zenodo,notkeyword=eucall, notkeyword=simex, notkeyword=tutorial, title={Articles}]
-\printbibliography[notkeyword=zenodo,notkeyword=tutorial, keyword=simex, keyword=eucall, title={EUCALL Reports}]
+\printbibliography[notkeyword=zenodo,notkeyword=tutorial, keyword=simex,
+keyword=eucall, title={Project Reports}]
 \printbibliography[keyword=zenodo,notkeyword=tutorial, title={Datasets}]
 %
 %\nocite{Fortmann-Grote_Zenodo855301}
