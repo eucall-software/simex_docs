@@ -30,11 +30,11 @@ and output files are available from the Ref.~\cite{Briggs2017.zenodo.883106}.
 The pressure in the Fe sample at $t = \SI{8.9}{\nano\second}$
 (laser pulse begins at $t = \SI{0}{ns}$) is shown in Fig.~\ref{fig:hydro}.
 
- The pressure, temperature, density and velocity can all be obtained at a given
+ The pressure, temperature, density and velocity can all be obtained at any given
  time step from the output files that Simex converts to OpenPMD \cite{Huebl2017} format. Upon
- completion of the code, it is then possible to adjust laser parameters to reach
+ completion of the code, it is then possible to adjust the laser parameters to reach
  different pressure-temperature conditions in the Fe sample. The P-T condition
- where the pressure is uniform through the whole of the sample is then stored and
+ where the pressure is uniform through the whole of the sample is then recorded and
  \gls{xas} modelling can be performed to simulate the expected E\gls{xafs} signal at
  the compressed state.
 %
@@ -42,8 +42,10 @@ The pressure in the Fe sample at $t = \SI{8.9}{\nano\second}$
    \centering{%
      \includegraphics[width=4.822in]{figures/SIMEX-Fe-Shock.png}
      \caption{%
-       Pressure wave in the iron target and plastic ablator layer. The red--dashed
-       box is the range probed by \gls{exafs}.  \label{fig:hydro}}
+       Pressure distribution in the plastic ablator layer (0-0.05 mm) and iron sample
+(0.05-0.055 mm). The laser arrives at 0 mm and sends the shock wave through the plastic. Upon reaching the
+Fe layer the shock pressure jumps to ~ 30 GPa and sends a reshock wave back into the plastic. The red-dashed
+box highlights the iron sample that is probed by the X-rays.  \label{fig:hydro}}
    }
  \end{figure}
 %
