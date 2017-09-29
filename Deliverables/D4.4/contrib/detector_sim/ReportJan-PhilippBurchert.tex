@@ -1,0 +1,150 @@
+% -------------------------- Geometry and Document type -------------------------------
+\documentclass[12pt,paper=a4,twoside,titlepage,abstracton,bibliography=totoc,ngerman,english]{scrartcl}
+
+
+\usepackage{geometry}
+\geometry{a4paper, top=25mm, left= 25mm, right=25mm, bottom=30mm}
+
+
+% ----------------------------- Head and Foot lines -----------------------------------
+% Für Kopf und Fußzeilen, siehe auch KOMA-Skript Doku
+\usepackage[komastyle,automark]{scrpage2}
+\pagestyle{scrheadings}
+\clearscrheadfoot
+\ohead[\pagemark]{\pagemark}
+\ihead[\headmark]{\headmark}
+\pagenumbering{arabic}
+%
+%\setheadsepline{0.5pt}[\color{black}]
+
+
+\usepackage{blindtext}
+\usepackage{setspace}
+\usepackage[printonlyused]{acronym}         %für das Abkürzungsverzeichnis
+
+% ------------------------------- Language and text fonts --------------------------------
+%% äöü and Co.
+\usepackage[utf8]{inputenc}
+
+\usepackage{lmodern}
+
+%% Separation of words
+\usepackage[T1]{fontenc}
+
+%% Set the spacing between lines
+\usepackage{setspace}
+
+%% \glqq •\grqq
+\usepackage{babel}
+
+% ------------------------------ Images and Figures -----------------------------------
+%%
+\usepackage{epsfig,scrpage2,graphicx}
+\usepackage{here}
+
+%caption centered
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+% ----------------------------- Captions -----------------------------------------------
+%% Type of font used as caption
+\setkomafont{captionlabel}{\sffamily\bfseries}
+
+
+% ------------------------------- Symbols ----------------------------------------------
+%% References such as url
+\usepackage{hyperref}
+
+%% used for the address page
+\usepackage{marvosym}
+
+% ------------------------------- Math -------------------------------------------------
+
+\usepackage{amsmath,amssymb} %% zusaetzliche Mathe-Symbole
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+
+% -------------------- Paket fuer bibtex-Datenbanken ------------------------------------
+\usepackage[square,sort,comma,numbers]{natbib}
+
+
+%%
+\setcapindent{0em}
+
+
+
+\setcounter{secnumdepth}{3}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0ex plus0.5ex minus0ex}
+
+\renewcommand{\headfont}{\normalfont}
+
+\cfoot{\pagemark}
+
+
+% ================================ Document begin =======================================
+\begin{document}
+\clearpage
+%\setlength{\hoffset}{-5mm}
+
+\input{Deckblatt.tex}
+\input{Adressen.tex}
+\clearpage\markboth{}{}\cleardoublepage
+\pagestyle{empty}
+\tableofcontents
+\newpage
+\newpage
+\setcounter{page}{1}
+%\pagestyle{scrheadings}
+
+
+\begin{abstract}
+The following report describes design and implementation of a detector simulation software, based on the existing software packages Geant4 and X-CSIT. X-CSIT describes the photon-matter interaction in the active layer of the detector and the propagation of created charges to the detector readout electronics.
+We make use of principles of object oriented programming to expose the X-CSIT library in the
+start-to-end simulation platform SimEx. C++ classes are compiled and linked to a shared object and made available in python by virtue of boost.python. Furthermore, cmake configuration and build instruction sets facilitate compiling this project. A test calculation for the AGIPD detector at the SPB-SFX instrument at European XFEL concludes
+the project.
+% X-CSIT  This software applies principles of polymorphism and inheritance to utilize the necessary functions of X-CSIT to run the simulation. It includes a photon-detector interaction simulation as well as a simulation of the propagation of charges in the detector. The inheriting classes written in C++ are extended to python using boost.python. By using cmake, all these components are compiled and linked to the shared object libpy\_detector\_interface.so.
+%A second part consists of the integration of the shared object into the existing SimEx project that simulates all the components of experiments at the X-ray Free Electron Laser facility in Hamburg. For this purpose, SimEx calculator classes are written that utilize the created shared object. Furthermore, cmake is used to create makefiles compilation and linkage for this project py\_detector\_interface as well as for X-CSIT.  Last but not least, for purposes of testing the principles of this design a simulation of the AGIPDSPB detector is carried out.
+\paragraph{Keywords:} Geant4, X-CSIT, SimEx, detector simulation, single particle imaging, boost python, cmake, C++, python
+\end{abstract}
+
+\newpage
+\setcounter{page}{1}
+
+\input{Introduction.tex}
+
+\input{Mainpart.tex}
+
+\input{Conclusion.tex}
+
+\section{Acknowledgements}
+First of all I would like to thank Ute Micheelsen, Olaf Behnke, Rainer Gehrke and the other organization team members for organizing this exciting summer school. Without their commitment and preparation this summer school would have been less informative, less fun and maybe also less productive than it was. Especially, their quick response to questions and the well done organization and provision of information was very helpful to concentrate on the contents of lectures and the project.
+
+Furthermore, I would like to thank Adrian Mancuso, head of the XFEL Scientific Instruments SPB/SFX group, for accepting a summer student in his group. I am aware that students often mean additional bureaucracy and little scientific results/ progress. This is especially worth mentioning, since the summer student program took place at the time of probably additional workload due to the near opening of the XFEL facility. For this reason, I am grateful for being given this opportunity.
+
+Special thanks go to my supervisor Carsten Fortmann-Grote for selecting the project and taking care of my progress. It was a demanding project to work on and I hope it can contribute to SimEx package a little bit. I enjoyed working at it and overcoming those obstacles on the way. Whenever there was a problem I was given hints, advice or new techniques for figuring out and solving the challenge. My impression is that I really learned a lot during the project. This ranges from programming languages like python via error prevention strategies such as unit tests to debugging tools such as gdb. Without his dedication and his advises this project would doubtlessly not have evolved half to the state it is.
+
+Last but not least, I am very grateful to be allowed to participate in this summer school and to work at the XFEL site. It have been exciting weeks with a challenging project and interesting lectures. Furthermore, working at the fascinating XFEL facility only weeks before it officially opens was a really exciting experience. I am looking forward, for the next opportunity to participate in such a great project.
+
+\clearpage
+\appendix
+
+
+\appendix
+\clearpage
+\bibliography{literatur}
+\bibliographystyle{alphadin}
+%\bibliographystyle{plainnat}
+
+
+\end{document}
+
+
+
+
+

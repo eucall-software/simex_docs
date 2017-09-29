@@ -1,0 +1,26 @@
+\subsection{Detector simulation software}
+For the purpose of detector simulations, the software packages \texttt{Geant4}
+(\url{http://geant4.cern.ch/}) and \textit{X-CSIT}
+(\url{https://git.xfel.eu/gitlab/karaboDevices/xcsit}) are utilized that have
+already been successfully implemented in the data analysis and control framework
+of the European XFEL \textit{karabo}
+(\url{https://git.xfel.eu/gitlab/Karabo/Framework}). In contrast to
+\textit{karabo}, where all the simulation is performed with devices which are
+integrated into the framework processing pipe, \textit{SimEx} is a collection of
+classes. Consequently,  installation as well as
+maintenance and usage of new components are more convenient in \textit{SimEx}.
+
+
+Another difference is the programming language:
+In contrast to \textit{karabo} and \textit{X-CSIT} which are
+written in C++, \textit{SimEx} is written in python. Since \textit{X-CSIT} is
+the basis of the simulation also in this project, the interface defined needs to
+be made accessible from python. To integrate it into \textit{SimEx} an
+additional calculator needs to be written that utilizes the extended functions
+from \textit{X-CSIT}. To achieve this, an interface between C++ written
+\textit{X-CSIT} and python written \textit{SimEx} source code is designed and
+implemented. This includes writing source code in C++ and python as well as
+creating a build procedure with \textit{cmake}. Furthermore, an appropriate
+documentation and similar coding style like the one used for other
+\textit{SimEx} calculators is required.
+
