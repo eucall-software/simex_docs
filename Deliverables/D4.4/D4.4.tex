@@ -1,6 +1,14 @@
 \documentclass[10pt]{scrartcl}
 \input{eucall_header}
 
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+
+\ihead{D4.4} % left head
+
+\addbibresource{detector_sim_references.bib}
 
 % sophisticated linking of references in the pdf and setting some options
 \usepackage{url}                                                  % for correct typesettings of URLs
@@ -11,12 +19,12 @@
     pdfmenubar=true,                                              % show Acrobat’s menu?
     pdffitwindow=false,                                           % window fit to page when opened
     pdfstartview={FitH},                                          % fits the width of the page to the window
-    pdftitle={D4.4: Interoperable simulations},                                        % title
+    pdftitle={D4.4: Signal generation for plasma and non-plasma samples},                                        % title
     pdfauthor={C. Fortmann-Grote},                                           % author
     pdfsubject={EUCALL WP4 (SIMEX) Deliverable D4.4},                             % subject of the document
     pdfcreator={pdflatex},                                         % creator of the document
-    pdfkeywords={EUCALL, SIMEX, simulations, Rad-Hydro, XFEL, ESRF, warm dense
-    matter, absorption, radiography},                                         % list of keywords
+    pdfkeywords={EUCALL, SIMEX, scattering, diffraction, hot dense matter,
+    single particle imaging, detector simulations},               % list of keywords
     pdfnewwindow=true,                                            % links in new PDF window
     colorlinks=true,                                              % false: boxed links; true: colored links
     linkcolor=blue,                                                % color of internal links (change box color with linkbordercolor)
@@ -46,14 +54,14 @@ Deliverable D4.4\\
 %
 Simulated coherent scattering data from plasma and non--plasma samples\\[5ex]
 %
-Lead Beneficiary: European XFEL, HZDR\\[5ex]
+Lead Beneficiary: HZDR, XFEL\\[5ex]
 %
-Carsten Fortmann-Grote, Michael Bussmann,
-  Marco Garten, Axel Huebl, Thomas Kluge,
+Carsten Fortmann-Grote, Jan-Philipp Burchert, Michael Bussmann,
+  Marco Garten, Axel H\"ubl, Thomas Kluge,
   and Adrian P. Mancuso\\[4ex]
 %
-Due data: September 30, 2017\\
-Delivery data: \today \\[4ex]
+Due date: September 30, 2017\\
+Delivery date: \today \\[4ex]
 %
 Project webpage: \url{www.eucall.eu}\\[6ex]
 %
@@ -63,7 +71,7 @@ Project webpage: \url{www.eucall.eu}\\[6ex]
   \hline
   \multicolumn{2}{|l|}{ \textit{Deliverable Type} } \\
   \hline
-  R = Report\hfill & R, OTHER \\
+  R = Report\hfill & R\\
   DEM = Demonstrator, pilot, prototype, plan designs & \\
   DEC = Websites, patents filing, press \& media actions, videos, etc. & \\
   OTHER = Software, technical diagram, etc. & \\
@@ -91,7 +99,7 @@ Project webpage: \url{www.eucall.eu}\\[6ex]
 
 %\tableofcontents
 
-\section{Summary}
+\section{Outline}
 %
 As first applications of our simulation software suite \textit{simex\_platform}
 \cite{simex_github, Fortmann-Grote2017a, EUCALL_SIMEX_D4.3}, we have employed the simulation capabilities of
@@ -101,9 +109,12 @@ As first applications of our simulation software suite \textit{simex\_platform}
     thick plasmas (plasma sample)
   \item Single particle imaging at the European XFEL (non--plasma sample)
 \end{enumerate}
+%
+In addition, we also report on the integration of detector simulations in
+\textit{simex\_platform}.
 
 \section{Plasma sample}
-
+%
 In Deliverable Report D4.3~\cite{EUCALL_SIMEX_D4.3}, we present the interoperability of \gls{xfel} and \gls{uhi} laser pulse generation,
 interaction with the target, and generation of a \gls{saxs} image using the
 scattering code \textit{ParaTAXIS}.
@@ -144,8 +155,8 @@ pulse.
 
 All density data from the \gls{pic} simulation as well as the \gls{saxs} patterns are
 published on Zenodo together with the data format documentation
-\cite{Garten2017.zenodo.885033} in partial fulfillment of EUCALL Milestone M4.4
-\cite{EUCALL_SIMEX_M4.4}.
+\cite{Garten2017.zenodo.885033} in partial fulfillment of EUCALL Milestone M4.3
+\cite{EUCALL_SIMEX_M4.3}.
 
 \section{Molecular (non--plasma) sample}
 Application of \textit{simex\_platform} to single--particle imaging experiments
@@ -235,7 +246,8 @@ Fig.~\ref{fig:2nip_diffraction_RD_vs_noRD} shows diffraction patterns from
   }
   \end{center}
   \caption{Diffraction from 2NIP with 5 keV photons without (a) and with (b)
-  radiation damage taken into account.}
+  radiation damage taken into account. Taken from
+  Ref.~\cite{Fortmann-Grote2017b}.}
   \label{fig:2nip_diffraction_RD_vs_noRD}
 \end{figure}
 %
@@ -246,10 +258,10 @@ two different hydration layer thicknesses of \SI{3}{\angstrom} (a) and
 \begin{figure}[ht]
   \begin{center}
     \subfloat[\SI{3}{\angstrom} hydration layer]{%
-    \includegraphics[width=0.4\textwidth,angle=0,clip]{2nip_1diffr_layer3-crop}
+    \includegraphics[width=0.4\textwidth,angle=0,clip]{figures/2nip_1diffr_layer3-crop}
   }
     \subfloat[\SI{10}{\angstrom} hydration layer]{%
-    \includegraphics[width=0.4\textwidth,angle=0,clip]{2nip_1diffr_layer3-crop}
+    \includegraphics[width=0.4\textwidth,angle=0,clip]{figures/2nip_1diffr_layer3-crop}
   }
   \end{center}
   \caption{Diffraction patterns for 5 keV XFEL photons scattering from a single
@@ -258,16 +270,88 @@ two different hydration layer thicknesses of \SI{3}{\angstrom} (a) and
   \label{fig:2nip_hydration_layer}
 \end{figure}
 
-It can be seen how qualitatively, the presence of imperfections (radiation
-damage and hydration layer) influences the quality of diffraction signals, e.g.
+It can be seen how, qualitatively, the presence of imperfections (radiation
+damage or hydration layer) influences the quality of diffraction signals, e.g.
 the speckle contrast and noise level.
 In both cases, we performed statistical analysis of the simulated diffraction
 patterns as a function of the varied parameters pulse duration and hydration
 layer thickness, respectively to gain more quantitative insight into the
-dependency of diffraction data quality on these effects. Results are published
-in the aforementioned articles.
+dependency of diffraction data quality on these effects.
 
-\printbibliography
+Fig.~\ref{fig:varcoeff} shows the coefficient of variation, a measure of
+interpretability of single--particle diffraction patterns \cite{Yoon2016,Fortmann-Grote2017}
+for \gls{fel} pulse durations of \SIlist{3;9;30}{\femto\second}. The larger
+coefficients of variation found in the  \SI{3}{\femto\second} case indicating
+poor data quality is due to the significantly lower photon flux at these
+ultra--short pulses. This in turn comes from the intrinsic dependence of pulse
+duration on the electron bunch charge \gls{fel}: Highly charged bunches,
+producing a high photon flux, experience higher space charge effects and stronger longitudinal dispersion
+leading to longer pulse durations.
+%
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=.8\textwidth,angle=0,clip]{figures/varcoeff_3-9-30-crop}
+  \end{center}
+  \caption{Coefficient of variation obtained from oriented simulated diffraction
+  patterns for 2NIP probed by \SI{5}{\kilo\electronvolt} \gls{xfel} pulses of
+varying pulse duration and photon flux. Figure taken from Ref.~\cite{Fortmann-Grote2017}.}
+  \label{fig:varcoeff}
+\end{figure}
+%
+
+Fig.~\ref{fig:R_value_hydration} shows the $R$--value for averaged simulated
+diffraction patterns as a function of the hydration layer thickness. Radiation
+damage has been neglected in these simulations to isolate the effect of the
+water presence. $R < 0.2$ indicates good data quality allowing reconstruction of
+the 3D electron density at resolution $d=2\pi/q$. Following this argument, the presence of a
+\SI{3}{\angstrom} thick hydration layer would allow reconstruction on the level
+of a few \si{\angstrom} length scales.
+%
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=0.8\textwidth,angle=0,clip]{r_factor_vs_layer_thickness}
+  \end{center}
+  \caption{$R$--value obtained from simulated diffraction patterns for 2NIP
+  probed by probed by \SI{5}{\kilo\electronvolt} \gls{xfel} pulses of
+  \SI{9}{\femto\second} pulse duration as a function of the hydration layer
+  thickness. Figure taken from Ref.~\cite{Fortmann-Grote2017b}}
+  \label{fig:R_value_hydration}
+\end{figure}
+
+\section{Detector simulations\label{sec:detector_simulations}}
+Simulations of measurable signals should not only take into account the
+mechanism of x--ray scattering from the sample but also the response of the
+detector to the scattered light impinging on the detector surface. So far, these
+detector simulations have been missing in \textit{simex\_platform} for various technical reasons as
+discussed e.g. in the EUCALL mid term report. These obstacles have now been
+overcome. In the following, we present the implementation of detector
+simulations in the simulation environment \textit{simex\_platform} followed by a first example simulation.
+
+\input{contrib/detector_sim/Introduction.tex}
+\input{contrib/detector_sim/Mainpart.tex}
+
+\appendix
+\section{Deviation from proposal}
+As mentioned in the EUCALL mid term report, ELI's contributions to the SIMEX
+work package were
+re--defined: Within SIMEX, ELI focusses on the development of a simulation
+pipeline for \gls{lpa} based coherent light sources. The progress is presented
+in the Deliverable Report D4.3 \cite{EUCALL_SIMEX_D4.3}. The task ``signal
+generation from plasma samples'' of D4.4  was assigned to HZDR, and the task
+``signal generation from non--plasma samples'' was assigned to XFEL.
+
+\FloatBarrier
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography[notkeyword=submitted, notkeyword=inpreparation, notkeyword=report, notkeyword=zenodo, title={Journal articles}]
+%
+\printbibliography[keyword=submitted, title={Submitted articles}]
+%
+\printbibliography[keyword=inpreparation, title={Articles in preparation}]
+%
+\printbibliography[keyword=eucall, keyword=report, title={Project reports}]
+%
+\printbibliography[keyword=zenodo, title={Datasets}]
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
 
