@@ -15,7 +15,7 @@
 ]{geometry}
 
 \usepackage[verbose]{placeins}
-\usepackage{subfig}
+\usepackage{subcaption}
 \usepackage{latexsym}
 \usepackage[centertags]{amsmath}
 \usepackage{amssymb}
@@ -66,10 +66,8 @@ defernumbers=true, backend=biber]{biblatex}
   \iffieldundef{doi}{#1}{\href{http://dx.doi.org/\thefield{doi}}{#1}}}
   \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
 
-\addbibresource{references.bib}
 \addbibresource{urls.bib}
-\addbibresource{aux.bib}
-\addbibresource{drafts.bib}
+\addbibresource{library.bib}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % GLOSSARY SETTINGS
