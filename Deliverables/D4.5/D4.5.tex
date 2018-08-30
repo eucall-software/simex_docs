@@ -68,7 +68,7 @@ Michael Bussmann,
 and
 Adrian P. Mancuso\\[4ex]
 %
-Due date: September 30, 2017\\
+Due date: September 30, 2018\\
 Delivery date: \today \\[4ex]
 %
 Project webpage: \url{www.eucall.eu}\\[6ex]
@@ -203,7 +203,7 @@ precise and well validated model for the form factors, calculated with the code 
 large signal at small angles, this has been removed in the \textit{pattern\_sim}
 calculation. These simulations were used to support the feasibility of a
 experiment proposed at European XFEL.
-%
+
 \begin{figure}[ht]
   \begin{center}
       \includegraphics[width=.8\textwidth,angle=0,clip]{Fe2O3_vpp_mercury_vs_simex}
@@ -215,7 +215,7 @@ experiment proposed at European XFEL.
     \label{fig:Fe2O3_vpp_model_vs_model}
   \end{center}
 \end{figure}
-%
+
 
 In the following, we will
 apply the \textit{singFEL} module for diffraction simulations and compare to
@@ -248,11 +248,58 @@ and the peak amplitudes are close.
 \end{figure}
 %
 \subsection{Imaging of High--Power Laser driven targets\label{sec:high_power_imaging}}
-\begin{verbatim} TODO: HZDR \end{verbatim}
+In Deliverable Report D4.3 [!!Deliverable4.3], we presented the interoperability
+of X-ray Free-Electron Laser (XFEL) and Ultra-High Intensity (UHI) laser pulse
+generation, interaction with the target, and generation of a Small-Angle X-ray
+Scattering (SAXS) images using the scattering code ParaTAXIS.  A Particle In
+Cell (PIC) simulation provides the time evolution of the electron density on
+which the XFEL photons are scattered.  We assumed invariance of the target in
+propagation direction and simulated the XFEL pulse with $10^{12}$ photons for
+which the target is optically thin.  The ion density follows the electron
+density as expected for plasma expansion into vacuum.  The SAXS pattern well
+resolves the nanometer-scale grating depth and period, taking into account the
+target evolution during the interaction time with the laser pulse.  The full
+details were reported in [!!Deliverable4.3,!!Deliverable 4.4].  The simulation
+parameters match an experiment led by the group of HZDR which was recently
+published in [!!1].  In the experiment a silicon grating was irradiated by a
+Ti:Sa laser with $400$\,mJ on target and pulse duration $80$\,fs, focus size
+$1500\,\mathrm{\mu m^2}$ (FWHM).  The expansion of the grating as a function of
+time was measured and is reported in [!!1].
+%
+%\begin{figure}
+  %\includegraphics[width=12cm]{figures/parataxis_vs_ln04.png}
+    %\caption{Comparison between the ParaTAXIS simulated scattering profile (red) and the analytic solution (blue), both based on PIC-simulated data used also in [!!1].
+    %The two curves almost perfectly agree in the relative heights of the scattered peaks, the signal in between is larger in the ParaTAXIS simulation due to the finite number of quasi-photons in the simulation.
+    %The simulation also agrees reasonably well with the experimental data, taking into account the finite experimental background  and imperfect peak-to-valley aspect ratio of the front side grating, generating imperfect suppression of even scattering peaks. \label{fig:1}}
+%\end{figure}
+Here we compare the scattering patterns at $t=0$ (i.e. when the laser maximum
+has reached the target front surface) between the ParaTAXIS simulation, an
+analytic solution and the measurement (see Fig.~\ref{fig:1}).  For optically
+thin targets, the scattering pattern of a grating with soft edges can be
+described by an analytic equation (see [!!1]).  As an input into this equation
+we extract the sharpness of the grating edges from the simulation,
+$\sigma\approx 8 nm$ We find a good agreement between the simulation and the
+analytic solution, as well as with the experimental curve when we take into
+account a few key aspects.  First, we note that the ParaTAXIS simulation gives
+the same relative peak heights as the Fourier transform, validating the
+simulation.  The signal level between the main peaks is different however due to
+the finite number of quasi-photons used in the simulation.  With more simulation
+time, this level will further decrease, as this contribution is solely due to
+limited sampling of the full parameter space for the quasi-photons and will be
+fully extinct in the limit of high photon numbers.  Secondly, the experiment
+contains signal from a background contribution, e.g. from plasma self-emission,
+bremsstrahlung and 3rd harmonic of the drive laser.  Also, the experiment shows
+peaks in between the simulated peak positions, which are due to non-perfect
+aspect ratio of the pre-inscribed grating on the target surface.  In the
+simulated case, the initial peak-to-valley aspect ratio is 1:1, while in the
+experiment due to production uncertainties this is not exactly the case.
+Besides this difference the experimental results are reproduced well by the
+simulation.
+
 %
 \subsection{Liquid jet crystal diffraction\label{sec:liquid_crystals}}
 \begin{verbatim} TODO: Mathias (ESRF) \end{verbatim}
-%
+
 \subsection{Warm dense matter x--ray absorption spectroscopy\label{sec:warm_dense_matter_spectroscopy}}
 Interaction of high--energy optical laser pulses with solid targets and shock
 compression is modeled with radiation--hydrodynamics (RH) simulations using
@@ -445,6 +492,108 @@ just--in--time compilation for available hardware of compute intensive parts.
 In the following we benchmark the performance of a \textit{pysingfel} diffraction
 calculation with an unperturbed protein diffracting a parametrized FEL beam of
 \SI{5}{\kilo\electronvolt} photon energy into a detector of 1024x1024 pixels.
+
+\section{JupyterHub as a Platform for Data Analysis as a Service}
+\subsection{Introduction}
+For the task 4.3.2 \textit{Provide a framework towards a service to users [\dots\ ] } we set up an instance of \textit{JupyterHub} for the users of the \textit{Maxwell Cluster} at \textsc{DESY}.
+Users of the \textit{SIMEX} code are familiar with the computing environment at \textsc{DESY} and use the cluster in many ways.
+To run heavy computations on the cluster users have to submit a job to \textit{SLURM} which will then allocate ressources to the users' jobs and run them.
+This is a well-established workflow for simulations and data reduction pipelines where the result of the
+computation can be delayed by days from the time of submission.
+For other use-cases though, users need near to instantaneous feedback from their input.
+This is what \textit{iPython} does. It is a interactive python shell that evaluates commands - or multi line command blocks - one by one and returns a result direcrtly.
+The iPython notebook was a web-based frontend to iPython that was then renamed into the Jupyter Notebook after other backends became popular.
+Doing work with the Jupyter Notebook on a remote server or a High Performance Cluster requires a few steps, setting up an SSH Tunnel with port forwarding, logging onto the server and then starting the notebook manually.
+If a user wants more advanced features like password protection
+The JupyterHub is a development that is meant for environments where many users need to access a Jupyter Notebook and all those steps are done automatically and users only need to log in with their username and password.
+
+\subsection{Features of the JupyterHub at DESY}
+The JupyterHub we set up uses a lot of infrastructure already available at DESY. In the following we explain how they were included into an instance to make data analysis more convenient.
+Features of the \textit{JupyterHub} Instance include:
+
+\begin{itemize}
+ \item Encryption via SSL using an DFN (Deutsches Forschungsnetzwerk) inheritance certificate to provide user data security
+ \item Integration into the existing LDAP authentication at DESY
+ \item Connection to the SLURM ressource manager on the Maxwell Cluster
+ \item Customization of the Notebook Spawner to provide access to the GPFS file system
+ \item Addition of Various Python Kernel Versions and other demanded languages such as R \& bash kernels
+ \item Using the Maxwell Cluster as an infrastructure to provide computing power
+\end{itemize}
+%
+\subsection{Using the JupyterHub and SimEx}
+To use the JupyterHub at DESY one has to visit the website
+\begin{verbatim}
+ https://max-jhub.desy.de
+\end{verbatim}
+while on the DESY-XFEL Network.
+Opening the ports to the Internet is work in progress and needs the server to be isolated in the demilitarized zone (DMZ) which is a different network section and has special firewall rules.
+Users then see the scrren shown in fig.~\ref{fig:jhub_start} which has been customized to show the DESY Logo and shows the \textit{Secure} Website lock so User know their data is protected.
+Users then have to enter their DESY credentials which are passed to the LDAP server to check if the password is correct.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}{0.45\textwidth} % width of left subfigure
+	  \includegraphics[width=\textwidth]{figures/jhub001.png}
+	  \caption{View of the login Page of the JupyterHub instance witht the url https://max-jhub.desy.de} % subcaption
+  \end{subfigure}
+  \vspace{1em} % here you can insert horizontal or vertical space
+  \begin{subfigure}{0.45\textwidth} % width of right subfigure
+	  \includegraphics[width=\textwidth]{figures/jhub002.png}
+	  \caption{The website has a trusted SSL certificate so users can trust our website.} % subcaption
+  \end{subfigure}
+  \caption{Screenshots of the JupyterHub login page and its SSL certificate}
+  \label{fig:jhub_start}
+\end{figure}
+
+After login on, users are presented with a choice, shown in fig.~\ref{fig:jhub_spawn}, where their notebook should run.
+There is a shared partition where users can
+
+\begin{figure}
+  \centering
+    \begin{subfigure}{0.45\textwidth} % width of left subfigure
+	  \includegraphics[width=\textwidth]{figures/jhub004.png}
+	  \caption{Before getting to the Notebook, users see the choice of spawner options for the partition to run the notebook on.} % subcaption
+  \end{subfigure}
+  \vspace{1em} % here you can insert horizontal or vertical space
+  \begin{subfigure}{0.45\textwidth} % width of right subfigure
+	  \includegraphics[width=\textwidth]{figures/jhub005.png}
+	  \caption{A shared Jhub partition and workgroup partitions for more heavy load usage are available, the shared one is the default.} % subcaption
+  \end{subfigure}
+  \caption{After the login using the DESY credentials was successful, the user has multiple options to select from for the spawner to start the notebook server}
+  \label{fig:jhub_spawn}
+\end{figure}
+
+Once the user has selected the partition a SLUM job is submitted that starts the Notebook Server and a connection is established and users see the screen depicted in fig.~\ref{fig:jhub_work}. On the right panel the options to start are shown. This is neccessary so users have access to their group specific partition if they want to do interactive computations with a full node and not just sharing ressources.
+
+\begin{figure}
+  \centering
+    \begin{subfigure}{0.45\textwidth} % width of left subfigure
+	  \includegraphics[width=\textwidth]{figures/jhub006.png}
+	  \caption{This is a the screen users see when the notebook is launched. The files and folders correspond to the users' home directorys.} % subcaption
+  \end{subfigure}
+  \vspace{1em} % here you can insert horizontal or vertical space
+  \begin{subfigure}{0.45\textwidth} % width of right subfigure
+	  \includegraphics[width=\textwidth]{figures/jhub007.png}
+	  \caption{When choosing a new kernel users have many options of Python versions, R \& a bash kernel, text files editing and a terminal session.} % subcaption
+  \end{subfigure}
+  \caption{Screenshots of the JupyterHub Instance at DESY, at different stages of the workflow. The images on the top show the login page and the SSL certificate, the middle the Spawner options and the bottom two screenshots show the User's files and folder as well as the available Kernels that can be used to start a Notebook}
+  \label{fig:jhub_work}
+\end{figure}
+
+Once the server is started and and a notebook is openend, users of the \textit{SimEx} code can execute code cells
+to import the module and functions they use in their regular python-driven workflow they are used to without the Jupyter Notebook, as is shown in fig.~\ref{fig:simex_import}.
+The advantage is now that plots can be displayed inline, so no X-forwarding is needed.
+Also, the Jupyter Notebook supports cells with \textit{Markdown} format, so documenting the work and coding progress
+can be done by adding cells with headings, text and even \LaTeX style text blocks.
+
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.9\textwidth]{figures/simex_import_jhub.png}
+ \caption{The Jupyter Notebook executes code in \textit{cell blocks} that can be executed individually. The import statement to make the \textit{SimEx} modules available runs and user sees immediately if it fails or the import was successful}
+ \label{fig:simex_import}
+\end{figure}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \printbibliography[title={References}]
 %
