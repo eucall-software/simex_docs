@@ -1,6 +1,9 @@
 \documentclass[10pt]{scrartcl}
 \input{eucall_header}
-
+\usepackage[final]{pdfpages}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{automata,shapes,snakes,positioning}
 \usepackage{mathtools}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
@@ -127,7 +130,7 @@ diffraction data from the Rice Dwarf Virus \cite{Munke2016}, in the second case
 we compare 3D molecular structures reconstructed from simulated diffraction data
 to the original 3D model reconstructed from NMR \cite{Schlessman1998}
 measurements.
-\subsubsection{Validation of single--particle imaging using raw diffraction data }
+\subsubsection{Validation of single--particle imaging using measured diffraction data }
 Our validation of the single--particle imaging simulation toolchain in SIMEX
 uses diffraction data measured at the AMO endstation at
 \SI{1.6}{\kilo\electronvolt} photon energy.
@@ -138,17 +141,7 @@ TBC (Carsten)
 %
 \subsubsection{Validation of the single--particle imaging simulation toolchain
 using reconstructed density profiles}%
-Coherent diffraction from single proteins has been simulated using the
-\textit{simS2E} suite \cite{Yoon2016}. Of the order 200000 diffraction images,
-sampling the FEL spectral and temporal fluctuations, including focussing
-mirror height profiles, radiation damage processes (ionization and atomic
-displacement), were then fed into computational reconstruction using the
-Expand--Maximize--Compress (EMC) algorithm for orientation and the
-Difference Map (DM) algorithm to solve the phase problem. The resulting 3D
-electron density maps could then be compared to the PDB model that was used as
-a sample specification in the simulation. The structure in the PDB had been
-measured with the NMR method. We reproduce below the corresponding figures
-from the original article by Yoon et al.
+%
 \begin{figure}[ht]
   \begin{center}
     \includegraphics[width=0.8\textwidth,angle=0,clip]{srep24791-f7}
@@ -165,10 +158,22 @@ from the original article by Yoon et al.
     previous damage--only simulations and may, in future studies, be tampered by a
     sacrificial water layer\cite{Hau-Riege2004}. Reproduced
     from Yoon et al., Scientific Reports \textbf{6}, 24791 (2016) under the
-  Creative Commons Attribution 4.0 International License.
-}
+    Creative Commons Attribution 4.0 International License.
+  }
   \label{fig:2NIP_reconstruction}
 \end{figure}
+
+Coherent diffraction from single proteins has been simulated using the
+\textit{simS2E} suite \cite{Yoon2016}. Of the order 200000 diffraction images,
+sampling the FEL spectral and temporal fluctuations, including focussing
+mirror height profiles, radiation damage processes (ionization and atomic
+displacement), were then fed into computational reconstruction using the
+Expand--Maximize--Compress (EMC) algorithm for orientation and the
+Difference Map (DM) algorithm to solve the phase problem. The resulting 3D
+electron density maps could then be compared to the PDB model that was used as
+a sample specification in the simulation. The structure in the PDB had been
+measured with the NMR method. We reproduce in Fig.~\ref{fig:2NIP_reconstruction}
+the corresponding results from the original article by Yoon et al.
 The results demonstrate the predictive power of our start--to--end simulation
 toolchain. All main features of the protein were reproduced. Regions close to
 the surface show enhanced displacement and poorer agreement with the
@@ -186,11 +191,23 @@ pattern consisting of Bragg spots and incoherent contributions.
 \textit{singfel} reads the structure of the entire nanocrystal, thus providing
 more flexibility to account for radiation damage effects which break the
 translational symmetry of the sample.
-
+%
+\begin{figure}[ht]
+  \begin{center}
+      \includegraphics[width=.49\textwidth,angle=0,clip]{Fe2O3_vpp_mercury_vs_simex}
+      \includegraphics[width=.49\textwidth,angle=0,clip]{Fe2O3_vpp_mercury_vs_patternsim}
+  \caption{Simulated powder diffraction patterns (blue lines) for nanocrystalline fcc Fe\textsubscript{2}O\textsubscript{3}
+  using the diffraction modules \textit{singfel} (left) and \textit{pattern\_sim}
+  (right) compared to reference calculations for an infinite fcc lattice
+    using the code \textit{mercury} (orange curve).}
+    \label{fig:Fe2O3_vpp_model_vs_model}
+  \end{center}
+\end{figure}
+%
 We validate both codes against the code \textit{mercury} \cite{Macrae2008} of the
 Cambridge Crystallographic Data Centre (CCDC). Fig.~\ref{fig:Fe2O3_vpp_model_vs_model} shows the simulated
-powder diffraction pattern up for \textit{singFEL} vs. \textit{mercury} (top)
-and for \textit{pattern\_sim} vs. \textit{mercury} (bottom). The sample is a
+powder diffraction pattern up for \textit{singFEL} vs. \textit{mercury} (left)
+and for \textit{pattern\_sim} vs. \textit{mercury} (right). The sample is a
 \SI{18}{\nano\metre} sized fcc crystal of
 Fe\textsubscript{2}O\textsubscript{3}. In both cases, the
 positions of Bragg peaks produced by SIMEX correspond to the reference
@@ -203,19 +220,6 @@ precise and well validated model for the form factors, calculated with the code 
 large signal at small angles, this has been removed in the \textit{pattern\_sim}
 calculation. These simulations were used to support the feasibility of a
 experiment proposed at European XFEL.
-
-\begin{figure}[ht]
-  \begin{center}
-      \includegraphics[width=.8\textwidth,angle=0,clip]{Fe2O3_vpp_mercury_vs_simex}
-      \includegraphics[width=.8\textwidth,angle=0,clip]{Fe2O3_vpp_mercury_vs_patternsim}
-  \caption{Simulated powder diffraction patterns (blue lines) for nanocrystalline fcc Fe\textsubscript{2}O\textsubscript{3}
-  using the diffraction modules \textit{singfel} (top) and \textit{pattern\_sim}
-  (bottom) compared to reference calculations for an infinite fcc lattice
-    using the code \textit{mercury} (orange curve).}
-    \label{fig:Fe2O3_vpp_model_vs_model}
-  \end{center}
-\end{figure}
-
 
 In the following, we will
 apply the \textit{singFEL} module for diffraction simulations and compare to
@@ -238,17 +242,17 @@ and the peak amplitudes are close.
 \begin{figure}[ht]
   \begin{center}
     \includegraphics[width=.8\textwidth,angle=0,clip]{C60_Abbey2016_phaseAfcc_lowFluence_vs_simex_noRD}
+    \caption{Virtual powder pattern from nanocrystalline C\textsubscript{60}
+    \cite{Abbey2016} (orange curve) compared to SIMEX
+    simulations for a 10x10x10 C\textsubscript{60} fcc supercell using the code
+    \textit{pysingfel} (blue curve) and compared to a modeled powder pattern for
+    an infinite C\textsubscript{60} fcc lattice using the code \textit{mercury}.}
+    \label{fig:C60_virtual_powder_data_vs_models}
   \end{center}
-  \caption{Virtual powder pattern from nanocrystalline C\textsubscript{60}
-  \cite{Abbey2016} (orange curve) compared to SIMEX
-  simulations for a 10x10x10 C\textsubscript{60} fcc supercell using the code
-  \textit{pysingfel} (blue curve) and compared to a modeled powder pattern for
-  an infinite C\textsubscript{60} fcc lattice using the code \textit{mercury}.}
-  \label{fig:C60_virtual_powder_data_vs_models}
 \end{figure}
 %
 \subsection{Imaging of High--Power Laser driven targets\label{sec:high_power_imaging}}
-In Deliverable Report D4.3 [!!Deliverable4.3], we presented the interoperability
+In Deliverable Report D4.3 \cite{Fortmann-Grote2017e}, we presented the interoperability
 of X-ray Free-Electron Laser (XFEL) and Ultra-High Intensity (UHI) laser pulse
 generation, interaction with the target, and generation of a Small-Angle X-ray
 Scattering (SAXS) images using the scattering code ParaTAXIS.  A Particle In
@@ -259,24 +263,45 @@ which the target is optically thin.  The ion density follows the electron
 density as expected for plasma expansion into vacuum.  The SAXS pattern well
 resolves the nanometer-scale grating depth and period, taking into account the
 target evolution during the interaction time with the laser pulse.  The full
-details were reported in [!!Deliverable4.3,!!Deliverable 4.4].  The simulation
+details were reported in Deliverable4.3 \cite{Fortmann-Grote2017e} and
+Deliverable D4.4 \cite{Fortmann-Grote2017h}. The simulation
 parameters match an experiment led by the group of HZDR which was recently
-published in [!!1].  In the experiment a silicon grating was irradiated by a
+published in \cite{Kluge2017}.  In the experiment a silicon grating was irradiated by a
 Ti:Sa laser with $400$\,mJ on target and pulse duration $80$\,fs, focus size
 $1500\,\mathrm{\mu m^2}$ (FWHM).  The expansion of the grating as a function of
 time was measured and is reported in [!!1].
 %
-%\begin{figure}
-  %\includegraphics[width=12cm]{figures/parataxis_vs_ln04.png}
-    %\caption{Comparison between the ParaTAXIS simulated scattering profile (red) and the analytic solution (blue), both based on PIC-simulated data used also in [!!1].
-    %The two curves almost perfectly agree in the relative heights of the scattered peaks, the signal in between is larger in the ParaTAXIS simulation due to the finite number of quasi-photons in the simulation.
-    %The simulation also agrees reasonably well with the experimental data, taking into account the finite experimental background  and imperfect peak-to-valley aspect ratio of the front side grating, generating imperfect suppression of even scattering peaks. \label{fig:1}}
-%\end{figure}
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{figures/parataxis_vs_ln04.png}
+    \caption{Comparison between the ParaTAXIS simulated scattering profile
+      (red)
+      and the analytic solution (blue), both based on PIC-simulated data
+      used
+      also in [Kluge et al. ``Observation of ultrafast solid-density
+        plasma
+        dynamics using femtosecond X-ray pulses from a free-electron
+        laser'',
+      arXiv:1801.08404].
+      The two curves almost perfectly agree in the relative
+      heights of the scattered peaks, the signal in between is
+      larger in the ParaTAXIS simulation due to the finite number of
+      quasi-photons in the simulation.
+      The simulation also agrees reasonably well with the
+      experimental data, taking into account the finite experimental
+      background  and imperfect peak-to-valley aspect ratio of the front
+      side grating, generating imperfect suppression of even scattering
+      peaks.
+    }\label{fig:parataxis_vs_ln04}
+  \end{center}
+\end{figure}
+%
 Here we compare the scattering patterns at $t=0$ (i.e. when the laser maximum
 has reached the target front surface) between the ParaTAXIS simulation, an
-analytic solution and the measurement (see Fig.~\ref{fig:1}).  For optically
+analytic solution and the measurement (see Fig.~\ref{fig:parataxis_vs_ln04}).
+For optically
 thin targets, the scattering pattern of a grating with soft edges can be
-described by an analytic equation (see [!!1]).  As an input into this equation
+described by an analytic equation (\cite{Kluge2018}). As an input into this equation
 we extract the sharpness of the grating edges from the simulation,
 $\sigma\approx 8 nm$ We find a good agreement between the simulation and the
 analytic solution, as well as with the experimental curve when we take into
@@ -372,7 +397,7 @@ these differences qualitatively. A more quantitative analysis and comparison
 beteen theory and experiment is still outstanding.
 %
 
-We also compared 1D RH simulations for the (peak??) pressure as a function
+We also compared 1D RH simulations for the pressure as a function
 of energy on target in the case of molybdenum. Fig.~\ref{fig:rh_1d_vs_exp}
 shows three measured datasets (dots) differing the the thickness of the phase plate
 used to smoothen the intensity distribution over the focal spot and the pump
@@ -390,29 +415,147 @@ correction factor to apply to 1D simulation data.
   (solid lines) systematically overestimate the experimental conditions (dots).}
   \label{fig:rh_1d_vs_exp}
 \end{figure}
-
+%
 \subsection{Wavefront propagation through phase gratings}
 \label{sec:wpg_phasegrating}
-\begin{verbatim}
-TODO L. Mikes.
-\end{verbatim}
+WPG functionality has been extended to support a selection of 2D transmission gratings.
+%
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[width=.45\textwidth,angle=0,clip]{grating-diamond}
+		\includegraphics[width=.45\textwidth,angle=0,clip]{grating-pillar}
+	\end{center}
+	\caption{Checkerboard and hexagonal gratings used in conducted experiments}
+	\label{fig:lm_gratings}
+\end{figure}
+%
+The Grating element is based on the srwl class SRWLOptT (Optical Element: Transmission - generic) and its transmission properties are achieved by modifying attribute arTr - amplitude transmission and optical path difference as function of transverse position.
+
+Grating structure can either be chosen from a predefined set (fig. \ref{fig:lm_predef}) or custom-made using a limited set of parameters.
+%
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[width=.32\textwidth,angle=0,clip]{grating-wpg-chb}
+		\includegraphics[width=.32\textwidth,angle=0,clip]{grating-wpg-mesh}				\includegraphics[width=.32\textwidth,angle=0,clip]{grating-wpg-hex}
+	\end{center}
+	\caption{Predefined grating structures: checkerboard, mesh and hexagonal}
+	\label{fig:lm_predef}
+\end{figure}
+%
+The predefined shapes are configured by pitch in the direction of x-axis and the y dimension can be scaled accordingly or be intentionally stretched to create rectangular structures.
+
+The range of parameters for custom-made gratings include (fig. \ref{fig:lm_params})
+%
+\begin{enumerate}
+	\item vectors $\vec{a}$ and $\vec{b}$ to define spacing of structural elements
+	\item switch to enable halfway combinations (mesh to checkerboard)
+	\item fractional parameter for $\vec{a}$ and $\vec{b}$ to specify element dimensions
+	\item switch to turn element shapes into circles (hex)
+	\item roll grating along the beam
+\end{enumerate}
+%
+\begin{figure}[ht]
+	\begin{tikzpicture}[scale=1.25, every node/.style={scale=1.25},shorten >=1pt,node distance=1.0cm,on grid,auto]
+%		\tikzstyle{high} = [circle, fill=gray!50]
+%		\tikzstyle{mid} = [circle, fill=gray!20]
+		\draw[xshift=-1.5cm,yshift=-0.5cm,fill=gray!50] (0cm,0cm) -- (2cm,0cm) -- (3cm,1cm)
+		-- (1cm,1cm) -- cycle;
+		\draw[xshift=2.5cm,yshift=-0.5cm,fill=gray!50] (0cm,0cm) -- (2cm,0cm) -- (3cm,1cm)
+		-- (1cm,1cm) -- cycle;
+		\draw[xshift=4.5cm,yshift=1.5cm,fill=gray!50] (0cm,0cm) -- (2cm,0cm) -- (3cm,1cm)
+		-- (1cm,1cm) -- cycle;
+		\draw[xshift=0.5cm,yshift=1.5cm,fill=gray!50] (0cm,0cm) -- (2cm,0cm) -- (3cm,1cm)
+		-- (1cm,1cm) -- cycle;
+		\draw[xshift=1.5cm,yshift=0.5cm,fill=gray!15] (0cm,0cm) -- (2cm,0cm) -- (3cm,1cm)
+		-- (1cm,1cm) -- cycle;
+		\draw[xshift=6cm,yshift=2cm,fill=gray!20] (0,0) circle(0.5);
+		\node (base) at (0,0) {S};
+		\node (end_a) at (4,0) {S};
+		\node[coordinate] (roll) at (8,0)  {};
+		\node (end_b) at (2,2) {S};
+		\node (end_ab) at (6,2)  {$S^4$};
+		\node (end_abh) at (3,1) {$H^2$};
+		\draw[->] (base) -- (end_a) node[pos=0.7] {$\vec{a}^1$};
+		\draw[->] (base) -- (end_b) node[pos=0.5,right,xshift=0.2cm] {$\vec{b}^1$};
+		\draw[->] (end_a) -- (end_ab) node[pos=0.5,right,xshift=0.2cm] {$\vec{b}$};
+		\draw[->] (end_b) -- (end_ab) node[pos=0.7] {$\vec{a}$};
+		\draw[->] (base) -- (end_abh);% node[pos=0.7] {$\frac{\vec{a}+\vec{b}}{2}$};
+		\draw[thick, ->] (roll) arc (0:15:8cm) node[midway,right] {$roll^5$};
+		\draw (1,0.1) -- (1,-0.1) node[xshift=0.5cm,yshift=-0.2cm] {$ratio_a^3$};
+		\draw (0.4,0.55) -- (0.6,0.45) node[xshift=-0.7cm,yshift=0.3cm] {$ratio_b^3$};
+	%	\node[state,rectangle, align=center] (q_r) [] {This is a \\ square}; % Here the nodes and coordinates are defined
+	%	\node[coordinate] (q_0) [right=of q_r, xshift=3cm]   {};
+	%	\node[coordinate] (q_1) [left=of q_r, xshift=-3cm, yshift=1mm]   {};
+	%	\node[coordinate] (q_2) [left=of q_r, xshift=-3cm, yshift=-1mm]   {};
+	%	\path[->] % path and draw commands connect the nodes and coordinates to each other.
+	%	(q_r) edge [] node  {This is an arrow} (q_0);
+	%	\draw[->] ([yshift=-3mm]q_1) -- ([yshift=-2mm]q_r.west) node[midway,swap] {This is an arrow};
+	%	\draw[->] ([yshift=3mm]q_2) -- ([yshift=2mm]q_r.west) node[midway] {This is an arrow};
+	\end{tikzpicture}
+	\caption{Custom grating parameters}
+	\label{fig:lm_params}
+\end{figure}
+%
+\subsubsection{Grating simulation}
+We run the sample "S1 SPB CRL simplified beamline" from the WPG package(fig. \ref{fig:lm_wpg_beamline}) with a $4\mu m$ pitch, $\pi/2$ phase checkerboard grating being added $3m$ downstream of focus and wavefront measured at distances between $5.625m$ and $5.84m$ from focus with $5mm$ steps. Due to the Talbot effect from spherical wavefront, a variation in peak visibility in Fourier spectrum is to be expected in this range, which we evaluated.
+At chosen "detector" range, one full period of Talbot order (even-odd-even) occurs for the diagonal pitch and two periods occur for orthogonal pitch (along x/y axis), following the equation \ref{eq:lm_talbot_order}.
+%
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[width=.9\textwidth,angle=0,clip]{scheme-wpg}
+	\end{center}
+	\caption{Simulated simplified beamline.}
+	\label{fig:lm_wpg_beamline}
+\end{figure}
+%
+\begin{equation}
+n(D) = \frac{2* \lambda * \mu ^2 * (D-G) * G}{D * pitch ^2}
+\label{eq:lm_talbot_order}
+\end{equation}
+Where $\lambda$ is wavelength, $\mu$ specifies $\pi/2$ (1) or $\pi$ (2) phase shift, pitch is the grating pitch and D and G are distances from focus to detector and grating.
+
+Visibility should be high for odd and low for even Talbot orders. A way to visualize it is by quantifying proximity to odd positions% (fig. \ref{fig:lm_oddness})
+%
+\begin{equation*}
+oddness(x) = 1-(x  \mathbin{\%}  2 - 1)^2
+\end{equation*}
+%
+The expected visibility (fig. \ref{fig:lm_visib}, left) is given by equation \ref{eq:lm_visib}. Since diagonal direction is usually dominant, orthogonal visibility is shown with factor of 0.5.
+%
+\begin{equation}
+  visib(D) = oddness\left(n(D) \right)
+  \label{eq:lm_visib}
+\end{equation}
+%
+Values calculated from the simulated beamline (fig. \ref{fig:lm_visib}, right) closely resemble the expected pattern and agree with other results we got from actual experiments.
+We observed a slight jitter not only in simulation visibility values, but also directly in wavefront calculated intensity. All the simulations were run with parameter $num\_points$ set to $1000$ and the grating defined at $2000$ data points (20 per orthogonal pitch). More precise results could be expected at higher resolutions at the cost of increased computation times.
+%
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[width=.45\textwidth,angle=0,clip]{plot-talbot-visibility}
+		\includegraphics[width=.45\textwidth,angle=0,clip]{plot-wpg-visibility}
+	\end{center}
+	\caption{Visibility: expected and simulated. Diagonals: orange/blue; x/y: green/red}
+	\label{fig:lm_visib}
+\end{figure}
 %
 \FloatBarrier
 %
 \section{High Performance Computing Benchmarks}
 \subsection{Single--particle imaging simulation pipeline}
 The single--particle imaging simulatoin pipeline consists of
+%
 \begin{enumerate}
   \item pulse propagation
   \item photon--matter interaction
   \item diffraction
   \item detector response (optional)
 \end{enumerate}
-
+%
 Each of these modules have very different and demanding computational resource
 requirements. We present benchmarking results for few selected modules which
 represent performance bottlenecks in the simulation pipeline.
-
+%
 \subsubsection{Wavefront propagation}
 The wavefront propagation utilizes the software Synchrotron Radiation Workshop
 (SRW), a legacy C library with historically very limited options for
@@ -451,7 +594,7 @@ openMP pragmas in the SRW source code.
     4x10       & 4     &   7.5     &    45 \\
     8x5        & 8     &   4.2     &    51 \\
   \end{tabular}
-  \caption{Total wall time  taken by the propagation of 40 individual source files with hybrid
+  \caption{Total wall time taken by the propagation of 40 individual source files with hybrid
   openMP/MPI parallelism in SRW. Note how the distribution of MPI processes over nodes
 and threads influences the walltime and the time to process each file.}
   \label{tab:srw_hybrid_timings}
@@ -459,9 +602,11 @@ and threads influences the walltime and the time to process each file.}
 %
 \subsubsection{Radiation damage}
 The radiation damage module is by far the most compute intensive part of the SPI
-pipeline, determining $\approx 90\%$ of the total wall time of one
+pipeline, determining $\approx 90\%$ of the total wall time\footnote{The wall
+  time defines the time elapsed between the start and the end of a computer
+  program run.} of one
 start--to--end propagation. The code \textit{xmdyn and xatom}, provided by
-CFEL, DESY \cite{Jurek2016} utilizes GPGPU cards, MPI or shared memory
+CFEL, DESY \cite{Jurek2016} utilizes GPGPU cards. MPI or shared memory
 parallelism are currently not implemented, only one GPGPU card can
 be utilized at a time. Our benchmarks therefore compare the performance on
 different GPGPU variants. The test case is a trajectory of the 2NIP protein
@@ -479,7 +624,8 @@ irradiated by a \SI{10}{\femto\second} (FWHM) pulse of
     P100  & 470 & 466 \\
   \end{tabular}
   \caption{Wall time for a single \textit{xmdyn and xatom} run on different
-NVIDIA(C) GPGPU car. The first run take longer because the atomic transition database
+NVIDIA(C) GPGPU cards.
+The first run takes longer because the atomic transition database
 has to be populated.}
   \label{tab:xmdyn_performance_nvidia}
 \end{table}
@@ -489,11 +635,60 @@ has to be populated.}
 Diffraction calculations are performed with the code \textit{pysingfel}. To
 enhance performance, this code uses the \textit{numba} library to facilitate
 just--in--time compilation for available hardware of compute intensive parts.
-In the following we benchmark the performance of a \textit{pysingfel} diffraction
-calculation with an unperturbed protein diffracting a parametrized FEL beam of
-\SI{5}{\kilo\electronvolt} photon energy into a detector of 1024x1024 pixels.
 
-\section{JupyterHub as a Platform for Data Analysis as a Service}
+Typically, one simulation run produces many
+diffraction patterns. Since all pattern calculations are independent, the
+best speedup can be obtained by parallelizing the diffraction simulation over the
+number of diffraction patterns requested. Fig.~\ref{fig:pysingfel_performance}
+shows the speedup by comparing the Wall times for computation of
+100 patterns on a shared memory system with 1, 10, and 100 MPI processes,
+respectively.
+\begin{figure}[ht]
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{loglogaxis}[
+        title=Pysingfel performance,
+        xlabel={Number of MPI processes},
+        ylabel={Speedup}
+      ]
+      \addplot[blue,mark=*] table {pysingfel_timings.dat};
+      \addplot[domain=1:100] {x};
+      \end{loglogaxis}
+    \end{tikzpicture}
+  \end{center}
+  \caption{Speed up factor for parallel computation of 100 diffraction patterns with
+    \textit{pysingfel} using MPI parallelization. (the black line represents linear scaling).}
+  \label{fig:pysingfel_performance}
+\end{figure}
+The case with 100 MPI ran on 2 separate nodes, whereas the cases with 1 and 10 processes
+ran on a single node with shared memory. The additional data communication
+between the nodes results in a reduced speedup between 10 and 100 nodes
+as compared to the speedup between 1 and 10 nodes. Also, the serial portion of
+the code (parsing the sample file, geometry calculations) result in a
+sub--linear  speedup.
+
+\subsection{High--power laser--matter interaction (\textit{picongpu})}
+Performance benchmarks for the particle--in--cell code \textit{picongpu} for the
+simulation of high--power laser--matter interaction are presented in
+\cite{Bussmann2013}, see also Ref.~\cite{Zenker2016} for an updated version. We
+show in Fig.~\ref{fig:picongpu_strongscaling} the speedup (strong scaling)
+achieved by increasing the number of GPUs between 2 and 1024
+demonstrating the near--linear scaling. More performance
+analysis data is presented in Ref.~\cite{Bussmann2013} including scalings up to
+18432 GPUs and also weak scalings.
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=0.8\textwidth,angle=0,clip]{figures/picongpu_strongscaling}
+  \end{center}
+  \caption{Speedup (left) and efficiency (right) from strong scaling performance
+    analysis between 2 and 1024 GPUs for the PIC code
+    \textit{picongpu}. Reproduced from [Bussmann et al. ``Radiative signatures
+    of the relativistic Kelvin-Helmholtz instability'', Proc. SC'13 (2013)].}
+  \label{fig:picongpu_strongscaling}
+\end{figure}
+%
+\FloatBarrier
+\section{SIMEX as a Service}
 \subsection{Introduction}
 For the task 4.3.2 \textit{Provide a framework towards a service to users [\dots\ ] } we set up an instance of \textit{JupyterHub} for the users of the \textit{Maxwell Cluster} at \textsc{DESY}.
 Users of the \textit{SIMEX} code are familiar with the computing environment at \textsc{DESY} and use the cluster in many ways.
@@ -501,11 +696,19 @@ To run heavy computations on the cluster users have to submit a job to \textit{S
 This is a well-established workflow for simulations and data reduction pipelines where the result of the
 computation can be delayed by days from the time of submission.
 For other use-cases though, users need near to instantaneous feedback from their input.
-This is what \textit{iPython} does. It is a interactive python shell that evaluates commands - or multi line command blocks - one by one and returns a result direcrtly.
+This is what \textit{iPython} does. It is a interactive python shell that evaluates commands - or multi line command blocks - one by one and returns a result directly.
 The iPython notebook was a web-based frontend to iPython that was then renamed into the Jupyter Notebook after other backends became popular.
 Doing work with the Jupyter Notebook on a remote server or a High Performance Cluster requires a few steps, setting up an SSH Tunnel with port forwarding, logging onto the server and then starting the notebook manually.
 If a user wants more advanced features like password protection
 The JupyterHub is a development that is meant for environments where many users need to access a Jupyter Notebook and all those steps are done automatically and users only need to log in with their username and password.
+
+We developed example notebooks which can be used as a starting point by
+\textit{simex} users to learn the workflow and to run their own simulations by
+modifying the example. We document in appendix \ref{appendix:notebooks}
+two example workflows for simulation of
+single--particle imaging and for nanocrystalography. Both notebooks can be
+obtained from the EUCALL software repository.
+\url{https://www.github.com/eucall-software/simex_notebooks}.
 
 \subsection{Features of the JupyterHub at DESY}
 The JupyterHub we set up uses a lot of infrastructure already available at DESY. In the following we explain how they were included into an instance to make data analysis more convenient.
@@ -522,19 +725,17 @@ Features of the \textit{JupyterHub} Instance include:
 %
 \subsection{Using the JupyterHub and SimEx}
 To use the JupyterHub at DESY one has to visit the website
-\begin{verbatim}
- https://max-jhub.desy.de
-\end{verbatim}
-while on the DESY-XFEL Network.
+\url{https://max-jhub.desy.de} while on the DESY-XFEL Network.
 Opening the ports to the Internet is work in progress and needs the server to be isolated in the demilitarized zone (DMZ) which is a different network section and has special firewall rules.
 Users then see the scrren shown in fig.~\ref{fig:jhub_start} which has been customized to show the DESY Logo and shows the \textit{Secure} Website lock so User know their data is protected.
 Users then have to enter their DESY credentials which are passed to the LDAP server to check if the password is correct.
-
+%
 \begin{figure}
   \centering
   \begin{subfigure}{0.45\textwidth} % width of left subfigure
 	  \includegraphics[width=\textwidth]{figures/jhub001.png}
-	  \caption{View of the login Page of the JupyterHub instance witht the url https://max-jhub.desy.de} % subcaption
+	  \caption{View of the login Page of the JupyterHub instance witht the url
+        \url{https://max-jhub.desy.de}} % subcaption
   \end{subfigure}
   \vspace{1em} % here you can insert horizontal or vertical space
   \begin{subfigure}{0.45\textwidth} % width of right subfigure
@@ -545,9 +746,10 @@ Users then have to enter their DESY credentials which are passed to the LDAP ser
   \label{fig:jhub_start}
 \end{figure}
 
-After login on, users are presented with a choice, shown in fig.~\ref{fig:jhub_spawn}, where their notebook should run.
-There is a shared partition where users can
-
+After login on, users are presented with a choice, shown in
+fig.~\ref{fig:jhub_spawn}, where their notebook should run. There is a shared
+partition where users can
+%
 \begin{figure}
   \centering
     \begin{subfigure}{0.45\textwidth} % width of left subfigure
@@ -562,9 +764,9 @@ There is a shared partition where users can
   \caption{After the login using the DESY credentials was successful, the user has multiple options to select from for the spawner to start the notebook server}
   \label{fig:jhub_spawn}
 \end{figure}
-
+%
 Once the user has selected the partition a SLUM job is submitted that starts the Notebook Server and a connection is established and users see the screen depicted in fig.~\ref{fig:jhub_work}. On the right panel the options to start are shown. This is neccessary so users have access to their group specific partition if they want to do interactive computations with a full node and not just sharing ressources.
-
+%
 \begin{figure}
   \centering
     \begin{subfigure}{0.45\textwidth} % width of left subfigure
@@ -579,21 +781,21 @@ Once the user has selected the partition a SLUM job is submitted that starts the
   \caption{Screenshots of the JupyterHub Instance at DESY, at different stages of the workflow. The images on the top show the login page and the SSL certificate, the middle the Spawner options and the bottom two screenshots show the User's files and folder as well as the available Kernels that can be used to start a Notebook}
   \label{fig:jhub_work}
 \end{figure}
-
+%
 Once the server is started and and a notebook is openend, users of the \textit{SimEx} code can execute code cells
 to import the module and functions they use in their regular python-driven workflow they are used to without the Jupyter Notebook, as is shown in fig.~\ref{fig:simex_import}.
 The advantage is now that plots can be displayed inline, so no X-forwarding is needed.
 Also, the Jupyter Notebook supports cells with \textit{Markdown} format, so documenting the work and coding progress
 can be done by adding cells with headings, text and even \LaTeX style text blocks.
-
-
+%
 \begin{figure}
  \centering
  \includegraphics[width=0.9\textwidth]{figures/simex_import_jhub.png}
  \caption{The Jupyter Notebook executes code in \textit{cell blocks} that can be executed individually. The import statement to make the \textit{SimEx} modules available runs and user sees immediately if it fails or the import was successful}
  \label{fig:simex_import}
 \end{figure}
-
+%
+\FloatBarrier
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \printbibliography[title={References}]
 %
@@ -603,8 +805,17 @@ can be done by adding cells with headings, text and even \LaTeX style text block
 %
 %\printbibliography[keyword=eucall, keyword=report, title={Project reports}]
 %
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\FloatBarrier
+\appendix
+\section{Example workflows}
+\label{appendix:notebooks}
+\subsection{Start--to--end single particle imaging}
+\includepdf[pages=-]{contributions/XFEL/demos/s2e_spi/start_to_end_demo.pdf}
+%
+\subsection{Nanocrystal diffraction}
+\includepdf[pages=-]{contributions/XFEL/demos/xstal/xstal_diffraction.pdf}
+%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
