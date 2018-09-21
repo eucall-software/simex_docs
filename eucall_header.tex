@@ -47,7 +47,9 @@
 %   BIBLIOGRAPHY SETTINGS
 \usepackage[bibstyle=nature,sorting=none,maxnames=1000,eprint=false,
 defernumbers=true, backend=biber]{biblatex}
+\usepackage{chemformula}
 \usepackage{hyperref}
+
 
 \renewcommand*\finalnamedelim{, and\addspace}
 \DeclareNameAlias{sortname}{last-first}
@@ -67,6 +69,7 @@ defernumbers=true, backend=biber]{biblatex}
   \DeclareFieldFormat*{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
 
 \addbibresource{urls.bib}
+\addbibresource{footnotes.bib}
 \addbibresource{library.bib}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

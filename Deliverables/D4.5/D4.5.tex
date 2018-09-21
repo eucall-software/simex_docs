@@ -1,4 +1,4 @@
-fdocumentclass[10pt]{scrartcl}
+\documentclass[10pt]{scrartcl}
 \input{eucall_header}
 \usepackage[final]{pdfpages}
 \usepackage{pgfplots}
@@ -72,7 +72,7 @@ and
 Adrian P. Mancuso\\[4ex]
 %
 Due date: September 30, 2018\\
-Delivery date: \today \\[4ex]
+Delivery date: September 25, 2018 \\[4ex]
 %
 Project webpage: \url{www.eucall.eu}\\[6ex]
 %
@@ -115,32 +115,20 @@ developed in EUCALL's workpackage 4 (SIMEX). Where available, we compare our
 simulations to experimental data. In other cases, we compare simulations with
 simulations, using either different implementations of the same modeling
 approach or two simulations of varying degree of accuracy (e.g. 1D vs. 2D
-radiation hydrodynamics). The second part contains HPC benchmarks of selected
+radiation hydrodynamics). We then summarize HPC benchmarks of selected
 simulation codes which present performance bottlenecks in the respective
-simulation pipeline.
+simulation pipeline. Finally, a simulation environment based on the jupyterHub
+technology is presented.
 %
 \tableofcontents
 %
 \section{Validation}%
 \subsection{Single--particle coherent diffractive imaging\label{sec:single_particle_imaging}}
-We present two study cases where we validate and benchmark individual simulation
-modules as well as an entire start--to--end simulation toolchain with
-experimental data. In the first case, we compare simulated and measured 2D
-diffraction data from the Rice Dwarf Virus \cite{Munke2016}, in the second case
-we compare 3D molecular structures reconstructed from simulated diffraction data
-to the original 3D model reconstructed from NMR \cite{Schlessman1998}
+We compare a 3D molecular structure reconstructed from simulated diffraction data
+to the original 3D model reconstructed from NMR \cite{Schlessman1998}.
 measurements.
-\subsubsection{Validation of single--particle imaging using measured diffraction data }
-Our validation of the single--particle imaging simulation toolchain in SIMEX
-uses diffraction data measured at the AMO endstation at
-\SI{1.6}{\kilo\electronvolt} photon energy.
-%
-\begin{verbatim}
-TBC (Carsten)
-\end{verbatim}
-%
-\subsubsection{Validation of the single--particle imaging simulation toolchain
-using reconstructed density profiles}%
+%, which served as an input to the simulation. to validate the
+%calculation of diffraction patterns in \textit{simex\_platform}.
 %
 \begin{figure}[ht]
   \begin{center}
@@ -164,7 +152,8 @@ using reconstructed density profiles}%
 \end{figure}
 
 Coherent diffraction from single proteins has been simulated using the
-\textit{simS2E} suite \cite{Yoon2016}. Of the order 200000 diffraction images,
+code \textit{singFEL}, which is integrated in \textit{simex\_platform}.
+Of the order 200000 diffraction images,
 sampling the FEL spectral and temporal fluctuations, including focussing
 mirror height profiles, radiation damage processes (ionization and atomic
 displacement), were then fed into computational reconstruction using the
@@ -174,6 +163,7 @@ electron density maps could then be compared to the PDB model that was used as
 a sample specification in the simulation. The structure in the PDB had been
 measured with the NMR method. We reproduce in Fig.~\ref{fig:2NIP_reconstruction}
 the corresponding results from the original article by Yoon et al.
+\cite{Yoon2016}.
 The results demonstrate the predictive power of our start--to--end simulation
 toolchain. All main features of the protein were reproduced. Regions close to
 the surface show enhanced displacement and poorer agreement with the
@@ -206,7 +196,7 @@ translational symmetry of the sample.
 %
 We validate both codes against the code \textit{mercury} \cite{Macrae2008} of the
 Cambridge Crystallographic Data Centre (CCDC). Fig.~\ref{fig:Fe2O3_vpp_model_vs_model} shows the simulated
-powder diffraction pattern up for \textit{singFEL} vs. \textit{mercury} (left)
+powder diffraction pattern for \textit{singFEL} vs. \textit{mercury} (left)
 and for \textit{pattern\_sim} vs. \textit{mercury} (right). The sample is a
 \SI{18}{\nano\metre} sized fcc crystal of
 Fe\textsubscript{2}O\textsubscript{3}. In both cases, the
@@ -236,8 +226,7 @@ The histogram (orange bars) is plotted as a function of the Bragg
 angle $2\theta$ and compared to a SIMEX simulation using \textit{singfel}
 (blue curve) and the \textit{mercury} reference calculation for a perfect
 infinite fcc lattice. Similar to the model--vs--model comparison, the agreement
-between models and data is overall satisfying, i.e. the peak positions coincide
-and the peak amplitudes are close.
+between models and data is overall satisfying.
 %
 \begin{figure}[ht]
   \begin{center}
@@ -256,9 +245,10 @@ In Deliverable Report D4.3 \cite{Fortmann-Grote2017e}, we presented the interope
 of X-ray Free-Electron Laser (XFEL) and Ultra-High Intensity (UHI) laser pulse
 generation, interaction with the target, and generation of a Small-Angle X-ray
 Scattering (SAXS) images using the scattering code ParaTAXIS.  A Particle In
-Cell (PIC) simulation provides the time evolution of the electron density on
-which the XFEL photons are scattered.  We assumed invariance of the target in
-propagation direction and simulated the XFEL pulse with $10^{12}$ photons for
+Cell (PIC) simulation provides the time evolution of the electron density. XFEL
+Photons than scatter from this electron density.
+We assumed invariance of the target in
+the propagation direction and simulated the XFEL pulse with $10^{12}$ photons for
 which the target is optically thin.  The ion density follows the electron
 density as expected for plasma expansion into vacuum.  The SAXS pattern well
 resolves the nanometer-scale grating depth and period, taking into account the
@@ -266,10 +256,10 @@ target evolution during the interaction time with the laser pulse.  The full
 details were reported in Deliverable4.3 \cite{Fortmann-Grote2017e} and
 Deliverable D4.4 \cite{Fortmann-Grote2017h}. The simulation
 parameters match an experiment led by the group of HZDR which was recently
-published in \cite{Kluge2017}.  In the experiment a silicon grating was irradiated by a
+published in \cite{Kluge2018a}.  In the experiment a silicon grating was irradiated by a
 Ti:Sa laser with $400$\,mJ on target and pulse duration $80$\,fs, focus size
 $1500\,\mathrm{\mu m^2}$ (FWHM).  The expansion of the grating as a function of
-time was measured and is reported in [!!1].
+time was measured and is reported in \cite{Kluge2018a}.
 %
 \begin{figure}
   \begin{center}
@@ -322,7 +312,6 @@ Besides this difference the experimental results are reproduced well by the
 simulation.
 
 %
-\subsection{Liquid jet crystal diffraction\label{sec:liquid_crystals}}
 \subsection{Warm dense matter x--ray absorption spectroscopy\label{sec:warm_dense_matter_spectroscopy}}
 Interaction of high--energy optical laser pulses with solid targets and shock
 compression is modeled with radiation--hydrodynamics (RH) simulations using
@@ -394,7 +383,6 @@ The modelled spectra reproduce
 these differences qualitatively. A more quantitative analysis and comparison
 beteen theory and experiment is still outstanding.
 %
-
 We also compared 1D RH simulations for the pressure as a function
 of energy on target in the case of molybdenum. Fig.~\ref{fig:rh_1d_vs_exp}
 shows three measured datasets (dots) differing the the thickness of the phase plate
@@ -414,9 +402,64 @@ correction factor to apply to 1D simulation data.
   \label{fig:rh_1d_vs_exp}
 \end{figure}
 %
+\subsection{X--ray diffraction diagnostics of coherent acoustic waves\label{sec:coherent_acoustic_phonons}}
+The structural dynamics and the according X-ray diffraction response in
+one-dimensional sample structures after ultrafast laser excitation is modeled
+with \textit{udkm1Dsim toolbx} \cite{Schick2014}
+[\url{https://www.github.com/eucall-software/udkm1Dsim}]. First the acoustic response of a
+nanometric bilayer sample is simulated and then fed into a dynamical x--ray
+diffraction simulation. The resulting time-dependent diffraction curves are
+compared with experiments carried out at ID09 of the European Synchrotron.
+Fig.~\ref{fig:Id9_exp_conditions} a) shows the experimental setup of the ID9
+beamline. Pump-probe experiments with a single x-ray pulse of 100ps duration
+are performed with a 1kHz repetition rate. In addition, a sketch of the bilayer
+sample structure is presented in Fig.~\ref{fig:Id9_exp_conditions} b). The
+sample is composed of \SI{100}{\nano\meter} \ch{LaAlO3} (LAO) and
+\SI{50}{\nano\meter} \ch{LaSrMnO_3} (LSMO).
+Fig.~\ref{fig:Id9_exp_conditions} c) shows a simulation of the time-dependent
+strain profile of the nanometric bilayer sample after ultrashort optical
+excitation. The simulation includes the generation and propagation of coherent
+acoustic sound waves and covers the heat generated strain  as well.
+Fig.~\ref{fig:Id9_exp_conditions} d) presents x-ray diffractions simulation of
+the excited sample for different pump-probe delays.
+
+\begin{figure}[ht]
+    \begin{center}
+      \includegraphics[width=0.8\textwidth,angle=0,clip]{diffraction_1d_esrf}
+    \end{center}
+    \caption{X--ray diffraction measurements of coherent acoustic waves:
+    Schematic of the experiment (a), Sample structure and probe geometrt (b),
+  strain as function of pump--probe delay and sample coordinate (c), and
+diffraction signals as function of pump--probe delay.}
+    \label{fig:Id9_exp_conditions}
+\end{figure}
+
+A benchmark experiment was performed to compare experimental results with the structural dynamics simulations. We extract the propagation time of the coherent acoustic sound wave, the strain amplitude of the sound wave and the time-dependent diffraction intensity of LAO and LSMO  layers.
+The results are shown in Fig.~\ref{fig:coherent_acoustic_exp_vs_sim}.
+
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth,angle=0,clip]{diffraction_1d_esrf_results}
+    \end{center}
+    \caption{Time-dependent diffraction efficiency of the nanometric LAO and
+      LSMO layers. The two upper panel show the measurement of the (002) Bragg
+      peak position and intensity of LAO and LSMO as a function of the
+      diffraction angle $\theta$ and pump-probe delay. The two lower panels
+      present the simulated position and diffraction intensity of the (002)
+      bragg peaks of LAO and LSMO \cite{Schick2014}.}
+    \label{fig:coherent_acoustic_exp_vs_sim}
+\end{figure}
+
+The simulations qualitatively reproduce the structural dynamics of the laser excited sample. The measured 30ps oscillation of the LAO (002) Bragg peak is simulated correctly. The sound wave is reflected at the free sample surface and enters the optical excited LSMO after 32ps which leads to an additional expansion and successive to a shift of the LSMO (002) bragg peak to lower diffraction angles. We extract the amplitude of the coherent acoustic sound wave from the intensity and the Bragg peak position and find an excellent agreement between experiment and  simulation.
+
 \subsection{Wavefront propagation through phase gratings}
 \label{sec:wpg_phasegrating}
-WPG functionality has been extended to support a selection of 2D transmission gratings.
+\textit{simex\_platform} interfaces the the coherent wavefront propagation code
+library \textit{WPG} [\url{https://www.github.com/samoylv/WPG}]. In order to
+simulate wavefront measurement experiments using phase grating techniques
+\cite{}, we have extended the set of optical elements supported by \textit{WPG}
+by a selection of various 2D transmission gratings.
 %
 \begin{figure}[ht]
 	\begin{center}
@@ -427,9 +470,9 @@ WPG functionality has been extended to support a selection of 2D transmission gr
 	\label{fig:lm_gratings}
 \end{figure}
 %
-The Grating element is based on the srwl class SRWLOptT (Optical Element: Transmission - generic) and its transmission properties are achieved by modifying attribute arTr - amplitude transmission and optical path difference as function of transverse position.
+The Grating element is based on the \textit{srwl} class SRWLOptT (Optical Element: Transmission - generic) and its transmission properties are achieved by modifying attribute arTr - amplitude transmission and optical path difference as function of transverse position.
 
-Grating structure can either be chosen from a predefined set (fig. \ref{fig:lm_predef}) or custom-made using a limited set of parameters.
+Grating structure can either be chosen from a predefined set (Fig. \ref{fig:lm_predef}) or custom-made using a limited set of parameters.
 %
 \begin{figure}[ht]
 	\begin{center}
@@ -442,7 +485,7 @@ Grating structure can either be chosen from a predefined set (fig. \ref{fig:lm_p
 %
 The predefined shapes are configured by pitch in the direction of x-axis and the y dimension can be scaled accordingly or be intentionally stretched to create rectangular structures.
 
-The range of parameters for custom-made gratings include (fig. \ref{fig:lm_params})
+The range of parameters for custom-made gratings include (Fig.~\ref{fig:lm_params})
 %
 \begin{enumerate}
 	\item vectors $\vec{a}$ and $\vec{b}$ to define spacing of structural elements
@@ -495,7 +538,7 @@ The range of parameters for custom-made gratings include (fig. \ref{fig:lm_param
 \end{figure}
 %
 \subsubsection{Grating simulation}
-We run the sample "S1 SPB CRL simplified beamline" from the WPG package(fig. \ref{fig:lm_wpg_beamline}) with a $4\mu m$ pitch, $\pi/2$ phase checkerboard grating being added $3m$ downstream of focus and wavefront measured at distances between $5.625m$ and $5.84m$ from focus with $5mm$ steps. Due to the Talbot effect from spherical wavefront, a variation in peak visibility in Fourier spectrum is to be expected in this range, which we evaluated.
+We run the sample "S1 SPB CRL simplified beamline" from the WPG package(Fig. \ref{fig:lm_wpg_beamline}) with a $4\mu m$ pitch, $\pi/2$ phase checkerboard grating being added $3m$ downstream of focus and wavefront measured at distances between $5.625m$ and $5.84m$ from focus with $5mm$ steps. Due to the Talbot effect from spherical wavefront, a variation in peak visibility in Fourier spectrum is to be expected in this range, which we evaluated.
 At chosen "detector" range, one full period of Talbot order (even-odd-even) occurs for the diagonal pitch and two periods occur for orthogonal pitch (along x/y axis), following the equation \ref{eq:lm_talbot_order}.
 %
 \begin{figure}[ht]
@@ -512,20 +555,20 @@ n(D) = \frac{2* \lambda * \mu ^2 * (D-G) * G}{D * pitch ^2}
 \end{equation}
 Where $\lambda$ is wavelength, $\mu$ specifies $\pi/2$ (1) or $\pi$ (2) phase shift, pitch is the grating pitch and D and G are distances from focus to detector and grating.
 
-Visibility should be high for odd and low for even Talbot orders. A way to visualize it is by quantifying proximity to odd positions% (fig. \ref{fig:lm_oddness})
+Visibility should be high for odd and low for even Talbot orders. A way to visualize it is by quantifying proximity to odd positions% (Fig. \ref{fig:lm_oddness})
 %
 \begin{equation*}
 oddness(x) = 1-(x  \mathbin{\%}  2 - 1)^2
 \end{equation*}
 %
-The expected visibility (fig. \ref{fig:lm_visib}, left) is given by equation \ref{eq:lm_visib}. Since diagonal direction is usually dominant, orthogonal visibility is shown with factor of 0.5.
+The expected visibility (Fig. \ref{fig:lm_visib}, left) is given by equation \ref{eq:lm_visib}. Since diagonal direction is usually dominant, orthogonal visibility is shown with factor of 0.5.
 %
 \begin{equation}
   visib(D) = oddness\left(n(D) \right)
   \label{eq:lm_visib}
 \end{equation}
 %
-Values calculated from the simulated beamline (fig. \ref{fig:lm_visib}, right) closely resemble the expected pattern and agree with other results we got from actual experiments.
+Values calculated from the simulated beamline (Fig. \ref{fig:lm_visib}, right) closely resemble the expected pattern and agree with other results we got from actual experiments.
 We observed a slight jitter not only in simulation visibility values, but also directly in wavefront calculated intensity. All the simulations were run with parameter $num\_points$ set to $1000$ and the grating defined at $2000$ data points (20 per orthogonal pitch). More precise results could be expected at higher resolutions at the cost of increased computation times.
 %
 \begin{figure}[ht]
@@ -541,7 +584,7 @@ We observed a slight jitter not only in simulation visibility values, but also d
 %
 \section{High Performance Computing Benchmarks}
 \subsection{Single--particle imaging simulation pipeline}
-The single--particle imaging simulatoin pipeline consists of
+The single--particle imaging simulation pipeline consists of
 %
 \begin{enumerate}
   \item pulse propagation
@@ -600,9 +643,8 @@ and threads influences the walltime and the time to process each file.}
 %
 \subsubsection{Radiation damage}
 The radiation damage module is by far the most compute intensive part of the SPI
-pipeline, determining $\approx 90\%$ of the total wall time\footnote{The wall
-  time defines the time elapsed between the start and the end of a computer
-  program run.} of one
+pipeline, determining $\approx 90\%$ of the total wall time
+\cite{wall_time_footnote} of one
 start--to--end propagation. The code \textit{xmdyn and xatom}, provided by
 CFEL, DESY \cite{Jurek2016} utilizes GPGPU cards. MPI or shared memory
 parallelism are currently not implemented, only one GPGPU card can
@@ -632,7 +674,7 @@ has to be populated.}
 %
 Diffraction calculations are performed with the code \textit{pysingfel}. To
 enhance performance, this code uses the \textit{numba} library to facilitate
-just--in--time compilation for available hardware of compute intensive parts.
+just--in--time compilation of compute intensive parts on the available hardware.
 
 Typically, one simulation run produces many
 diffraction patterns. Since all pattern calculations are independent, the
@@ -694,11 +736,16 @@ To run heavy computations on the cluster users have to submit a job to \textit{S
 This is a well-established workflow for simulations and data reduction pipelines where the result of the
 computation can be delayed by days from the time of submission.
 For other use-cases though, users need near to instantaneous feedback from their input.
-This is what \textit{iPython} does. It is a interactive python shell that evaluates commands - or multi line command blocks - one by one and returns a result directly.
-The iPython notebook was a web-based frontend to iPython that was then renamed into the Jupyter Notebook after other backends became popular.
-Doing work with the Jupyter Notebook on a remote server or a High Performance Cluster requires a few steps, setting up an SSH Tunnel with port forwarding, logging onto the server and then starting the notebook manually.
-If a user wants more advanced features like password protection more configuration is needed, making the setup process more elaborate and less user-friendly.
-The JupyterHub is a development that is meant for environments where many users need to access a Jupyter Notebook and all those steps are done automatically and users only need to log on with their username and password that was provided by their research institute.
+In this case, interactive compute environments like matlab(C), mathematica (C),
+root(C), or (i)python (C) allow a more direct interaction with the data.
+Here, individual commands or command blocks are
+evaluated on the fly and results can be displayed or further processed in the same
+environment. We built our solution on the opensource and widely distributed
+ipython interactieve python shell (backend) and the Jupyter Notebook as a
+frontend.
+The JupyterHub administers user credentials, resource configuration, and access
+to data and notebooks. It supports usage of the same computer cluster or even the same notebook
+by many users.
 
 We developed example notebooks which can be used as a starting point by
 \textit{simex} users to learn the workflow and to run their own simulations by
@@ -714,7 +761,7 @@ In the following we explain how it was included into an instance to make data an
 Features of the \textit{JupyterHub} Instance include:
 
 \begin{itemize}
- \item Encryption via SSL using an DFN (Deutsches Forschungsnetzwerk) inheritance certificate to provide user data security
+ \item Encryption via SSL using a DFN (Deutsches Forschungsnetzwerk) inheritance certificate to provide user data security
  \item Integration into the existing LDAP authentication at DESY
  \item Using the Maxwell Cluster as an infrastructure to provide computing power
  \item Connection to the SLURM ressource manager on the Maxwell Cluster
@@ -725,8 +772,11 @@ Features of the \textit{JupyterHub} Instance include:
 \subsection{Using the JupyterHub and SimEx}
 To use the JupyterHub at DESY one has to visit the website \url{https://max-jhub.desy.de} while on the DESY-XFEL Network.
 Opening the ports to the Internet is work in progress and needs the server to be isolated in the demilitarized zone (DMZ) which is a different network section and has special firewall rules.
-Users then see the scrren shown in fig.~\ref{fig:jhub_start} which has been customized to show the DESY Logo and shows the \textit{Secure} Website lock so User know their data is protected.
-Users then have to enter their DESY credentials which are passed to the LDAP server to check if the password is correct.
+Users then see the screen shown in Fig.~\ref{fig:jhub_start} which has been
+customized to show the DESY Logo and shows the \textit{Secure} Website lock so
+users know their data is protected.
+Users then have to enter their DESY credentials which are passed to the LDAP
+server for authentication.
 %
 \begin{figure}
   \centering
@@ -743,7 +793,7 @@ Users then have to enter their DESY credentials which are passed to the LDAP ser
   \label{fig:jhub_start}
 \end{figure}
 
-After logging on, users are presented with a choice, shown in fig.~\ref{fig:jhub_spawn}, where their notebook should run.
+After logging on, users are presented with a choice, shown in Fig.~\ref{fig:jhub_spawn}, where their notebook should run.
 There is a shared partition where users can do lightweight calculations and configuration of larger computations.
 If users want to do data analysis that requires multiple CPUs and large amounts of memory they can select a whole node of their inidividual partition.
 It is not given that the notebook server will be able to start up immediately, though, since SLURM might need time to allocate a node.
@@ -764,9 +814,9 @@ The shared partition, on the other hand, is responsive and starts the notebook s
   \label{fig:jhub_spawn}
 \end{figure}
 %
-On the right panel of fig.~\ref{fig:jhub_spawn} the options to start are shown.
+On the right panel of Fig.~\ref{fig:jhub_spawn} the options to start are shown.
 This is neccessary so users have access to their group specific (ExFEL, CMS, and others) partition if they want to do interactive computations with a full node and not just sharing ressources.
-Once the user has selected the partition a SLUM job is submitted that starts the Notebook Server and a connection is established and users see the screen depicted in fig.~\ref{fig:jhub_work}.
+Once the user has selected the partition a SLUM job is submitted that starts the Notebook Server and a connection is established and users see the screen depicted in Fig.~\ref{fig:jhub_work}.
 %
 \begin{figure}
   \centering
@@ -784,7 +834,7 @@ Once the user has selected the partition a SLUM job is submitted that starts the
 \end{figure}
 %
 Once the server is started and and a notebook is openend, users of the \textit{SimEx} code can execute code cells
-to import the module and functions they use in their regular python-driven workflow they are used to without the Jupyter Notebook, as is shown in fig.~\ref{fig:simex_import}.
+to import the module and functions they use in their regular python-driven workflow they are used to without the Jupyter Notebook, as is shown in Fig.~\ref{fig:simex_import}.
 The advantage is now that plots can be displayed inline, so no X-forwarding is needed.
 Also, the Jupyter Notebook supports cells with \textit{Markdown} format, so documenting the work and coding progress can be done by adding cells with headings, text and even \LaTeX -style text blocks.
 %
@@ -810,11 +860,15 @@ Also, the Jupyter Notebook supports cells with \textit{Markdown} format, so docu
 \appendix
 \section{Example workflows}
 \label{appendix:notebooks}
+The following pages contain jupyter notebooks converted to pdf output. The
+original notebooks can be
+obtained from the EUCALL software repository
+\url{https://www.github.com/eucall-software/simex_notebooks}.
 \subsection{Start--to--end single particle imaging}
-\includepdf[pages=-]{contributions/XFEL/demos/s2e_spi/start_to_end_demo.pdf}
+\includepdf[pages=-, noautoscale=true, scale=0.9]{contributions/XFEL/demos/s2e_spi/start_to_end_demo.pdf}
 %
 \subsection{Nanocrystal diffraction}
-\includepdf[pages=-]{contributions/XFEL/demos/xstal/xstal_diffraction.pdf}
+\includepdf[pages=-, noautoscale=true, scale=0.9]{contributions/XFEL/demos/xstal/xstal_diffraction.pdf}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
