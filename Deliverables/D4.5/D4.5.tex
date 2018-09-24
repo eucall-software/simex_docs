@@ -253,12 +253,13 @@ which the target is optically thin.  The ion density follows the electron
 density as expected for plasma expansion into vacuum.  The SAXS pattern well
 resolves the nanometer-scale grating depth and period, taking into account the
 target evolution during the interaction time with the laser pulse.  The full
-details were reported in Deliverable4.3 \cite{Fortmann-Grote2017e} and
+details were reported in Deliverable D4.3 \cite{Fortmann-Grote2017e} and
 Deliverable D4.4 \cite{Fortmann-Grote2017h}. The simulation
 parameters match an experiment led by the group of HZDR which was recently
 published in \cite{Kluge2018a}.  In the experiment a silicon grating was irradiated by a
-Ti:Sa laser with $400$\,mJ on target and pulse duration $80$\,fs, focus size
-$1500\,\mathrm{\mu m^2}$ (FWHM).  The expansion of the grating as a function of
+Ti:Sa laser with \SI{400}{\milli\joule} on target and pulse duration
+\SI{80}{\femto\second}, focus size \SI{1500}{\square\micro\meter}.
+The expansion of the grating as a function of
 time was measured and is reported in \cite{Kluge2018a}.
 %
 \begin{figure}
@@ -268,11 +269,9 @@ time was measured and is reported in \cite{Kluge2018a}.
       (red)
       and the analytic solution (blue), both based on PIC-simulated data
       used
-      also in [Kluge et al. ``Observation of ultrafast solid-density
-        plasma
-        dynamics using femtosecond X-ray pulses from a free-electron
-        laser'',
-      arXiv:1801.08404].
+      also in [Kluge et al., ``Observation of Ultrafast Solid-Density Plasma
+        Dynamics Using Femtosecond X-Ray Pulses from a Free-Electron Laser'', Phys. Rev. X \textbf{8} (2018).
+      ].
       The two curves almost perfectly agree in the relative
       heights of the scattered peaks, the signal in between is
       larger in the ParaTAXIS simulation due to the finite number of
@@ -291,9 +290,9 @@ has reached the target front surface) between the ParaTAXIS simulation, an
 analytic solution and the measurement (see Fig.~\ref{fig:parataxis_vs_ln04}).
 For optically
 thin targets, the scattering pattern of a grating with soft edges can be
-described by an analytic equation (\cite{Kluge2018}). As an input into this equation
+described by an analytic equation (\cite{Kluge2018a}). As an input into this equation
 we extract the sharpness of the grating edges from the simulation,
-$\sigma\approx 8 nm$ We find a good agreement between the simulation and the
+$\sigma\approx \SI{8}{\nano\meter}$ We find a good agreement between the simulation and the
 analytic solution, as well as with the experimental curve when we take into
 account a few key aspects.  First, we note that the ParaTAXIS simulation gives
 the same relative peak heights as the Fourier transform, validating the
@@ -409,10 +408,11 @@ with \textit{udkm1Dsim toolbx} \cite{Schick2014}
 [\url{https://www.github.com/eucall-software/udkm1Dsim}]. First the acoustic response of a
 nanometric bilayer sample is simulated and then fed into a dynamical x--ray
 diffraction simulation. The resulting time-dependent diffraction curves are
-compared with experiments carried out at ID09 of the European Synchrotron.
+compared with experiments carried out at ID09 of the ESRF.
 Fig.~\ref{fig:Id9_exp_conditions} a) shows the experimental setup of the ID9
-beamline. Pump-probe experiments with a single x-ray pulse of 100ps duration
-are performed with a 1kHz repetition rate. In addition, a sketch of the bilayer
+beamline. Pump-probe experiments with a single x-ray pulse of
+\SI{100}{\pico\second} duration
+are performed with a \SI{1}{\kilo\hertz} repetition rate. In addition, a sketch of the bilayer
 sample structure is presented in Fig.~\ref{fig:Id9_exp_conditions} b). The
 sample is composed of \SI{100}{\nano\meter} \ch{LaAlO3} (LAO) and
 \SI{50}{\nano\meter} \ch{LaSrMnO_3} (LSMO).
@@ -420,7 +420,7 @@ Fig.~\ref{fig:Id9_exp_conditions} c) shows a simulation of the time-dependent
 strain profile of the nanometric bilayer sample after ultrashort optical
 excitation. The simulation includes the generation and propagation of coherent
 acoustic sound waves and covers the heat generated strain  as well.
-Fig.~\ref{fig:Id9_exp_conditions} d) presents x-ray diffractions simulation of
+Fig.~\ref{fig:Id9_exp_conditions} d) presents x-ray diffraction simulation of
 the excited sample for different pump-probe delays.
 
 \begin{figure}[ht]
@@ -451,14 +451,21 @@ The results are shown in Fig.~\ref{fig:coherent_acoustic_exp_vs_sim}.
     \label{fig:coherent_acoustic_exp_vs_sim}
 \end{figure}
 
-The simulations qualitatively reproduce the structural dynamics of the laser excited sample. The measured 30ps oscillation of the LAO (002) Bragg peak is simulated correctly. The sound wave is reflected at the free sample surface and enters the optical excited LSMO after 32ps which leads to an additional expansion and successive to a shift of the LSMO (002) bragg peak to lower diffraction angles. We extract the amplitude of the coherent acoustic sound wave from the intensity and the Bragg peak position and find an excellent agreement between experiment and  simulation.
+The simulations qualitatively reproduce the structural dynamics of the laser
+excited sample. The measured \SI{30}{\pico\second} oscillation of the LAO (002) Bragg peak is
+simulated correctly. The sound wave is reflected at the free sample surface and
+enters the optical excited LSMO after \SI{32}{\pico\second} which leads to an additional
+expansion and successive to a shift of the LSMO (002) bragg peak to lower
+diffraction angles. We extract the amplitude of the coherent acoustic sound wave
+from the intensity and the Bragg peak position and find an excellent agreement
+between experiment and  simulation.
 
 \subsection{Wavefront propagation through phase gratings}
 \label{sec:wpg_phasegrating}
 \textit{simex\_platform} interfaces the the coherent wavefront propagation code
 library \textit{WPG} [\url{https://www.github.com/samoylv/WPG}]. In order to
 simulate wavefront measurement experiments using phase grating techniques
-\cite{}, we have extended the set of optical elements supported by \textit{WPG}
+\cite{Weitkamp2005}, we have extended the set of optical elements supported by \textit{WPG}
 by a selection of various 2D transmission gratings.
 %
 \begin{figure}[ht]
@@ -538,8 +545,16 @@ The range of parameters for custom-made gratings include (Fig.~\ref{fig:lm_param
 \end{figure}
 %
 \subsubsection{Grating simulation}
-We run the sample "S1 SPB CRL simplified beamline" from the WPG package(Fig. \ref{fig:lm_wpg_beamline}) with a $4\mu m$ pitch, $\pi/2$ phase checkerboard grating being added $3m$ downstream of focus and wavefront measured at distances between $5.625m$ and $5.84m$ from focus with $5mm$ steps. Due to the Talbot effect from spherical wavefront, a variation in peak visibility in Fourier spectrum is to be expected in this range, which we evaluated.
-At chosen "detector" range, one full period of Talbot order (even-odd-even) occurs for the diagonal pitch and two periods occur for orthogonal pitch (along x/y axis), following the equation \ref{eq:lm_talbot_order}.
+We run the sample "S1 SPB CRL simplified beamline" from the WPG package(Fig.
+\ref{fig:lm_wpg_beamline}) with a \SI{4}{\micro\meter} pitch, $\pi/2$ phase
+checkerboard grating being added \SI{3}{\meter} downstream of focus and
+wavefront measured at distances between \SI{5.625}{\meter} and \SI{5.84}{\meter}
+from focus with \SI{5}{\milli\meter} steps. Due to the Talbot effect from
+spherical wavefront, a variation in peak visibility in Fourier spectrum is to be
+expected in this range, which we evaluated.  At chosen "detector" range, one
+full period of Talbot order (even-odd-even) occurs for the diagonal pitch and
+two periods occur for orthogonal pitch (along x/y axis), following the equation
+\ref{eq:lm_talbot_order}.
 %
 \begin{figure}[ht]
 	\begin{center}
@@ -769,7 +784,7 @@ Features of the \textit{JupyterHub} Instance include:
  \item Addition of Various Python Kernel Versions and other demanded languages such as R \& bash kernels
 \end{itemize}
 %
-\subsection{Using the JupyterHub and SimEx}
+\subsection{Using the JupyterHub and SIMEX}
 To use the JupyterHub at DESY one has to visit the website \url{https://max-jhub.desy.de} while on the DESY-XFEL Network.
 Opening the ports to the Internet is work in progress and needs the server to be isolated in the demilitarized zone (DMZ) which is a different network section and has special firewall rules.
 Users then see the screen shown in Fig.~\ref{fig:jhub_start} which has been
@@ -816,7 +831,7 @@ The shared partition, on the other hand, is responsive and starts the notebook s
 %
 On the right panel of Fig.~\ref{fig:jhub_spawn} the options to start are shown.
 This is neccessary so users have access to their group specific (ExFEL, CMS, and others) partition if they want to do interactive computations with a full node and not just sharing ressources.
-Once the user has selected the partition a SLUM job is submitted that starts the Notebook Server and a connection is established and users see the screen depicted in Fig.~\ref{fig:jhub_work}.
+Once the user has selected the partition a SLURM job is submitted that starts the Notebook Server and a connection is established and users see the screen depicted in Fig.~\ref{fig:jhub_work}.
 %
 \begin{figure}
   \centering
@@ -833,7 +848,8 @@ Once the user has selected the partition a SLUM job is submitted that starts the
   \label{fig:jhub_work}
 \end{figure}
 %
-Once the server is started and and a notebook is openend, users of the \textit{SimEx} code can execute code cells
+Once the server is started and and a notebook is openend, users of
+\textit{simex\_platform} code can execute code cells
 to import the module and functions they use in their regular python-driven workflow they are used to without the Jupyter Notebook, as is shown in Fig.~\ref{fig:simex_import}.
 The advantage is now that plots can be displayed inline, so no X-forwarding is needed.
 Also, the Jupyter Notebook supports cells with \textit{Markdown} format, so documenting the work and coding progress can be done by adding cells with headings, text and even \LaTeX -style text blocks.
@@ -841,7 +857,8 @@ Also, the Jupyter Notebook supports cells with \textit{Markdown} format, so docu
 \begin{figure}
  \centering
  \includegraphics[width=0.9\textwidth]{figures/simex_import_jhub.png}
- \caption{The Jupyter Notebook executes code in \textit{cell blocks} that can be executed individually. The import statement to make the \textit{SimEx} modules available runs and user sees immediately if it fails or the import was successful}
+ \caption{The Jupyter Notebook executes code in \textit{cell blocks} that can be
+ executed individually. The import statement to make the \textit{SimEx} python modules available runs and user sees immediately if it fails or the import was successful}
  \label{fig:simex_import}
 \end{figure}
 %
