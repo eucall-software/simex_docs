@@ -1,0 +1,86 @@
+\documentclass[10pt]{scrartcl}
+\input{eucall_header}
+\ihead{M4.4} % left head
+
+% sophisticated linking of references in the pdf and setting some options
+\usepackage{url}                                                  % for correct typesettings of URLs
+\usepackage{hyperref}                                             % for sophisticated linking of urls, dois, pictures, tables, etc.
+\hypersetup{
+    unicode=true,                                                 % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,                                              % show Acrobat’s toolbar?
+    pdfmenubar=true,                                              % show Acrobat’s menu?
+    pdffitwindow=false,                                           % window fit to page when opened
+    pdfstartview={FitH},                                          % fits the width of the page to the window
+    pdfauthor={C. Fortmann-Grote},                                           % author
+    pdftitle={M4.4: Tested and documented simulation code},   % title
+    pdfsubject={EUCALL WP4 (SIMEX) Milestone M4.4},                             % subject of the document
+    pdfcreator={pdflatex},                                         % creator of the document
+    pdfkeywords={EUCALL, SIMEX, simex_platform},                                         % list of keywords
+    pdfnewwindow=true,                                            % links in new PDF window
+    colorlinks=true,                                              % false: boxed links; true: colored links
+    linkcolor=blue,                                                % color of internal links (change box color with linkbordercolor)
+    citecolor=blue,                                                % color of links to bibliography
+    filecolor=blue,                                               % color of file links
+    urlcolor=blue                                                 % color of external links
+}
+
+\begin{document}
+\makeatletter
+\begin{titlepage}
+\thispagestyle{scrheadings}
+\begin{center}
+  $~$\\
+  \vspace{2cm}
+  \Huge{\textbf{WP 4 -- SIMEX\\[1cm]
+    Milestone M4.4: Tested and documented simulation code%
+  }}\\
+  \vspace{2cm}
+  \large{%
+    Carsten Fortmann-Grote,
+    Alexander Andreev,
+    Michael Bussmann,
+    Marco Garten,
+    Axel H\"ubl,
+    Thomas Kluge,
+    Sakura Pascarelli,
+    Johannes Reppin,
+    Sebastian Starke,
+    Mathias Sander,
+    Frank Schl\"unzen,
+    Ashutosh Sharma,
+    Sergey Yakubov,
+    Chun Hong Yoon,
+    and
+    Adrian P. Mancuso\\[4ex]
+  }
+  \today
+\end{center}
+\vfill%
+\includegraphics[width=\textwidth]{figures/PartnerLogos_2017}
+\end{titlepage}
+\makeatother
+
+%\tableofcontents
+
+\section{Summary}
+%
+Version 0.4.0 of \textit{simex\_platform} was released into public domain on
+\today. The archived source code can be obtained from
+\url{https://github.com/eucall-software/simex_platform/archive/v0.4.0.tar.gz}.
+The latest stable development snapshot is available from the EUCALL software repository
+\url{https://github.com/eucall-software/simex_platform}.
+The tagged version 0.4.0 is also deposited on the EUCALL data repository
+(\url{https://dx.doi.org/10.5281/zenodo.1436547}.
+
+The software is continuously built and tested. The build and test status can be
+observed at \url{https://travis-ci.org/eucall-software/simex_platform/}. The
+test report for the tagged commit v0.4.0 can be found at
+\url{https://travis-ci.org/eucall-software/simex_platform/builds/434069674}.
+
+The documentation of \textit{simex\_platform} can be found online at
+\url{https://eucall-software.github.io/simex_platform/}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+
